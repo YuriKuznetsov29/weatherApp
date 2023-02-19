@@ -9,11 +9,14 @@
     <title>Weather App</title>
 </head>
 <body>
+
+    <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="header__inner">
                 <div class="location">
                     <div class="location__city"></div>
+                    <div class="location__get__btn">Get your location</div>
                     <div class="location__change__btn">Change location</div>
                     <div class="location__change__wrapper">
                         <input class="input-city" type="text" placeholder="Input your city"/>
@@ -22,7 +25,8 @@
                     </div>
                 </div>
                 <nav class="nav">
-                    <a class="nav__link active" href="#">Weather for 6 days</a>
+                    <a class="nav__link active" href="#">Learn more</a>
+                    <a class="nav__link" href="#">Several days</a>
                     <a class="nav__link" href="#">Marine Weather</a>
                     <a class="nav__link" href="#">Historical Weather</a>
                     <a class="nav__link" href="#">Air Quality</a>
@@ -30,40 +34,47 @@
             </div>
         </div>
     </header>
-    <!-- Header -->
+
+    <!-- Background -->
     <video autoplay muted loop class="video-bg">
         <source src="/src/images/winter.mp4" type="video/mp4">
     </video>
     <div class="background"></div>
-
     
-
-    <div class="city"></div>
-
+    <!-- Weather description -->
+    <div class="container">
+        <div class="description">
+            <div class="city"></div>
+            <div class="weatherDescription"></div>
+        </div>
+    </div>
+    
+    <!-- Weather data -->
     <div class="weather">    
-        <div class="data">
-            <span>
-                <i class="ph-thermometer values"></i>
-                <div class="temp values"></div>
-            </span>
-
-            <span>
-                <i class="ph-drop values"></i>
-                <div class="moi values"></div>
-            </span>
-            <span>
-                <i class="ph-cloud-snow values"></i>
-                <div class="precip values"></div>
-            </span>
-            <span>
-                <i class="ph-wind values"></i>
-                <div class="wind values"></div>
-            </span>
-            <span>
-                <i class="ph-sun-horizon values"></i>
-                <div class="sunrise values"></div>
-                <div class="sunset values"></div>
-            </span>
+        <div class="container">
+            <div class="weather__inner">
+                <span>
+                    <i class="ph-thermometer values"></i>
+                    <div class="temp values"></div>
+                </span>
+                <span>
+                    <i class="ph-drop values"></i>
+                    <div class="moi values"></div>
+                </span>
+                <!-- <span>
+                    <i class="ph-cloud-snow values"></i>
+                    <div class="precip values"></div>
+                </span> -->
+                <span>
+                    <i class="ph-wind values"></i>
+                    <div class="wind values"></div>
+                </span>
+                <span>
+                    <i class="ph-sun-horizon values"></i>
+                    <div class="sunrise values"></div>
+                    <div class="sunset values"></div>
+                </span>
+            </div>
         </div>  
     </div>
 

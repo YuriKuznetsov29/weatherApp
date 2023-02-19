@@ -12,7 +12,7 @@ function getData() {
     }
 
     const getWeather = (lat, lon) => {
-        const data = request(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,precipitation,windspeed_10m&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,windspeed_10m_max,windgusts_10m_max&timezone=Europe%2FMoscow`);
+        const data = request(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,precipitation,weathercode,windspeed_10m&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,windspeed_10m_max,windgusts_10m_max&timezone=Europe%2FMoscow`);
         data.then(console.log)
         return transformWeatherData(data);
     }
@@ -27,6 +27,7 @@ function getData() {
                 wind: res.hourly.windspeed_10m[hour],
                 sunrise: res.daily.sunrise[0].slice(-5),
                 sunset: res.daily.sunset[0].slice(-5),
+                weathercode: res.hourly.weathercode[hour],
             }
             return result;
         })

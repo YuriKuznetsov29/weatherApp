@@ -35,7 +35,7 @@
 
 /* Header */
 .header {
-    height: 60px;
+    height: 80px;
     background-color: rgba(0, 0, 0, 0.3);
 
     position: fixed;
@@ -49,11 +49,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
+    height: 80px;
 }
 
 /* Nav */
-
 .nav {
     display: flex;
     height: 100%;
@@ -69,10 +68,14 @@
 }
 
 /* Location */
-
 .location {
     color: #fff;
     font-size: 18px;
+}
+
+.location__get__btn:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .location__change__btn:hover {
@@ -117,39 +120,31 @@
     background-color: #004AF2;
 }
 
-
-
-
-
-.btn {
-    width: 200px;
-    height: 30px;
-}
-
-.weather {
-    margin: 300px auto;
-    width: 100%;
+/* Description */
+.description {
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
+    color: #fff;
 
-.data-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
 }
 
 .city {
     margin: 100px auto;
-    width: 1000px;
-    color: #fff;
     font-size: 80px;
-    text-align: center;
 }
 
-.data {
-    padding: 0 50px;
-    width: 100%;
+.weatherDescription {
+    margin: 0 auto;
+    font-size: 50px;
+}
+
+
+/* Weather data */
+.weather {
+    margin: 100px auto;
+}
+
+.weather__inner {
     display: flex;
     justify-content: space-between;
 }
@@ -162,3 +157,5 @@
 span {
     text-align: center;
 }
+
+
