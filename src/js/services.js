@@ -28,6 +28,8 @@ function getData() {
                 sunrise: res.daily.sunrise[0].slice(-5),
                 sunset: res.daily.sunset[0].slice(-5),
                 weathercode: res.hourly.weathercode[hour],
+                dailyTemp: res.hourly.temperature_2m.slice(0, 24),
+                dailyTime: res.hourly.time.slice(0, 24).map(item => item.slice(-5)),
             }
             return result;
         })

@@ -15,7 +15,6 @@ const inputCity = document.querySelector('.input-city'),
 
 const getWeatherOnCity = (lat, lon) => {
     getWeather(lat, lon).then((res) => {
-        console.log(weatherDescription);
         document.querySelector('.weatherDescription').innerHTML = weatherDescription[res.weathercode]
         
         const temp = document.querySelector('.temp');
@@ -46,7 +45,6 @@ const getWeatherOnCity = (lat, lon) => {
 
 // Get loacation
 getLocation().then((res) => {
-    console.log(res)
     if (!localStorage.getItem('city')) {
         setLocationToLocalStorage(res.city, res.lat, res.lon);
         city.textContent = res.city;
@@ -54,7 +52,6 @@ getLocation().then((res) => {
         getWeatherOnCity(res.lat, res.lon);
     } else {
         city.textContent = localStorage.getItem('city');
-        console.log(localStorage.getItem('city'))
         yourLocation.textContent = `Current location: ${localStorage.getItem('city')}`;
         getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'));
     }
@@ -91,7 +88,6 @@ inputCity.addEventListener('keydown', (e) => {
             document.querySelector('.errorMessage').remove();
         }
         getCityLocation(inputCity.value).then((res) => {
-            console.log(res);
             if (Object.values(res).length === 1) {
                 const errorMessage = document.createElement('label');
                 errorMessage.classList.add('errorMessage');
@@ -122,7 +118,6 @@ inputCity.addEventListener('input', () => {
             })
         }
         getCityLocation(inputCity.value).then((res) => {
-            console.log(res);
             if (Object.values(res).length === 1) {
                 const errorMessage = document.createElement('label');
                 errorMessage.classList.add('errorMessage');

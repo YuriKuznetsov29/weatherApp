@@ -1,5 +1,6 @@
-// import Chart from 'chart.js/auto'
 import getData from './services';
+import { CHART_COLORS } from './constants'
+import Chart from 'chart.js/auto';
 
 import '../styles/main.css';
 import '../styles/daily.css';
@@ -9,9 +10,12 @@ const inputCity = document.querySelector('.input-city'),
       city = document.querySelector('.city'),
       yourLocation = document.querySelector('.location__city'),
       btnChangeLocation = document.querySelector('.location__change__btn'),
-      btnGetLocation = document.querySelector('.location__get__btn');
+      btnGetLocation = document.querySelector('.location__get__btn'),
+      ctx = document.getElementById('myChart');
+
 
 const {getLocation, getCityLocation, getWeather} = getData();
+
 
 getLocation().then((res) => {
     console.log(res)
@@ -22,28 +26,67 @@ getLocation().then((res) => {
     } else {
         console.log(localStorage.getItem('city'))
         yourLocation.textContent = `Current location: ${localStorage.getItem('city')}`;
+        getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'));
     }
 })
 
-const ctx = document.getElementById('myChart');
+Chart.defaults.plugins.title.color = '#fff';
+Chart.defaults.plugins.legend.color = '#fff';
+Chart.defaults.backgroundColor = '#fff';
+Chart.defaults.color = '#fff';   
 
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', '00'],
-        datasets: [{
-          label: 'My First Dataset',
-          data: [-10, -5, 0, 5, 10, 10, 5, 0, 6, 4, 0, -5],
-          fill: false,
-          borderColor: 'rgb(75, 192, 192)',
-          tension: 0.1
-        }]
-      },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
+const getWeatherOnCity = (lat, lon) => {
+    getWeather(lat, lon).then((res) => {
+        console.log(res)
+        new Chart(ctx, {
+            type: 'line',
+            color: '#fff',
+            data: {
+                labels: res.dailyTime,
+                datasets: [{
+                  label: 'Temperature',
+                  data: res.dailyTemp,
+                  fill: 'start',
+                  backgroundColor: CHART_COLORS.blue,
+                  borderColor: CHART_COLORS.red,
+                  color: '#fff',
+                  tension: 0.1
+                }]
+              },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  color: '#fff'
+                },
+                
+              },
+              plugins: {
+                subtitle: {
+                    display: true,
+                    text: 'Custom Chart Subtitle',
+                    font: {
+                        size: 24
+                    },
+                    color: '#fff',
+                },
+                legend: {
+                    labels: {
+                        // This more specific font property overrides the global property
+                        font: {
+                            size: 24
+                        }
+                    }
+                }
+              },
+              color: '#fff',
+              font: {
+                size: 24
+              }
+            }
+          });
+    })
+}
+
+
+

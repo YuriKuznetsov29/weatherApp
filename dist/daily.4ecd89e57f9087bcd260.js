@@ -90,9 +90,12 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./services */ "./src/js/services.js");
-/* harmony import */ var _styles_main_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../styles/main.css */ "./src/styles/main.css");
-/* harmony import */ var _styles_daily_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../styles/daily.css */ "./src/styles/daily.css");
-// import Chart from 'chart.js/auto'
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./src/js/constants.js");
+/* harmony import */ var chart_js_auto__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! chart.js/auto */ "./node_modules/chart.js/auto/auto.js");
+/* harmony import */ var _styles_main_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../styles/main.css */ "./src/styles/main.css");
+/* harmony import */ var _styles_daily_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../styles/daily.css */ "./src/styles/daily.css");
+
+
 
 
 
@@ -103,9 +106,12 @@ const inputCity = document.querySelector('.input-city'),
       city = document.querySelector('.city'),
       yourLocation = document.querySelector('.location__city'),
       btnChangeLocation = document.querySelector('.location__change__btn'),
-      btnGetLocation = document.querySelector('.location__get__btn');
+      btnGetLocation = document.querySelector('.location__get__btn'),
+      ctx = document.getElementById('myChart');
+
 
 const {getLocation, getCityLocation, getWeather} = (0,_services__WEBPACK_IMPORTED_MODULE_0__["default"])();
+
 
 getLocation().then((res) => {
     console.log(res)
@@ -116,31 +122,70 @@ getLocation().then((res) => {
     } else {
         console.log(localStorage.getItem('city'))
         yourLocation.textContent = `Current location: ${localStorage.getItem('city')}`;
+        getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'));
     }
 })
 
-const ctx = document.getElementById('myChart');
+chart_js_auto__WEBPACK_IMPORTED_MODULE_2__["default"].defaults.plugins.title.color = '#fff';
+chart_js_auto__WEBPACK_IMPORTED_MODULE_2__["default"].defaults.plugins.legend.color = '#fff';
+chart_js_auto__WEBPACK_IMPORTED_MODULE_2__["default"].defaults.backgroundColor = '#fff';
+chart_js_auto__WEBPACK_IMPORTED_MODULE_2__["default"].defaults.color = '#fff';   
 
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', '00'],
-        datasets: [{
-          label: 'My First Dataset',
-          data: [-10, -5, 0, 5, 10, 10, 5, 0, 6, 4, 0, -5],
-          fill: false,
-          borderColor: 'rgb(75, 192, 192)',
-          tension: 0.1
-        }]
-      },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
+const getWeatherOnCity = (lat, lon) => {
+    getWeather(lat, lon).then((res) => {
+        console.log(res)
+        new chart_js_auto__WEBPACK_IMPORTED_MODULE_2__["default"](ctx, {
+            type: 'line',
+            color: '#fff',
+            data: {
+                labels: res.dailyTime,
+                datasets: [{
+                  label: 'Temperature',
+                  data: res.dailyTemp,
+                  fill: 'start',
+                  backgroundColor: _constants__WEBPACK_IMPORTED_MODULE_1__.CHART_COLORS.blue,
+                  borderColor: _constants__WEBPACK_IMPORTED_MODULE_1__.CHART_COLORS.red,
+                  color: '#fff',
+                  tension: 0.1
+                }]
+              },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  color: '#fff'
+                },
+                
+              },
+              plugins: {
+                subtitle: {
+                    display: true,
+                    text: 'Custom Chart Subtitle',
+                    font: {
+                        size: 24
+                    },
+                    color: '#fff',
+                },
+                legend: {
+                    labels: {
+                        // This more specific font property overrides the global property
+                        font: {
+                            size: 24
+                        }
+                    }
+                }
+              },
+              color: '#fff',
+              font: {
+                size: 24
+              }
+            }
+          });
+    })
+}
+
+
+
 
 
 /***/ })
@@ -310,9 +355,9 @@ new Chart(ctx, {
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["src_styles_main_css-src_js_services_js"], () => (__webpack_require__("./src/js/daily.js")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_css-loader_dist_runtime_api_js-node_modules_css-loader_dist_runtime_sour-6c1c5e","src_styles_main_css-src_js_constants_js-src_js_services_js"], () => (__webpack_require__("./src/js/daily.js")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=daily.60e1dc217c0184dbff4c.js.map
+//# sourceMappingURL=daily.4ecd89e57f9087bcd260.js.map
