@@ -1,6 +1,8 @@
 import getData from "./services";
 import { weatherDescription } from "./constants";
 
+import '../styles/main.css';
+
 
 const {getLocation, getCityLocation, getWeather} = getData();
 const inputCity = document.querySelector('.input-city'),
@@ -52,6 +54,7 @@ getLocation().then((res) => {
         getWeatherOnCity(res.lat, res.lon);
     } else {
         city.textContent = localStorage.getItem('city');
+        console.log(localStorage.getItem('city'))
         yourLocation.textContent = `Current location: ${localStorage.getItem('city')}`;
         getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'));
     }

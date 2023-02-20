@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/phosphor-icons"></script>
-    <title>Weather App</title>
-</head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    
+    <title>Daily</title>
+<script defer src="src_styles_main_css-src_js_services_js.d43a6f77ca2c9b78a668.js"></script><script defer src="daily.60e1dc217c0184dbff4c.js"></script></head>
 <body>
 
     <!-- Header -->
@@ -40,42 +40,16 @@
         <source src="/src/images/winter.mp4" type="video/mp4">
     </video>
     <div class="background"></div>
-    
-    <!-- Weather description -->
+
+
+    <div class="chart__innner">
+
     <div class="container">
-        <div class="description">
-            <div class="city"></div>
-            <div class="weatherDescription"></div>
-        </div>
+            <canvas class="chart" id="myChart"></canvas>
     </div>
+</div>
+
+
     
-    <!-- Weather data -->
-    <div class="weather">    
-        <div class="container">
-            <div class="weather__inner">
-                <span>
-                    <i class="ph-thermometer values"></i>
-                    <div class="temp values"></div>
-                </span>
-                <span>
-                    <i class="ph-drop values"></i>
-                    <div class="moi values"></div>
-                </span>
-                <!-- <span>
-                    <i class="ph-cloud-snow values"></i>
-                    <div class="precip values"></div>
-                </span> -->
-                <span>
-                    <i class="ph-wind values"></i>
-                    <div class="wind values"></div>
-                </span>
-                <span>
-                    <i class="ph-sun-horizon values"></i>
-                    <div class="sunrise values"></div>
-                    <div class="sunset values"></div>
-                </span>
-            </div>
-        </div>  
-    </div>
 </body>
 </html>

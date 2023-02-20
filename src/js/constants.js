@@ -2,7 +2,7 @@ export const weatherDescription = {
     0: 'Clear sky',
     1: 'Mainly clear',
     2: 'Partly cloudy',
-    3: 'overcast',
+    3: 'Overcast',
     45: 'Fog and depositing rime fog',
     48: 'Fog and depositing rime fog',
     51: 'Drizzle: light',

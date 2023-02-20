@@ -106,6 +106,7 @@
 
 .finded-city:hover {
     cursor: pointer;
+    background-color: #004AF2;
 }
 
 .input-city {

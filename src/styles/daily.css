@@ -1,0 +1,10 @@
+/* Chart */
+.chart__innner {
+    margin-top: 300px;
+    display: flex;
+}
+
+.chart {
+    height: 500px;
+    width: 1000px;
+}
