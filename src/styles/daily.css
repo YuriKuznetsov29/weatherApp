@@ -1,10 +1,92 @@
 /* Chart */
 .chart__innner {
-    margin-top: 300px;
+    margin-top: 50px;
     display: flex;
 }
 
-.chart {
+/* .chart {
     height: 500px;
     width: 1000px;
+} */
+
+/* Input day */
+
+.day {
+    margin: 200px auto 0;
+}
+
+.day__inner {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.day__input {
+    width: 250px;
+    height: 40px;
+    font-size: 22px;
+    border: none;
+    outline: none;
+}
+
+.day__previous {
+    color: #fff;
+    font-size: 40px;
+}
+
+.day__previous:hover {
+    cursor: pointer;
+}
+
+.day__next {
+    color: #fff;
+    font-size: 40px;
+}
+
+.day__next:hover {
+    cursor: pointer;
+}
+
+.day__input__wrapper {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+}
+
+.enterBtn {
+    color: #000;
+    height: 40px;
+    font-size: 35px;
+    background-color: #fff;
+    transition: 0.2s linear ;
+}
+
+.enterBtn:hover {
+    cursor: pointer;
+    background-color: #004AF2;
+}
+
+.day__errorMessage {
+    position: absolute;
+    top: 50px;
+    margin: 0 auto;
+    color: #fff;
+    font-size: 18px;
+    /* font-weight: 600; */
+}
+
+/* Media */
+
+@media(max-width: 900px) {
+    .day {
+        margin-top: 100px;
+    }
+}
+
+@media(max-width: 450px) {
+
+    .day__input {
+        width: 200px;
+        font-size: 20px;
+    }
 }

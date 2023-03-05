@@ -427,6 +427,47 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ "./src/js/changeLocation.js":
+/*!**********************************!*\
+  !*** ./src/js/changeLocation.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+
+
+const blockChangeLocation = () => {
+    const inputCity = document.querySelector('.input-city'),
+      city = document.querySelector('.city'),
+      yourLocation = document.querySelector('.location__city'),
+      btnChangeLocation = document.querySelector('.location__change__btn'),
+      btnGetLocation = document.querySelector('.location__get__btn');
+
+    const {getLocation, getCityLocation, getWeather, getDataAvito} = getData();
+
+    // Get loacation
+    getLocation().then((res) => {
+        if (!localStorage.getItem('city')) {
+            setLocationToLocalStorage(res.city, res.lat, res.lon);
+            city.textContent = res.city;
+            yourLocation.textContent = `Current location: ${res.city}`;
+            getWeatherOnCity(res.lat, res.lon);
+        } else {
+            city.textContent = localStorage.getItem('city');
+            yourLocation.textContent = `Current location: ${localStorage.getItem('city')}`;
+            // getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'));
+        }
+        
+    })
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (blockChangeLocation);
+
+/***/ }),
+
 /***/ "./src/js/main.js":
 /*!************************!*\
   !*** ./src/js/main.js ***!
@@ -436,21 +477,27 @@ module.exports = styleTagTransform;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./services */ "./src/js/services.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./src/js/constants.js");
-/* harmony import */ var _styles_main_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../styles/main.css */ "./src/styles/main.css");
+/* harmony import */ var _changeLocation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./changeLocation */ "./src/js/changeLocation.js");
+/* harmony import */ var _styles_main_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../styles/main.css */ "./src/styles/main.css");
 
 
 
 
 
 
-const {getLocation, getCityLocation, getWeather} = (0,_services__WEBPACK_IMPORTED_MODULE_0__["default"])();
+const {getLocation, getCityLocation, getWeather, getDataAvito} = (0,_services__WEBPACK_IMPORTED_MODULE_0__["default"])();
 const inputCity = document.querySelector('.input-city'),
       weather = document.querySelector('.weather'),
       city = document.querySelector('.city'),
       yourLocation = document.querySelector('.location__city'),
       btnChangeLocation = document.querySelector('.location__change__btn'),
-      btnGetLocation = document.querySelector('.location__get__btn');
+      btnGetLocation = document.querySelector('.location__get__btn'),
+      burger = document.querySelector('.burger'),
+      nav = document.querySelector('.nav');
 
+burger.addEventListener('click', () => {
+    nav.style.display = 'block';
+})
 
 const getWeatherOnCity = (lat, lon) => {
     getWeather(lat, lon).then((res) => {
@@ -463,10 +510,6 @@ const getWeatherOnCity = (lat, lon) => {
         const moi = document.querySelector('.moi');
         moi.textContent = res.currentMoi + ' %';
         document.querySelector('.ph-drop').after(moi);
-
-        // const precipitation = document.querySelector('.precip');
-        // precipitation.textContent = res.currentPrecipitation + ' mm';
-        // document.querySelector('.ph-cloud-snow').after(precipitation);
 
         const wind = document.querySelector('.wind');
         wind.textContent = res.wind + ' km/h'; // + Math.floor(res.wind*1000/3600) + 'm/s';
@@ -595,6 +638,8 @@ const clearFindData = () => {
     }
     inputCity.value = '';
 }
+
+
 
 
 
@@ -771,4 +816,4 @@ const clearFindData = () => {
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=main.7954bf8e9c18e87133ae.js.map
+//# sourceMappingURL=main.da8940d196e562f77751.js.map

@@ -95,7 +95,7 @@
 .location__change__find {
     width: 200px;
     position: absolute;
-    top: 65px;
+    top: 75px;
     background-color: #fff;
 }
 
@@ -115,7 +115,11 @@
     position: relative;
 }
 
-
+.burger {
+    color: #fff;
+    display: none;
+    font-size: 26px;
+}
 
 .active {
     background-color: #004AF2;
@@ -130,19 +134,19 @@
 }
 
 .city {
-    margin: 100px auto;
+    margin: 100px auto 0;
     font-size: 80px;
 }
 
 .weatherDescription {
-    margin: 0 auto;
+    margin: 100px auto 0;
     font-size: 50px;
 }
 
 
 /* Weather data */
 .weather {
-    margin: 100px auto;
+    margin: 100px auto 0;
 }
 
 .weather__inner {
@@ -155,8 +159,65 @@
     font-size: 50px;
 }
 
-span {
+.weather__dataWrapper {
     text-align: center;
 }
 
+/* Media */
 
+@media(max-width: 900px) {
+    .nav {
+        display: none;
+        height: auto;
+        min-height: calc(100vh - 80px);
+        width: 100%;
+        padding-top: 9px;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        flex-direction: column;
+        background-color: rgba(0, 0, 0, 0.85);
+    }
+
+    .nav__link {
+        display: block;
+        padding: 10px 15px;
+        text-align: right;
+    }
+
+    .burger {
+        display: block;
+    }
+}
+
+@media(max-width: 650px) {
+    .weather__inner {
+        flex-direction: column;
+    }
+
+    .weather__dataWrapper {
+        margin-bottom: 30px;
+    }
+}
+
+@media(max-width: 450px) {
+    .city {
+        font-size: 50px;
+    }
+
+    .weatherDescription {
+        margin-top: 25px;
+        font-size: 30px;
+    }
+
+    .weather {
+        margin-top: 30px;
+    }
+
+    .values {
+        font-size: 35px;
+    }
+
+}

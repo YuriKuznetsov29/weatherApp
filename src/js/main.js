@@ -1,17 +1,22 @@
 import getData from "./services";
 import { weatherDescription } from "./constants";
+import blockChangeLocation from "./changeLocation";
 
 import '../styles/main.css';
 
-
-const {getLocation, getCityLocation, getWeather} = getData();
+const {getLocation, getCityLocation, getWeather, getDataAvito} = getData();
 const inputCity = document.querySelector('.input-city'),
       weather = document.querySelector('.weather'),
       city = document.querySelector('.city'),
       yourLocation = document.querySelector('.location__city'),
       btnChangeLocation = document.querySelector('.location__change__btn'),
-      btnGetLocation = document.querySelector('.location__get__btn');
+      btnGetLocation = document.querySelector('.location__get__btn'),
+      burger = document.querySelector('.burger'),
+      nav = document.querySelector('.nav');
 
+burger.addEventListener('click', () => {
+    nav.style.display = 'block';
+})
 
 const getWeatherOnCity = (lat, lon) => {
     getWeather(lat, lon).then((res) => {
@@ -24,10 +29,6 @@ const getWeatherOnCity = (lat, lon) => {
         const moi = document.querySelector('.moi');
         moi.textContent = res.currentMoi + ' %';
         document.querySelector('.ph-drop').after(moi);
-
-        // const precipitation = document.querySelector('.precip');
-        // precipitation.textContent = res.currentPrecipitation + ' mm';
-        // document.querySelector('.ph-cloud-snow').after(precipitation);
 
         const wind = document.querySelector('.wind');
         wind.textContent = res.wind + ' km/h'; // + Math.floor(res.wind*1000/3600) + 'm/s';
@@ -156,5 +157,7 @@ const clearFindData = () => {
     }
     inputCity.value = '';
 }
+
+
 
 

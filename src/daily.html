@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/phosphor-icons"></script>
     <title>Daily</title>
 </head>
 <body>
@@ -30,9 +31,25 @@
                     <a class="nav__link" href="#">Historical Weather</a>
                     <a class="nav__link" href="#">Air Quality</a>
                 </nav>
+                <i class="ph-list burger"></i>
             </div>
         </div>
     </header>
+    <!-- Day -->
+    
+    <div class="day">
+        <div class="container">
+            <div class="day__inner">
+                <i class="ph-arrow-fat-left day__previous"></i>
+                <div class="day__input__wrapper">
+                    <input class="day__input" type="text" placeholder="Input day yyyy-mm-dd">
+                    <i class="ph-arrow-right enterBtn"></i>
+                    <div class="day__errorMessage"></div>
+                </div>
+                <i class="ph-arrow-fat-right day__next"></i>
+            </div>
+        </div>
+    </div>
 
     <!-- Background -->
     <video autoplay muted loop class="video-bg">
@@ -42,13 +59,12 @@
 
 
     <div class="chart__innner">
-
-    <div class="container">
-            <canvas class="chart" id="myChart"></canvas>
+        <div class="container">
+            <div class="chart-container" style="position: relative; height:100%; width:100%">
+                <canvas class="chart" id="myChart"></canvas>
+            </div>
+        </div>
     </div>
-</div>
-
-
     
 </body>
 </html>
