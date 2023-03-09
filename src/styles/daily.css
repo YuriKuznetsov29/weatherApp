@@ -12,7 +12,7 @@
 /* Input day */
 
 .day {
-    margin: 200px auto 0;
+    margin: 100px auto 0;
 }
 
 .day__inner {
@@ -56,7 +56,7 @@
 .enterBtn {
     color: #000;
     height: 40px;
-    font-size: 35px;
+    font-size: 40px;
     background-color: #fff;
     transition: 0.2s linear ;
 }
@@ -75,15 +75,34 @@
     /* font-weight: 600; */
 }
 
+/* Charts */
+
+.chartWrapper {
+    max-width: 100%;
+}
+
+.chart-container {
+    height:600px; 
+    width: 1200px;
+}
+
 /* Media */
 
-@media(max-width: 900px) {
+@media (max-width: 1200px) {
+    .chartWrapper {
+        overflow-x: scroll;
+    }
+}
+/* @media(max-width: 900px) {
     .day {
         margin-top: 100px;
     }
-}
+} */
 
 @media(max-width: 450px) {
+    .chart__innner {
+        margin-top: 20px;
+    }
 
     .day__input {
         width: 200px;

@@ -1,17 +1,16 @@
 import getData from './services';
-import { CHART_COLORS } from './constants'
+import chartConfigs from './chartConfigs';
+import changeLocation from './changeLocation';
 import Chart from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 import '../styles/main.css';
 import '../styles/daily.css';
 
-const inputCity = document.querySelector('.input-city'),
-      weather = document.querySelector('.weather'),
-      city = document.querySelector('.city'),
-      yourLocation = document.querySelector('.location__city'),
-      btnChangeLocation = document.querySelector('.location__change__btn'),
-      btnGetLocation = document.querySelector('.location__get__btn'),
-      myChart = document.getElementById('myChart'),
+const myChart = document.getElementById('myChart'),
+      myChartMoi = document.getElementById('myChartMoi'),
+      myChartWind = document.getElementById('myChartWind'),
+      myChartPressure = document.getElementById('myChartPressure'),
       inputDay = document.querySelector('.day__input'),
       inputDateBtn = document.querySelector('.enterBtn'),
       dayErrorMessage = document.querySelector('.day__errorMessage'),
@@ -20,126 +19,13 @@ const inputCity = document.querySelector('.input-city'),
       burger = document.querySelector('.burger'),
       nav = document.querySelector('.nav');
 
+
+const {getWeather} = getData();
+const {tempChartConfig, moiChartConfig, windChartConfig, pressureChartConfig} = chartConfigs();
+
 burger.addEventListener('click', () => {
     nav.style.display = 'block';
 })
-
-
-
-const {getLocation, getCityLocation, getWeather} = getData();
-
-
-getLocation().then((res) => {
-    console.log(res)
-    if (!localStorage.getItem('city')) {
-        setLocationToLocalStorage(res.city, res.lat, res.lon);
-        yourLocation.textContent = `Current location: ${res.city}`;
-        getWeatherOnCity(res.lat, res.lon);
-    } else {
-        console.log(localStorage.getItem('city'))
-        yourLocation.textContent = `Current location: ${localStorage.getItem('city')}`;
-        getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'));
-    }
-})
-
-const setLocationToLocalStorage = (city, lat, lon) => {
-  localStorage.setItem('city', city);
-  localStorage.setItem('lat', lat);
-  localStorage.setItem('lon', lon);
-}
-
-// Change location toggle
-btnChangeLocation.addEventListener('click', () => {
-  document.querySelector('.location__change__wrapper').style.display = 'flex';
-  btnChangeLocation.style.display = 'none'
-
-})
-
-// Get location btn
-btnGetLocation.addEventListener('click', () => {
-  getLocation().then((res) => {
-      setLocationToLocalStorage(res.city, res.lat, res.lon);
-      console.log(res.city)
-      yourLocation.textContent = `Current location: ${res.city}`;
-      getWeatherOnCity(res.lat, res.lon);
-  })
-})
-
-// Change location onEnter
-inputCity.addEventListener('keydown', (e) => {
-  if (e.keyCode == 13) {
-      if (document.querySelector('.errorMessage')) {
-          document.querySelector('.errorMessage').remove();
-      }
-      getCityLocation(inputCity.value).then((res) => {
-          if (Object.values(res).length === 1) {
-              const errorMessage = document.createElement('label');
-              errorMessage.classList.add('errorMessage');
-              errorMessage.textContent = 'City not found';
-              inputCity.after(errorMessage)
-          } else {
-              setLocationToLocalStorage(res.results[0].name, res.results[0].latitude, res.results[0].longitude);
-              yourLocation.textContent = `Current location: ${res.results[0].name}`;
-              getWeatherOnCity(res.results[0].latitude, res.results[0].longitude)
-              document.querySelector('.location__change__wrapper').style.display = 'none';
-              btnChangeLocation.style.display = 'block'
-              clearFindData();
-          }
-      })
-  }
-})
-
-// Find location on input
-inputCity.addEventListener('input', () => {
-  
-      if (document.querySelector('.errorMessage')) {
-          document.querySelector('.errorMessage').remove();
-      }
-      if (document.querySelector('.finded-city')) {
-          document.querySelectorAll('.finded-city').forEach(elem => {
-              elem.remove();
-          })
-      }
-      getCityLocation(inputCity.value).then((res) => {
-          if (Object.values(res).length === 1) {
-              const errorMessage = document.createElement('label');
-              errorMessage.classList.add('errorMessage');
-              errorMessage.textContent = 'City not found';
-              inputCity.after(errorMessage)
-          } else {
-              res.results.forEach(el => {
-                  const div = document.createElement('div');
-                  div.classList.add('finded-city');
-                  div.textContent = `${el.name}  ${el.country_code}`;
-                  document.querySelector('.location__change__find').append(div)
-                  div.addEventListener('click', () => {
-                      console.log(el)
-                      setLocationToLocalStorage(el.name, el.latitude, el.longitude);
-                      yourLocation.textContent = `Current location: ${el.name}`;
-                      getWeatherOnCity(el.latitude, el.longitude);
-                      document.querySelector('.location__change__wrapper').style.display = 'none';
-                      btnChangeLocation.style.display = 'block'
-                      clearFindData();
-                  })
-
-              });
-          }
-      })
-})
-
-
-
-const clearFindData = () => {
-  if (document.querySelector('.errorMessage')) {
-      document.querySelector('.errorMessage').remove();
-  }
-  if (document.querySelector('.finded-city')) {
-      document.querySelectorAll('.finded-city').forEach(elem => {
-          elem.remove();
-      })
-  }
-  inputCity.value = '';
-}
 
 const getCurrentDate = () => {
   const date = new Date();
@@ -182,7 +68,7 @@ inputDay.addEventListener('keydown', (e) => {
 })
 
 nextDayBtn.addEventListener('click', () => {
-  let day = chart.options.plugins.subtitle.text
+  let day = tempChart.options.plugins.subtitle.text
 
   console.log(Number(day.slice(0, 4)), (Number(day.slice(5, 7))) - 1, (Number(day.slice(8))) + 1)
   const lastDate = new Date(Number(day.slice(0, 4)), (Number(day.slice(5, 7))) - 1, (Number(day.slice(8))) + 1);
@@ -194,7 +80,7 @@ nextDayBtn.addEventListener('click', () => {
 })
 
 previousDayBtn.addEventListener('click', () => {
-  let day = chart.options.plugins.subtitle.text
+  let day = tempChart.options.plugins.subtitle.text
 
   console.log(Number(day.slice(0, 4)), (Number(day.slice(5, 7))) - 1, (Number(day.slice(8))) - 1)
   const lastDate = new Date(Number(day.slice(0, 4)), (Number(day.slice(5, 7))) - 1, (Number(day.slice(8))) - 1);
@@ -205,126 +91,98 @@ previousDayBtn.addEventListener('click', () => {
   getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'), transformLastDate);
 })
 
-
-let arrow = document.createElement ('img');
-arrow.src ='/src/images/arrow.png';
-
+Chart.register(ChartDataLabels);
 // Chart.defaults.plugins.title.color = '#fff';
 // Chart.defaults.plugins.legend.color = '#fff';
 // Chart.defaults.backgroundColor = '#fff';
 Chart.defaults.color = '#fff';
 Chart.defaults.font.size = 16;
-let chart;
+
+let tempChart;
+let moiChart;
+let windChart;
+let pressureChart;
+
 const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
     getWeather(lat, lon, day).then((res) => {
-        const chartConfig = {
-          type: 'line',
-          color: '#fff',
-          data: {
-              labels: res.dailyTime,
-              datasets: [
-                {
-                label: 'Temperature',
-                data: res.dailyTemp,
-                fill: 'start',
-                backgroundColor: CHART_COLORS.blue,
-                borderColor: CHART_COLORS.red,
-                color: '#fff',
-                tension: 0.1
-              },
-              {
-                label: 'Moisture',
-                data: res.dailyMoi,
-                fill: 'start',
-                backgroundColor: CHART_COLORS.purple,
-                borderColor: CHART_COLORS.green,
-                color: '#fff',
-                tension: 0.1,
-                hidden: true
-              },
-              {
-                label: 'Wind',
-                data: res.dailyWind,
-                fill: 'start',
-                backgroundColor: CHART_COLORS.yellow,
-                borderColor: CHART_COLORS.orange,
-                color: '#fff',
-                tension: 0.1,
-                hidden: true,
-                pointHitRadius: 10,
-                rotation: res.dailyWindDir,
-                pointStyle: [arrow],
-              },
-              {
-                label: 'Pressure',
-                data: res.dailyPressure,
-                fill: 'start',
-                backgroundColor: CHART_COLORS.green,
-                borderColor: CHART_COLORS.orange,
-                color: '#fff',
-                tension: 0.1,
-                hidden: true
-              },
-            ]
-            },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-                grid: {
-                  display: false,
-                }
-              },
-              x: {
-                grid: {
-                  display: false,
-                }
-              }
-            },
-            plugins: {
-              subtitle: {
-                  display: true,
-                  text: day,
-                  font: {
-                      size: 24
-                  },
-              },
-              legend: {
-                  labels: {
-                      // This more specific font property overrides the global property
-                      font: {
-                          size: 24
-                      }
-                  },
-              }
-            },
-          }
-        }
 
         if (document.documentElement.clientWidth <= 600) {
-          chartConfig.options.plugins.subtitle.font.size = 12;
-          chartConfig.options.plugins.legend.labels.font.size = 12;
+          // chartConfig.options.plugins.subtitle.font.size = 12;
+          // chartConfig.options.plugins.legend.labels.font.size = 12;
+          // Chart.defaults.options.plugins.subtitle.font.size = 12;
+          // Chart.defaults.options.plugins.legend.labels.font.size = 12;
           Chart.defaults.font.size = 10;
+          const chartContainer = document.querySelectorAll('.chart-container');
+          chartContainer.forEach(el => {
+            el.style.cssText = 'height:300px; width: 800px;'
+          })
         }
 
-        if (!chart) {
-          chart = new Chart(myChart, chartConfig);
+        if (!tempChart) {
+          tempChartConfig.data.labels = res.dailyTime;
+          tempChartConfig.data.datasets[0].data = res.dailyTemp,
+          tempChartConfig.options.plugins.subtitle.text = day;
+          tempChart = new Chart(myChart, tempChartConfig);
         } else {
-          {
-            console.log(chart)
             function addData(chart, label, data, day) {
               chart.data.labels = label;
-              chart.data.datasets = data;
+              chart.data.datasets[0].data = data;
               chart.options.plugins.subtitle.text = day;
               chart.update('active');
             }
-            addData(chart, res.dailyTime, chartConfig.data.datasets, day);
+            addData(tempChart, res.dailyTime, res.dailyTemp, day);
         }
-      }
+        
+        if (!moiChart) {
+          moiChartConfig.data.labels = res.dailyTime;
+          moiChartConfig.data.datasets[0].data = res.dailyMoi;
+          moiChartConfig.options.plugins.subtitle.text = day;
+          moiChart = new Chart(myChartMoi, moiChartConfig);
+        } else {
+            function addData(chart, label, data, day) {
+              chart.data.labels = label;
+              chart.data.datasets[0].data = data;
+              chart.options.plugins.subtitle.text = day;
+              chart.update('active');
+            }
+            addData(moiChart, res.dailyTime, res.dailyMoi, day);
+        }
+
+        if (!windChart) {
+          windChartConfig.data.labels = res.dailyTime;
+          windChartConfig.data.datasets[0].data = res.dailyWind;
+          windChartConfig.data.datasets[0].rotation = res.dailyWindDir
+          windChartConfig.options.plugins.subtitle.text = day;
+          windChart = new Chart(myChartWind, windChartConfig);
+        } else {
+            function addData(chart, label, data, rotation, day) {
+              chart.data.labels = label;
+              chart.data.datasets[0].data = data;
+              chart.data.datasets[0].rotation = rotation;
+              chart.options.plugins.subtitle.text = day;
+              chart.update('active');
+            }
+            addData(windChart, res.dailyTime, res.dailyWind, res.dailyWindDir, day);
+        }
+
+        if (!pressureChart) {
+          pressureChartConfig.data.labels = res.dailyTime;
+          pressureChartConfig.data.datasets[0].data =  res.dailyPressure;
+          pressureChartConfig.options.plugins.subtitle.text = day;
+          pressureChart = new Chart(myChartPressure, pressureChartConfig);
+        } else {
+            function addData(chart, label, data, day) {
+              chart.data.labels = label;
+              chart.data.datasets[0].data = data;
+              chart.options.plugins.subtitle.text = day;
+              chart.update('active');
+            }
+            addData(pressureChart, res.dailyTime, res.dailyPressure, day);
+        }
     })
-
-
 }
+
+changeLocation(getWeatherOnCity);
 
 
 

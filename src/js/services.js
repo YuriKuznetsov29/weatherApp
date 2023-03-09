@@ -2,9 +2,30 @@ import { request } from "./http";
 
 function getData() {
     const getLocation = () => {
-        const data = request('http://ip-api.com/json/');
-        return data;
+        const data = request('https://api.ipgeolocation.io/ipgeo?apiKey=17a8d753063e4a20a9531fe3638de576');
+        // function success(pos) {
+        //     var crd = pos.coords;
+        //     console.log('Ваше текущее местоположение:');
+        //     console.log(`Широта: ${crd.latitude}`);
+        //     console.log(`Долгота: ${crd.longitude}`);
+        //     console.log(`Плюс-минус ${crd.accuracy} метров.`);
+        //     console.log(crd);
+        //   };
+
+        //   navigator.geolocation.getCurrentPosition(success)
+          
+          return data.then(res => {
+            return {
+                city: res.city,
+                lat: res.latitude,
+                lon: res.longitude,
+            }
+          })
+        // return data;
     }
+
+    // 
+    // http://ip-api.com/json/
 
     const getCityLocation = (city) => {
         const data = request(`https://geocoding-api.open-meteo.com/v1/search?name=${city}`);
