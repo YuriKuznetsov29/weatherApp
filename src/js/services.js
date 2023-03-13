@@ -52,9 +52,37 @@ function getData() {
         const month = date.getMonth();
         const day = date.getDate();
         const currentDate = `${year}-${(month + 1) < 10 ? `0${(month + 1)}` : (month + 1)}-${day < 10 ? `0${day}` : day}`;
-        console.log(currentDate);
+        // console.log(currentDate);
         return currentDate;
     }
+
+    // const sunCalk = () => {
+    //     const coefficent = 100 / 60;
+    //     console.log(coefficent)
+    //     const timeArr = [];
+    //     const sunArr = [];
+    //     let hour = 0;
+    //     let minutes = 0;
+    //     let sun = 0
+    //     for (let i = 0; i < 1440; i++) {
+    //         sunArr.push(sun)
+    //         sun += coefficent;
+    //     }
+    //     console.log(sunArr)
+
+    //     for (let i = 0; i < 1463; i++) {
+    //         if (minutes < 60) {
+    //             timeArr.push((hour <= 9 ? '0' + hour : hour) + ':' + (minutes <= 9 ? '0' + minutes : minutes))
+    //             minutes++;
+    //         } else {
+    //             hour++;
+    //             minutes = 0;
+    //         }
+    //     }
+    //     return timeArr;
+    // }
+
+    // sunCalk()
 
     const getWeather = (lat, lon, day = getCurrentDate()) => {
         const data = request(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,precipitation,weathercode,pressure_msl,surface_pressure,windspeed_10m,winddirection_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,precipitation_sum,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&timezone=Europe%2FMoscow&start_date=${day}&end_date=${getLastDate()}`);

@@ -10,7 +10,11 @@ const city = document.querySelector('.city'),
       nav = document.querySelector('.nav');
 
 burger.addEventListener('click', () => {
-    nav.style.display = 'block';
+    if (nav.style.display === 'none') {
+        nav.style.display = 'block';
+      } else {
+        nav.style.display = 'none';
+      }
 })
 
 const getWeatherOnCity = (lat, lon) => {
