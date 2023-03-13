@@ -23,10 +23,6 @@ const myChart = document.getElementById('myChart'),
 const {getWeather} = getData();
 const {tempChartConfig, moiChartConfig, windChartConfig, pressureChartConfig, sunChartConfig} = chartConfigs();
 
-
-
-
-
 burger.addEventListener('click', () => {
     if (nav.style.display === 'none') {
       nav.style.display = 'block';
@@ -173,10 +169,14 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
         if (!windChart) {
           windChartConfig.data.labels = res.dailyTime;
           windChartConfig.data.datasets[0].data = res.dailyWind;
-          windChartConfig.data.datasets[1].data = res.dailyWind;
+          windChartConfig.data.datasets[1].data = res.dailyWind.map(el => el - 1);
           windChartConfig.data.datasets[0].rotation = res.dailyWindDir
-          windChartConfig.options.plugins.subtitle.text = day;
+          windChartConfig.options.plugins.subtitle.text = day + ' Wind';
           windChart = new Chart(myChartWind, windChartConfig);
+          // windChart.legend.legendItems.shift()
+          // windChart.legend.legendHitBoxes.shift()
+          console.log(windChart)
+
         } else {
             function addData(chart, label, data, rotation, day) {
               chart.data.labels = label;
@@ -203,67 +203,44 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
             addData(pressureChart, res.dailyTime, res.dailyPressure, day);
         }
 
-        const sunCalk = (sunrise) => {
+        const sunCalk = (sunrise, sunset) => {
           let labels = [];
           let sin = [];
           // let sunrise = '06:48';
   
           let coefficient = (6.5 - (+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100)) * 0.25;
+
+          const step = Math.PI / ((+sunset.slice(0, 2) + (+sunset.slice(3, 5) * (10/6))/100) - (+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100))
           
-          for (let i = -Math.PI / 2; i <= 1.5*Math.PI; i+=Math.PI/48) {
+          for (let i = -Math.PI / 2; i <= 1.5*Math.PI; i+= step) {
               labels.push(''+i.toFixed(10));
               sin.push(Math.sin(i).toFixed(10));
              }
   
-             sin = sin.map(el => +el + coefficient)
+            //  sin = sin.map(el => +el + coefficient)
   
             //  console.log(sin)
   
           return [labels, sin];
         }
 
-        // const sunCalkk = (sunrise, sunset) => {
-        //   let labels = [];
-        //   let sin = [];
-        //   // let sunrise = '06:48';
-  
-        //   let coefficient = (6.5 - (+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100)) * 0.25;
-        //   console.log((+sunset.slice(0, 2) + (+sunset.slice(3, 5) * (10/6))/100))
-
-        //   console.log( Math.PI / ((+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100) - (+sunset.slice(0, 2) + (+sunset.slice(3, 5) * (10/6))/100)) )
-
-        //   const step = Math.PI / ((+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100) - (+sunset.slice(0, 2) + (+sunset.slice(3, 5) * (10/6))/100))
-          
-        //   for (let i = -Math.PI / 2; i < 1.5*Math.PI; i += step ) {
-        //       labels.push(''+i.toFixed(10));
-        //       sin.push(Math.sin(i).toFixed(10));
-        //      }
-  
-        //      sin = sin.map(el => +el + coefficient)
-  
-        //      console.log(sin)
-  
-        //   return [labels, sin];
-        // }
-
-        // sunCalkk(res.sunrise, res.sunset)
-
-
         const date = new Date();
-        const time = date.getHours() + (date.getMinutes() * (10/6)/100)
-        console.log(time)
+        const time = date.getHours() + (date.getMinutes() * (10/6)/100);
+        // console.log(time)
 
         if (!sunChart) {
           console.log(res.dailyTime)
-          sunChartConfig.data.labels = sunCalk(res.sunrise)[0];
-          sunChartConfig.data.datasets[0].data =  sunCalk(res.sunrise)[1];
-          sunChartConfig.data.datasets[1].data =  sunCalk(res.sunrise)[1].slice(0, Math.floor(time * 4));
-          sunChartConfig.options.plugins.subtitle.text = day;
+          sunChartConfig.data.labels = res.dailyTime;//sunCalk(res.sunrise, res.sunset)[0];
+          sunChartConfig.data.datasets[0].data =  sunCalk(res.sunrise, res.sunset)[1];
+          sunChartConfig.data.datasets[1].data =  sunCalk(res.sunrise, res.sunset)[1].slice(0, Math.floor(time));
+          sunChartConfig.data.datasets[3].data =  sunCalk(res.sunrise, res.sunset)[1].map(el => +el + 0.15 + '').slice(0, Math.floor(time));
+          console.log(sunCalk(res.sunrise, res.sunset)[1].map(el => +el + 0.5 + '').slice(0, Math.floor(time)));
+          sunChartConfig.options.plugins.subtitle.text = `${day}\n` + 'Sunrise / Sunset';
           sunChart = new Chart(myChartSun, sunChartConfig);
-          const ctx = myChartSun.getContext("2d");
-                ctx.font = "48px serif";
-                ctx.color = "#fff";
-                ctx.fillText("Hello world", 50, 100);
+          // const ctx = myChartSun.getContext("2d");
+          //       ctx.font = "48px serif";
+          //       ctx.color = "#fff";
+          //       ctx.fillText("Hello world", 50, 100);
 
         } else {
             function addData(chart, label, data, day) {

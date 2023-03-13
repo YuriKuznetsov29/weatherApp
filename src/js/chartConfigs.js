@@ -4,7 +4,7 @@ import {
 } from './constants'
 
 let arrow = document.createElement('img');
-arrow.src = '/src/images/arrow.png';
+arrow.src = '../src/images/arrow.png';
 
 const chartConfigs = () => {
     const tempChartConfig = {
@@ -65,6 +65,7 @@ const chartConfigs = () => {
             },
         }
     }
+
     const moiChartConfig = {
         type: 'line',
         color: '#fff',
@@ -117,13 +118,14 @@ const chartConfigs = () => {
             },
         }
     }
+
     const windChartConfig = {
         type: 'line',
         color: '#fff',
         data: {
             // labels: res.dailyTime,
             datasets: [{
-                label: 'Wind',
+                // label: {display: false},
                 // data: res.dailyWind,
                 // fill: 'start',
                 // backgroundColor: CHART_COLORS.yellow,
@@ -178,6 +180,7 @@ const chartConfigs = () => {
                     },
                 },
                 legend: {
+                    display: false,
                     labels: {
                         // This more specific font property overrides the global property
                         font: {
@@ -188,6 +191,7 @@ const chartConfigs = () => {
             },
         }
     }
+
     const pressureChartConfig = {
         type: 'line',
         color: '#fff',
@@ -241,28 +245,6 @@ const chartConfigs = () => {
         }
     }
 
-    const sunCalk = () => {
-        let labels = [];
-        let sin = [];
-        let sunrise = '06:48';
-
-        let coefficient = (6.5 - (+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100)) * 0.25
-        console.log(coefficient)
-        
-        for (let i = -Math.PI / 2; i <= 1.5*Math.PI; i+=Math.PI/48) {
-            labels.push(''+i.toFixed(10));
-            sin.push(Math.sin(i).toFixed(10));
-           }
-
-
-           sin = sin.map(el => +el * 0.3 + coefficient)
-
-           console.log(sin)
-
-
-        return [labels, sin];
-    }
-    
     const sunChartConfig = {
         type: 'line',
         color: '#fff',
@@ -289,11 +271,12 @@ const chartConfigs = () => {
                     color: '#fff',
                     tension: 0.1,
                     // hidden: true
-                    pointStyle: [    '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, arrow],
+                    // pointStyle: false,
+                    
                 },
                 {
                     label: 'Sunrise / Sunset',
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
                     fill: false,
                     backgroundColor: CHART_COLORS.yellow,
                     borderColor: CHART_COLORS.grey,
@@ -304,14 +287,16 @@ const chartConfigs = () => {
                 },
                 {
                     label: 'Sunrise / Sunset',
-                    data: [],
+                    // data: [],
                     fill: false,
-                    backgroundColor: CHART_COLORS.yellow,
-                    borderColor: CHART_COLORS.grey,
+                    backgroundColor: 'rgba(0, 0, 0, 0)',
+                    borderColor: 'rgba(0, 0, 0, 0)',
                     color: '#fff',
                     tension: 0.1,
+                    borderWidth: 0,
                     // hidden: true
-                    pointStyle: false,
+                    pointStyle: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, arrow],
+                    pointHitRadius: 0
                 }, 
         ]
         },
@@ -322,9 +307,16 @@ const chartConfigs = () => {
                 mode: 'index',
                 intersect: false
             },
+            hover: {mode: null},
             elements: {
                 point: {
                     display: false,
+                    borderWidth: 0,
+                    radius: 1,
+                    hitRadius: -1,
+                    hoverRadius: 0,
+                    howerBorderWidth: 0,
+                    hover: false
                 },
             },
             scales: {
@@ -355,6 +347,8 @@ const chartConfigs = () => {
                     
                 },
                 legend: {
+                    display: false,
+
                     labels: {
                         // This more specific font property overrides the global property
                         font: {

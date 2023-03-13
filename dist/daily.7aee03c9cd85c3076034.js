@@ -98,7 +98,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let arrow = document.createElement('img');
-arrow.src = '/src/images/arrow.png';
+arrow.src = '../src/images/arrow.png';
 
 const chartConfigs = () => {
     const tempChartConfig = {
@@ -159,6 +159,7 @@ const chartConfigs = () => {
             },
         }
     }
+
     const moiChartConfig = {
         type: 'line',
         color: '#fff',
@@ -211,13 +212,14 @@ const chartConfigs = () => {
             },
         }
     }
+
     const windChartConfig = {
         type: 'line',
         color: '#fff',
         data: {
             // labels: res.dailyTime,
             datasets: [{
-                label: 'Wind',
+                // label: {display: false},
                 // data: res.dailyWind,
                 // fill: 'start',
                 // backgroundColor: CHART_COLORS.yellow,
@@ -272,6 +274,7 @@ const chartConfigs = () => {
                     },
                 },
                 legend: {
+                    display: false,
                     labels: {
                         // This more specific font property overrides the global property
                         font: {
@@ -282,6 +285,7 @@ const chartConfigs = () => {
             },
         }
     }
+
     const pressureChartConfig = {
         type: 'line',
         color: '#fff',
@@ -335,28 +339,6 @@ const chartConfigs = () => {
         }
     }
 
-    const sunCalk = () => {
-        let labels = [];
-        let sin = [];
-        let sunrise = '06:48';
-
-        let coefficient = (6.5 - (+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100)) * 0.25
-        console.log(coefficient)
-        
-        for (let i = -Math.PI / 2; i <= 1.5*Math.PI; i+=Math.PI/48) {
-            labels.push(''+i.toFixed(10));
-            sin.push(Math.sin(i).toFixed(10));
-           }
-
-
-           sin = sin.map(el => +el * 0.3 + coefficient)
-
-           console.log(sin)
-
-
-        return [labels, sin];
-    }
-    
     const sunChartConfig = {
         type: 'line',
         color: '#fff',
@@ -383,11 +365,12 @@ const chartConfigs = () => {
                     color: '#fff',
                     tension: 0.1,
                     // hidden: true
-                    pointStyle: [    '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, arrow],
+                    // pointStyle: false,
+                    
                 },
                 {
                     label: 'Sunrise / Sunset',
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
                     fill: false,
                     backgroundColor: _constants__WEBPACK_IMPORTED_MODULE_1__.CHART_COLORS.yellow,
                     borderColor: _constants__WEBPACK_IMPORTED_MODULE_1__.CHART_COLORS.grey,
@@ -398,14 +381,16 @@ const chartConfigs = () => {
                 },
                 {
                     label: 'Sunrise / Sunset',
-                    data: [],
+                    // data: [],
                     fill: false,
-                    backgroundColor: _constants__WEBPACK_IMPORTED_MODULE_1__.CHART_COLORS.yellow,
-                    borderColor: _constants__WEBPACK_IMPORTED_MODULE_1__.CHART_COLORS.grey,
+                    backgroundColor: 'rgba(0, 0, 0, 0)',
+                    borderColor: 'rgba(0, 0, 0, 0)',
                     color: '#fff',
                     tension: 0.1,
+                    borderWidth: 0,
                     // hidden: true
-                    pointStyle: false,
+                    pointStyle: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, arrow],
+                    pointHitRadius: 0
                 }, 
         ]
         },
@@ -416,9 +401,16 @@ const chartConfigs = () => {
                 mode: 'index',
                 intersect: false
             },
+            hover: {mode: null},
             elements: {
                 point: {
                     display: false,
+                    borderWidth: 0,
+                    radius: 1,
+                    hitRadius: -1,
+                    hoverRadius: 0,
+                    howerBorderWidth: 0,
+                    hover: false
                 },
             },
             scales: {
@@ -449,6 +441,8 @@ const chartConfigs = () => {
                     
                 },
                 legend: {
+                    display: false,
+
                     labels: {
                         // This more specific font property overrides the global property
                         font: {
@@ -517,10 +511,6 @@ const myChart = document.getElementById('myChart'),
 
 const {getWeather} = (0,_services__WEBPACK_IMPORTED_MODULE_0__["default"])();
 const {tempChartConfig, moiChartConfig, windChartConfig, pressureChartConfig, sunChartConfig} = (0,_chartConfigs__WEBPACK_IMPORTED_MODULE_1__["default"])();
-
-
-
-
 
 burger.addEventListener('click', () => {
     if (nav.style.display === 'none') {
@@ -668,10 +658,14 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
         if (!windChart) {
           windChartConfig.data.labels = res.dailyTime;
           windChartConfig.data.datasets[0].data = res.dailyWind;
-          windChartConfig.data.datasets[1].data = res.dailyWind;
+          windChartConfig.data.datasets[1].data = res.dailyWind.map(el => el - 1);
           windChartConfig.data.datasets[0].rotation = res.dailyWindDir
-          windChartConfig.options.plugins.subtitle.text = day;
+          windChartConfig.options.plugins.subtitle.text = day + ' Wind';
           windChart = new chart_js_auto__WEBPACK_IMPORTED_MODULE_3__["default"](myChartWind, windChartConfig);
+          // windChart.legend.legendItems.shift()
+          // windChart.legend.legendHitBoxes.shift()
+          console.log(windChart)
+
         } else {
             function addData(chart, label, data, rotation, day) {
               chart.data.labels = label;
@@ -698,67 +692,44 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
             addData(pressureChart, res.dailyTime, res.dailyPressure, day);
         }
 
-        const sunCalk = (sunrise) => {
+        const sunCalk = (sunrise, sunset) => {
           let labels = [];
           let sin = [];
           // let sunrise = '06:48';
   
           let coefficient = (6.5 - (+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100)) * 0.25;
+
+          const step = Math.PI / ((+sunset.slice(0, 2) + (+sunset.slice(3, 5) * (10/6))/100) - (+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100))
           
-          for (let i = -Math.PI / 2; i <= 1.5*Math.PI; i+=Math.PI/48) {
+          for (let i = -Math.PI / 2; i <= 1.5*Math.PI; i+= step) {
               labels.push(''+i.toFixed(10));
               sin.push(Math.sin(i).toFixed(10));
              }
   
-             sin = sin.map(el => +el + coefficient)
+            //  sin = sin.map(el => +el + coefficient)
   
             //  console.log(sin)
   
           return [labels, sin];
         }
 
-        // const sunCalkk = (sunrise, sunset) => {
-        //   let labels = [];
-        //   let sin = [];
-        //   // let sunrise = '06:48';
-  
-        //   let coefficient = (6.5 - (+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100)) * 0.25;
-        //   console.log((+sunset.slice(0, 2) + (+sunset.slice(3, 5) * (10/6))/100))
-
-        //   console.log( Math.PI / ((+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100) - (+sunset.slice(0, 2) + (+sunset.slice(3, 5) * (10/6))/100)) )
-
-        //   const step = Math.PI / ((+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100) - (+sunset.slice(0, 2) + (+sunset.slice(3, 5) * (10/6))/100))
-          
-        //   for (let i = -Math.PI / 2; i < 1.5*Math.PI; i += step ) {
-        //       labels.push(''+i.toFixed(10));
-        //       sin.push(Math.sin(i).toFixed(10));
-        //      }
-  
-        //      sin = sin.map(el => +el + coefficient)
-  
-        //      console.log(sin)
-  
-        //   return [labels, sin];
-        // }
-
-        // sunCalkk(res.sunrise, res.sunset)
-
-
         const date = new Date();
-        const time = date.getHours() + (date.getMinutes() * (10/6)/100)
-        console.log(time)
+        const time = date.getHours() + (date.getMinutes() * (10/6)/100);
+        // console.log(time)
 
         if (!sunChart) {
           console.log(res.dailyTime)
-          sunChartConfig.data.labels = sunCalk(res.sunrise)[0];
-          sunChartConfig.data.datasets[0].data =  sunCalk(res.sunrise)[1];
-          sunChartConfig.data.datasets[1].data =  sunCalk(res.sunrise)[1].slice(0, Math.floor(time * 4));
-          sunChartConfig.options.plugins.subtitle.text = day;
+          sunChartConfig.data.labels = res.dailyTime;//sunCalk(res.sunrise, res.sunset)[0];
+          sunChartConfig.data.datasets[0].data =  sunCalk(res.sunrise, res.sunset)[1];
+          sunChartConfig.data.datasets[1].data =  sunCalk(res.sunrise, res.sunset)[1].slice(0, Math.floor(time));
+          sunChartConfig.data.datasets[3].data =  sunCalk(res.sunrise, res.sunset)[1].map(el => +el + 0.15 + '').slice(0, Math.floor(time));
+          console.log(sunCalk(res.sunrise, res.sunset)[1].map(el => +el + 0.5 + '').slice(0, Math.floor(time)));
+          sunChartConfig.options.plugins.subtitle.text = `${day}\n` + 'Sunrise / Sunset';
           sunChart = new chart_js_auto__WEBPACK_IMPORTED_MODULE_3__["default"](myChartSun, sunChartConfig);
-          const ctx = myChartSun.getContext("2d");
-                ctx.font = "48px serif";
-                ctx.color = "#fff";
-                ctx.fillText("Hello world", 50, 100);
+          // const ctx = myChartSun.getContext("2d");
+          //       ctx.font = "48px serif";
+          //       ctx.color = "#fff";
+          //       ctx.fillText("Hello world", 50, 100);
 
         } else {
             function addData(chart, label, data, day) {
@@ -950,4 +921,4 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=daily.25c7ac8743591900dbcb.js.map
+//# sourceMappingURL=daily.7aee03c9cd85c3076034.js.map
