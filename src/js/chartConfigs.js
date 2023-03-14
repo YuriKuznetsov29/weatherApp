@@ -5,6 +5,10 @@ import {
 
 let arrow = document.createElement('img');
 arrow.src = '../src/images/arrow.png';
+let sun = document.createElement('img');
+sun.src = '../src/images/sun.png';
+let h1 = document.createElement('h1');
+h1.value = 'jbjbjbj';
 
 const chartConfigs = () => {
     const tempChartConfig = {
@@ -152,6 +156,9 @@ const chartConfigs = () => {
                 pointHitRadius: 10,
                 // rotation: res.dailyWindDir,
                 pointStyle: [arrow],
+                datalabels: {
+                    display: false,
+                }
             }, ]
         },
         options: {
@@ -245,6 +252,60 @@ const chartConfigs = () => {
         }
     }
 
+    const annotation1 = {
+        type: 'line',
+        borderColor: 'black',
+        borderWidth: 0,
+        label: {
+          backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          content: 'Horizon',
+          display: true
+        },
+        yScaleID: 'y',
+        yMax: 0.1,
+	    yMin:  0.1,
+
+        xScaleID: 'x',
+        xMax: 22,
+	    xMin:  22,
+      };
+
+    const annotation2 = {
+        type: 'line',
+        borderColor: 'black',
+        borderWidth: 0,
+        label: {
+          backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          content: '6:38',
+          display: true
+        },
+        yScaleID: 'y',
+        yMax: 0.1,
+	    yMin:  0.1,
+
+        xScaleID: 'x',
+        xMax: 5,
+	    xMin:  5,
+      };
+
+    const annotation3 = {
+        type: 'line',
+        borderColor: 'black',
+        borderWidth: 0,
+        label: {
+          backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          content: '18:15',
+          display: true
+        },
+        yScaleID: 'y',
+        yMax: 0.1,
+	    yMin:  0.1,
+
+        xScaleID: 'x',
+        xMax: 18,
+	    xMin:  18,
+      };
+
     const sunChartConfig = {
         type: 'line',
         color: '#fff',
@@ -289,13 +350,13 @@ const chartConfigs = () => {
                     label: 'Sunrise / Sunset',
                     // data: [],
                     fill: false,
-                    backgroundColor: 'rgba(0, 0, 0, 0)',
-                    borderColor: 'rgba(0, 0, 0, 0)',
+                    backgroundColor: 'rgba(0, 0, 0, 0.0)',
+                    borderColor: 'rgba(0, 0, 0, 0.0)',
                     color: '#fff',
                     tension: 0.1,
-                    borderWidth: 0,
+                    borderWidth: 3,
                     // hidden: true
-                    pointStyle: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, arrow],
+                    pointStyle: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, sun],
                     pointHitRadius: 0
                 }, 
         ]
@@ -323,6 +384,7 @@ const chartConfigs = () => {
                 y: {
                     min: -1.5,
                     max: 1.5,
+                    display: false,
                     beginAtZero: true,
                     // min: 0,
                     grid: {
@@ -361,6 +423,13 @@ const chartConfigs = () => {
                 },
                 datalabels: {
                     display: false,
+                },
+                annotation: {
+                    annotations: {
+                        annotation1,
+                        annotation2,
+                        annotation3,
+                    }
                 }
             },
         }

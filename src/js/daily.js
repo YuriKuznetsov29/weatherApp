@@ -3,6 +3,8 @@ import chartConfigs from './chartConfigs';
 import changeLocation from './changeLocation';
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import annotationPlugin from 'chartjs-plugin-annotation';
+
 
 import '../styles/main.css';
 import '../styles/daily.css';
@@ -95,6 +97,7 @@ previousDayBtn.addEventListener('click', () => {
   getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'), transformLastDate);
 })
 
+Chart.register(annotationPlugin);
 Chart.register(ChartDataLabels);
 // Chart.defaults.plugins.title.color = '#fff';
 // Chart.defaults.plugins.legend.color = '#fff';
@@ -169,7 +172,7 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
         if (!windChart) {
           windChartConfig.data.labels = res.dailyTime;
           windChartConfig.data.datasets[0].data = res.dailyWind;
-          windChartConfig.data.datasets[1].data = res.dailyWind.map(el => el - 1);
+          windChartConfig.data.datasets[1].data = res.dailyWind.map(el => el - 1.5);
           windChartConfig.data.datasets[0].rotation = res.dailyWindDir
           windChartConfig.options.plugins.subtitle.text = day + ' Wind';
           windChart = new Chart(myChartWind, windChartConfig);
@@ -233,14 +236,19 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
           sunChartConfig.data.labels = res.dailyTime;//sunCalk(res.sunrise, res.sunset)[0];
           sunChartConfig.data.datasets[0].data =  sunCalk(res.sunrise, res.sunset)[1];
           sunChartConfig.data.datasets[1].data =  sunCalk(res.sunrise, res.sunset)[1].slice(0, Math.floor(time));
-          sunChartConfig.data.datasets[3].data =  sunCalk(res.sunrise, res.sunset)[1].map(el => +el + 0.15 + '').slice(0, Math.floor(time));
+          sunChartConfig.data.datasets[3].data =  sunCalk(res.sunrise, res.sunset)[1].map(el => +el + 0.27 + '').slice(0, Math.floor(time));
           console.log(sunCalk(res.sunrise, res.sunset)[1].map(el => +el + 0.5 + '').slice(0, Math.floor(time)));
           sunChartConfig.options.plugins.subtitle.text = `${day}\n` + 'Sunrise / Sunset';
+          const ctx = myChartSun.getContext("2d");
+                ctx.font = "48px serif";
+                ctx.color = "#fff";
+                ctx.fillText("Hello world", 50, 100);
+                sunChartConfig.data.datasets[3].pointStyle.push(ctx);
           sunChart = new Chart(myChartSun, sunChartConfig);
-          // const ctx = myChartSun.getContext("2d");
-          //       ctx.font = "48px serif";
-          //       ctx.color = "#fff";
-          //       ctx.fillText("Hello world", 50, 100);
+
+          console.log(sunChart)
+
+
 
         } else {
             function addData(chart, label, data, day) {

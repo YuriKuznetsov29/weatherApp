@@ -99,6 +99,10 @@ __webpack_require__.r(__webpack_exports__);
 
 let arrow = document.createElement('img');
 arrow.src = '../src/images/arrow.png';
+let sun = document.createElement('img');
+sun.src = '../src/images/sun.png';
+let h1 = document.createElement('h1');
+h1.value = 'jbjbjbj';
 
 const chartConfigs = () => {
     const tempChartConfig = {
@@ -246,6 +250,9 @@ const chartConfigs = () => {
                 pointHitRadius: 10,
                 // rotation: res.dailyWindDir,
                 pointStyle: [arrow],
+                datalabels: {
+                    display: false,
+                }
             }, ]
         },
         options: {
@@ -339,6 +346,60 @@ const chartConfigs = () => {
         }
     }
 
+    const annotation1 = {
+        type: 'line',
+        borderColor: 'black',
+        borderWidth: 0,
+        label: {
+          backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          content: 'Horizon',
+          display: true
+        },
+        yScaleID: 'y',
+        yMax: 0.1,
+	    yMin:  0.1,
+
+        xScaleID: 'x',
+        xMax: 22,
+	    xMin:  22,
+      };
+
+    const annotation2 = {
+        type: 'line',
+        borderColor: 'black',
+        borderWidth: 0,
+        label: {
+          backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          content: '6:38',
+          display: true
+        },
+        yScaleID: 'y',
+        yMax: 0.1,
+	    yMin:  0.1,
+
+        xScaleID: 'x',
+        xMax: 5,
+	    xMin:  5,
+      };
+
+    const annotation3 = {
+        type: 'line',
+        borderColor: 'black',
+        borderWidth: 0,
+        label: {
+          backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          content: '18:15',
+          display: true
+        },
+        yScaleID: 'y',
+        yMax: 0.1,
+	    yMin:  0.1,
+
+        xScaleID: 'x',
+        xMax: 18,
+	    xMin:  18,
+      };
+
     const sunChartConfig = {
         type: 'line',
         color: '#fff',
@@ -383,13 +444,13 @@ const chartConfigs = () => {
                     label: 'Sunrise / Sunset',
                     // data: [],
                     fill: false,
-                    backgroundColor: 'rgba(0, 0, 0, 0)',
-                    borderColor: 'rgba(0, 0, 0, 0)',
+                    backgroundColor: 'rgba(0, 0, 0, 0.0)',
+                    borderColor: 'rgba(0, 0, 0, 0.0)',
                     color: '#fff',
                     tension: 0.1,
-                    borderWidth: 0,
+                    borderWidth: 3,
                     // hidden: true
-                    pointStyle: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, arrow],
+                    pointStyle: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, sun],
                     pointHitRadius: 0
                 }, 
         ]
@@ -417,6 +478,7 @@ const chartConfigs = () => {
                 y: {
                     min: -1.5,
                     max: 1.5,
+                    display: false,
                     beginAtZero: true,
                     // min: 0,
                     grid: {
@@ -455,6 +517,13 @@ const chartConfigs = () => {
                 },
                 datalabels: {
                     display: false,
+                },
+                annotation: {
+                    annotations: {
+                        annotation1,
+                        annotation2,
+                        annotation3,
+                    }
                 }
             },
         }
@@ -485,8 +554,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _changeLocation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./changeLocation */ "./src/js/changeLocation.js");
 /* harmony import */ var chart_js_auto__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! chart.js/auto */ "./node_modules/chart.js/auto/auto.js");
 /* harmony import */ var chartjs_plugin_datalabels__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! chartjs-plugin-datalabels */ "./node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.esm.js");
-/* harmony import */ var _styles_main_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../styles/main.css */ "./src/styles/main.css");
-/* harmony import */ var _styles_daily_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../styles/daily.css */ "./src/styles/daily.css");
+/* harmony import */ var chartjs_plugin_annotation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! chartjs-plugin-annotation */ "./node_modules/chartjs-plugin-annotation/dist/chartjs-plugin-annotation.esm.js");
+/* harmony import */ var _styles_main_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../styles/main.css */ "./src/styles/main.css");
+/* harmony import */ var _styles_daily_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../styles/daily.css */ "./src/styles/daily.css");
+
+
 
 
 
@@ -584,6 +656,7 @@ previousDayBtn.addEventListener('click', () => {
   getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'), transformLastDate);
 })
 
+chart_js_auto__WEBPACK_IMPORTED_MODULE_3__["default"].register(chartjs_plugin_annotation__WEBPACK_IMPORTED_MODULE_5__["default"]);
 chart_js_auto__WEBPACK_IMPORTED_MODULE_3__["default"].register(chartjs_plugin_datalabels__WEBPACK_IMPORTED_MODULE_4__["default"]);
 // Chart.defaults.plugins.title.color = '#fff';
 // Chart.defaults.plugins.legend.color = '#fff';
@@ -658,7 +731,7 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
         if (!windChart) {
           windChartConfig.data.labels = res.dailyTime;
           windChartConfig.data.datasets[0].data = res.dailyWind;
-          windChartConfig.data.datasets[1].data = res.dailyWind.map(el => el - 1);
+          windChartConfig.data.datasets[1].data = res.dailyWind.map(el => el - 1.5);
           windChartConfig.data.datasets[0].rotation = res.dailyWindDir
           windChartConfig.options.plugins.subtitle.text = day + ' Wind';
           windChart = new chart_js_auto__WEBPACK_IMPORTED_MODULE_3__["default"](myChartWind, windChartConfig);
@@ -722,14 +795,19 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
           sunChartConfig.data.labels = res.dailyTime;//sunCalk(res.sunrise, res.sunset)[0];
           sunChartConfig.data.datasets[0].data =  sunCalk(res.sunrise, res.sunset)[1];
           sunChartConfig.data.datasets[1].data =  sunCalk(res.sunrise, res.sunset)[1].slice(0, Math.floor(time));
-          sunChartConfig.data.datasets[3].data =  sunCalk(res.sunrise, res.sunset)[1].map(el => +el + 0.15 + '').slice(0, Math.floor(time));
+          sunChartConfig.data.datasets[3].data =  sunCalk(res.sunrise, res.sunset)[1].map(el => +el + 0.27 + '').slice(0, Math.floor(time));
           console.log(sunCalk(res.sunrise, res.sunset)[1].map(el => +el + 0.5 + '').slice(0, Math.floor(time)));
           sunChartConfig.options.plugins.subtitle.text = `${day}\n` + 'Sunrise / Sunset';
+          const ctx = myChartSun.getContext("2d");
+                ctx.font = "48px serif";
+                ctx.color = "#fff";
+                ctx.fillText("Hello world", 50, 100);
+                sunChartConfig.data.datasets[3].pointStyle.push(ctx);
           sunChart = new chart_js_auto__WEBPACK_IMPORTED_MODULE_3__["default"](myChartSun, sunChartConfig);
-          // const ctx = myChartSun.getContext("2d");
-          //       ctx.font = "48px serif";
-          //       ctx.color = "#fff";
-          //       ctx.fillText("Hello world", 50, 100);
+
+          console.log(sunChart)
+
+
 
         } else {
             function addData(chart, label, data, day) {
@@ -916,9 +994,9 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_chartjs-plugin-datalabels_dist_chartjs-plugin-datalabels_esm_js-node_mod-ab2686","src_styles_main_css-src_js_changeLocation_js-src_js_constants_js"], () => (__webpack_require__("./src/js/daily.js")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_chartjs-plugin-annotation_dist_chartjs-plugin-annotation_esm_js-node_mod-7c1274","src_styles_main_css-src_js_changeLocation_js-src_js_constants_js"], () => (__webpack_require__("./src/js/daily.js")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=daily.7aee03c9cd85c3076034.js.map
+//# sourceMappingURL=daily.3ea43a589b6cd5eb7d0a.js.map
