@@ -99,6 +99,9 @@ __webpack_require__.r(__webpack_exports__);
 
 let arrow = document.createElement('img');
 arrow.src = '../src/images/arrow.png';
+let sun = document.createElement('img');
+sun.src = '../src/images/sun.png';
+
 
 const chartConfigs = () => {
     const tempChartConfig = {
@@ -108,7 +111,6 @@ const chartConfigs = () => {
             // labels: res.dailyTime,
             datasets: [{
                 label: 'Temperature',
-                //   data: res.dailyTemp,
                 fill: 'start',
                 backgroundColor: _constants__WEBPACK_IMPORTED_MODULE_1__.CHART_COLORS.blue,
                 borderColor: _constants__WEBPACK_IMPORTED_MODULE_1__.CHART_COLORS.red,
@@ -125,7 +127,7 @@ const chartConfigs = () => {
             maintainAspectRatio: false,
             scales: {
                 y: {
-                    // display: false,
+                    display: false,
                     beginAtZero: true,
                     grid: {
                         display: false,
@@ -150,7 +152,6 @@ const chartConfigs = () => {
                 },
                 legend: {
                     labels: {
-                        // This more specific font property overrides the global property
                         font: {
                             size: 24
                         }
@@ -164,7 +165,6 @@ const chartConfigs = () => {
         type: 'line',
         color: '#fff',
         data: {
-            // labels: res.dailyTime,
             datasets: [{
                 label: 'Moisture',
                 fill: 'start',
@@ -181,7 +181,7 @@ const chartConfigs = () => {
             maintainAspectRatio: false,
             scales: {
                 y: {
-                    // display: false,
+                    display: false,
                     beginAtZero: true,
                     grid: {
                         display: false,
@@ -196,14 +196,12 @@ const chartConfigs = () => {
             plugins: {
                 subtitle: {
                     display: true,
-                    // text: day,
                     font: {
                         size: 24
                     },
                 },
                 legend: {
                     labels: {
-                        // This more specific font property overrides the global property
                         font: {
                             size: 24
                         }
@@ -217,12 +215,7 @@ const chartConfigs = () => {
         type: 'line',
         color: '#fff',
         data: {
-            // labels: res.dailyTime,
             datasets: [{
-                // label: {display: false},
-                // data: res.dailyWind,
-                // fill: 'start',
-                // backgroundColor: CHART_COLORS.yellow,
                 borderColor: _constants__WEBPACK_IMPORTED_MODULE_1__.CHART_COLORS.orange,
                 color: '#fff',
                 tension: 0.1,
@@ -231,21 +224,21 @@ const chartConfigs = () => {
                 // rotation: res.dailyWindDir,
                 pointStyle: [arrow],
                 borderWidth: 0,
-                
+                datalabels: {
+                    display: false,
+                }
             },
             {   
                 type: 'bar',
                 label: 'Wind',
-                // data: res.dailyWind,
                 fill: 'start',
                 backgroundColor: _constants__WEBPACK_IMPORTED_MODULE_1__.CHART_COLORS.blue,
-                // borderColor: CHART_COLORS.orange,
                 color: '#fff',
                 tension: 0.1,
-                // hidden: true,
                 pointHitRadius: 10,
-                // rotation: res.dailyWindDir,
-                pointStyle: [arrow],
+                datalabels: {
+                    anchor: 'end'
+                }
             }, ]
         },
         options: {
@@ -254,6 +247,7 @@ const chartConfigs = () => {
             showAllTooltips: true,
             scales: {
                 y: {
+                    display: false,
                     beginAtZero: true,
                     grid: {
                         display: false,
@@ -281,7 +275,11 @@ const chartConfigs = () => {
                             size: 24
                         }
                     },
-                }
+                    
+                },
+                tooltip: {
+                    enabled: false,
+                },
             },
         }
     }
@@ -308,6 +306,7 @@ const chartConfigs = () => {
             maintainAspectRatio: false,
             scales: {
                 y: {
+                    display: false,
                     beginAtZero: true,
                     grid: {
                         display: false,
@@ -339,6 +338,98 @@ const chartConfigs = () => {
         }
     }
 
+    const annotation1 = {
+        type: 'line',
+        borderColor: 'black',
+        borderWidth: 0,
+        label: {
+          backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          content: 'Horizon',
+          display: true
+        },
+        yScaleID: 'y',
+        yMax: 0.1,
+	    yMin:  0.1,
+
+        xScaleID: 'x',
+        xMax: 88,
+	    xMin:  88,
+      };
+
+    const annotation2 = {
+        type: 'line',
+        borderColor: 'black',
+        borderWidth: 0,
+        label: {
+          backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          content: '6:38',
+          display: true
+        },
+        yScaleID: 'y',
+        yMax: 0.1,
+	    yMin:  0.1,
+
+        xScaleID: 'x',
+        xMax: 20,
+	    xMin:  20,
+      };
+
+    const annotation3 = {
+        type: 'line',
+        borderColor: 'black',
+        borderWidth: 0,
+        label: {
+          backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          content: 'Sunrise',
+          display: true
+        },
+        yScaleID: 'y',
+        yMax: 0.2,
+	    yMin:  0.2,
+
+        xScaleID: 'x',
+        xMax: 20,
+	    xMin:  20,
+      };
+
+    const annotation4 = {
+        type: 'line',
+        borderColor: 'black',
+        borderWidth: 0,
+        label: {
+          backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          content: '18:15',
+          display: true
+        },
+
+        yScaleID: 'y',
+        yMax: 0.1,
+	    yMin:  0.1,
+
+        xScaleID: 'x',
+        xMax: 73,
+	    xMin:  73,
+      };
+
+    const annotation5 = {
+        type: 'line',
+        borderColor: 'black',
+        borderWidth: 0,
+        label: {
+          backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          content: 'Sunset',
+          display: true
+        },
+
+        yScaleID: 'y',
+        yMax: 0.2,
+	    yMin:  0.2,
+
+        xScaleID: 'x',
+        xMax: 73,
+	    xMin:  73,
+      };
+
     const sunChartConfig = {
         type: 'line',
         color: '#fff',
@@ -359,7 +450,11 @@ const chartConfigs = () => {
                 {
                     label: 'Sunrise / Sunset',
                     // data: sunCalk()[1].slice(0, 25), // 6:30 18:30
-                    fill: 'origin',
+                    fill: {
+                        target: 'origin',
+                        above: _constants__WEBPACK_IMPORTED_MODULE_1__.CHART_COLORS.yellow,   // Area will be red above the origin
+                        below: _constants__WEBPACK_IMPORTED_MODULE_1__.CHART_COLORS.purple,    // And blue below the origin
+                      },
                     backgroundColor: _constants__WEBPACK_IMPORTED_MODULE_1__.CHART_COLORS.yellow,
                     borderColor: _constants__WEBPACK_IMPORTED_MODULE_1__.CHART_COLORS.orange,
                     color: '#fff',
@@ -370,7 +465,7 @@ const chartConfigs = () => {
                 },
                 {
                     label: 'Sunrise / Sunset',
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
                     fill: false,
                     backgroundColor: _constants__WEBPACK_IMPORTED_MODULE_1__.CHART_COLORS.yellow,
                     borderColor: _constants__WEBPACK_IMPORTED_MODULE_1__.CHART_COLORS.grey,
@@ -383,13 +478,13 @@ const chartConfigs = () => {
                     label: 'Sunrise / Sunset',
                     // data: [],
                     fill: false,
-                    backgroundColor: 'rgba(0, 0, 0, 0)',
-                    borderColor: 'rgba(0, 0, 0, 0)',
+                    backgroundColor: 'rgba(0, 0, 0, 0.0)',
+                    borderColor: 'rgba(0, 0, 0, 0.0)',
                     color: '#fff',
                     tension: 0.1,
-                    borderWidth: 0,
+                    borderWidth: 3,
                     // hidden: true
-                    pointStyle: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, arrow],
+                    pointStyle: [],
                     pointHitRadius: 0
                 }, 
         ]
@@ -417,15 +512,14 @@ const chartConfigs = () => {
                 y: {
                     min: -1.5,
                     max: 1.5,
+                    display: false,
                     beginAtZero: true,
-                    // min: 0,
                     grid: {
                         display: false,
                     }
                 },
                 x: {
-                    // min: 0,
-                    // max: 20,
+                    display: false,
                     grid: {
                         display: false,
                     }
@@ -455,6 +549,15 @@ const chartConfigs = () => {
                 },
                 datalabels: {
                     display: false,
+                },
+                annotation: {
+                    annotations: {
+                        annotation1,
+                        annotation2,
+                        annotation3,
+                        annotation4,
+                        annotation5,
+                    }
                 }
             },
         }
@@ -485,8 +588,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _changeLocation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./changeLocation */ "./src/js/changeLocation.js");
 /* harmony import */ var chart_js_auto__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! chart.js/auto */ "./node_modules/chart.js/auto/auto.js");
 /* harmony import */ var chartjs_plugin_datalabels__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! chartjs-plugin-datalabels */ "./node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.esm.js");
-/* harmony import */ var _styles_main_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../styles/main.css */ "./src/styles/main.css");
-/* harmony import */ var _styles_daily_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../styles/daily.css */ "./src/styles/daily.css");
+/* harmony import */ var chartjs_plugin_annotation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! chartjs-plugin-annotation */ "./node_modules/chartjs-plugin-annotation/dist/chartjs-plugin-annotation.esm.js");
+/* harmony import */ var _styles_main_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../styles/main.css */ "./src/styles/main.css");
+/* harmony import */ var _styles_daily_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../styles/daily.css */ "./src/styles/daily.css");
+
+
 
 
 
@@ -584,6 +690,7 @@ previousDayBtn.addEventListener('click', () => {
   getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'), transformLastDate);
 })
 
+chart_js_auto__WEBPACK_IMPORTED_MODULE_3__["default"].register(chartjs_plugin_annotation__WEBPACK_IMPORTED_MODULE_5__["default"]);
 chart_js_auto__WEBPACK_IMPORTED_MODULE_3__["default"].register(chartjs_plugin_datalabels__WEBPACK_IMPORTED_MODULE_4__["default"]);
 // Chart.defaults.plugins.title.color = '#fff';
 // Chart.defaults.plugins.legend.color = '#fff';
@@ -611,10 +718,10 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
           // Chart.defaults.options.plugins.legend.labels.font.size = 12;
           // tempChart.options.scales.y.display = 'fals e';
           // console.log(tempChart.options.scales.y.display)
-          tempChartConfig.options.scales.y.display = false;
-          moiChartConfig.options.scales.y.display = false;
-          windChartConfig.options.scales.y.display = false;
-          pressureChartConfig.options.scales.y.display = false;
+          // tempChartConfig.options.scales.y.display = false;
+          // moiChartConfig.options.scales.y.display = false;
+          // windChartConfig.options.scales.y.display = false;
+          // pressureChartConfig.options.scales.y.display = false;
           chart_js_auto__WEBPACK_IMPORTED_MODULE_3__["default"].defaults.font.size = 10;
           const chartContainer = document.querySelectorAll('.chart-container');
           chartContainer.forEach(el => {
@@ -657,8 +764,8 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
 
         if (!windChart) {
           windChartConfig.data.labels = res.dailyTime;
-          windChartConfig.data.datasets[0].data = res.dailyWind;
-          windChartConfig.data.datasets[1].data = res.dailyWind.map(el => el - 1);
+          windChartConfig.data.datasets[0].data = res.dailyWind.map(el => el + 2.5);
+          windChartConfig.data.datasets[1].data = res.dailyWind;
           windChartConfig.data.datasets[0].rotation = res.dailyWindDir
           windChartConfig.options.plugins.subtitle.text = day + ' Wind';
           windChart = new chart_js_auto__WEBPACK_IMPORTED_MODULE_3__["default"](myChartWind, windChartConfig);
@@ -669,9 +776,10 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
         } else {
             function addData(chart, label, data, rotation, day) {
               chart.data.labels = label;
-              chart.data.datasets[0].data = data;
+              chart.data.datasets[0].data = data.map(el => el + 2.5);
               chart.data.datasets[0].rotation = rotation;
-              chart.options.plugins.subtitle.text = day;
+              windChartConfig.data.datasets[1].data = data;
+              chart.options.plugins.subtitle.text = day + ' Wind';
               chart.update('active');
             }
             addData(windChart, res.dailyTime, res.dailyWind, res.dailyWindDir, day);
@@ -695,42 +803,31 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
         const sunCalk = (sunrise, sunset) => {
           let labels = [];
           let sin = [];
-          // let sunrise = '06:48';
-  
-          let coefficient = (6.5 - (+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100)) * 0.25;
-
+          // let coefficient = (6.5 - (+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100)) * 0.25;
           const step = Math.PI / ((+sunset.slice(0, 2) + (+sunset.slice(3, 5) * (10/6))/100) - (+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100))
           
-          for (let i = -Math.PI / 2; i <= 1.5*Math.PI; i+= step) {
+          for (let i = -Math.PI / 2; i <= 1.5*Math.PI; i+= (step / 4)) {
               labels.push(''+i.toFixed(10));
               sin.push(Math.sin(i).toFixed(10));
              }
-  
-            //  sin = sin.map(el => +el + coefficient)
-  
-            //  console.log(sin)
   
           return [labels, sin];
         }
 
         const date = new Date();
         const time = date.getHours() + (date.getMinutes() * (10/6)/100);
-        // console.log(time)
+
+        let sun = document.createElement('img');
+        sun.src = '../src/images/sun.png';
 
         if (!sunChart) {
-          console.log(res.dailyTime)
-          sunChartConfig.data.labels = res.dailyTime;//sunCalk(res.sunrise, res.sunset)[0];
-          sunChartConfig.data.datasets[0].data =  sunCalk(res.sunrise, res.sunset)[1];
-          sunChartConfig.data.datasets[1].data =  sunCalk(res.sunrise, res.sunset)[1].slice(0, Math.floor(time));
-          sunChartConfig.data.datasets[3].data =  sunCalk(res.sunrise, res.sunset)[1].map(el => +el + 0.15 + '').slice(0, Math.floor(time));
-          console.log(sunCalk(res.sunrise, res.sunset)[1].map(el => +el + 0.5 + '').slice(0, Math.floor(time)));
+          sunChartConfig.data.labels = sunCalk(res.sunrise, res.sunset)[0];
+          sunChartConfig.data.datasets[0].data = sunCalk(res.sunrise, res.sunset)[1];
+          sunChartConfig.data.datasets[1].data = sunCalk(res.sunrise, res.sunset)[1].slice(0, Math.floor(time * 4));
+          sunChartConfig.data.datasets[3].data = sunCalk(res.sunrise, res.sunset)[1].map(el => +el + 0.20 + '').slice(0, Math.floor((time * 4) - 2));
+          sunChartConfig.data.datasets[3].pointStyle[sunChartConfig.data.datasets[3].data.length - 1] = sun;
           sunChartConfig.options.plugins.subtitle.text = `${day}\n` + 'Sunrise / Sunset';
           sunChart = new chart_js_auto__WEBPACK_IMPORTED_MODULE_3__["default"](myChartSun, sunChartConfig);
-          // const ctx = myChartSun.getContext("2d");
-          //       ctx.font = "48px serif";
-          //       ctx.color = "#fff";
-          //       ctx.fillText("Hello world", 50, 100);
-
         } else {
             function addData(chart, label, data, day) {
               chart.data.labels = label;
@@ -916,9 +1013,9 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_chartjs-plugin-datalabels_dist_chartjs-plugin-datalabels_esm_js-node_mod-ab2686","src_styles_main_css-src_js_changeLocation_js-src_js_constants_js"], () => (__webpack_require__("./src/js/daily.js")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_chartjs-plugin-annotation_dist_chartjs-plugin-annotation_esm_js-node_mod-7c1274","src_styles_main_css-src_js_changeLocation_js-src_js_constants_js"], () => (__webpack_require__("./src/js/daily.js")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=daily.7aee03c9cd85c3076034.js.map
+//# sourceMappingURL=daily.19d4893872f5d3044a72.js.map
