@@ -262,7 +262,7 @@ const chartConfigs = () => {
 	    xMin:  88,
       };
 
-    const annotation2 = {
+    const sunriseConfig = {
         type: 'line',
         borderColor: 'black',
         borderWidth: 0,
@@ -298,7 +298,7 @@ const chartConfigs = () => {
 	    xMin:  20,
       };
 
-    const annotation4 = {
+    const sunsetConfig = {
         type: 'line',
         borderColor: 'black',
         borderWidth: 0,
@@ -459,9 +459,9 @@ const chartConfigs = () => {
                 annotation: {
                     annotations: {
                         annotation1,
-                        annotation2,
+                        sunriseConfig,
                         annotation3,
-                        annotation4,
+                        sunsetConfig,
                         annotation5,
                     }
                 }
@@ -474,7 +474,9 @@ const chartConfigs = () => {
         moiChartConfig,
         windChartConfig,
         pressureChartConfig,
-        sunChartConfig
+        sunChartConfig,
+        sunriseConfig,
+        sunsetConfig
     }
 }
 

@@ -23,7 +23,7 @@ const myChart = document.getElementById('myChart'),
       nav = document.querySelector('.nav');
 
 const {getWeather} = getData();
-const {tempChartConfig, moiChartConfig, windChartConfig, pressureChartConfig, sunChartConfig} = chartConfigs();
+const {tempChartConfig, moiChartConfig, windChartConfig, pressureChartConfig, sunChartConfig, sunriseConfig, sunsetConfig} = chartConfigs();
 
 burger.addEventListener('click', () => {
     if (nav.style.display === 'none') {
@@ -221,6 +221,8 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
           return [labels, sin];
         }
 
+        const [labels, sin] = sunCalk(res.sunrise, res.sunset)
+
         const date = new Date();
         const time = date.getHours() + (date.getMinutes() * (10/6)/100);
 
@@ -228,10 +230,12 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
         sun.src = '../src/images/sun.png';
 
         if (!sunChart) {
-          sunChartConfig.data.labels = sunCalk(res.sunrise, res.sunset)[0];
-          sunChartConfig.data.datasets[0].data = sunCalk(res.sunrise, res.sunset)[1];
-          sunChartConfig.data.datasets[1].data = sunCalk(res.sunrise, res.sunset)[1].slice(0, Math.floor(time * 4));
-          sunChartConfig.data.datasets[3].data = sunCalk(res.sunrise, res.sunset)[1].map(el => +el + 0.20 + '').slice(0, Math.floor((time * 4) - 2));
+          sunriseConfig.label.content = res.sunrise;
+          sunsetConfig.label.content = res.sunset;
+          sunChartConfig.data.labels = labels;
+          sunChartConfig.data.datasets[0].data = sin;
+          sunChartConfig.data.datasets[1].data = sin.slice(0, Math.floor(time * 4));
+          sunChartConfig.data.datasets[3].data = sin.map(el => +el + 0.20 + '').slice(0, Math.floor((time * 4) - 2));
           sunChartConfig.data.datasets[3].pointStyle[sunChartConfig.data.datasets[3].data.length - 1] = sun;
           sunChartConfig.options.plugins.subtitle.text = `${day}\n` + 'Sunrise / Sunset';
           sunChart = new Chart(myChartSun, sunChartConfig);

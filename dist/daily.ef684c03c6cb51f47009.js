@@ -356,7 +356,7 @@ const chartConfigs = () => {
 	    xMin:  88,
       };
 
-    const annotation2 = {
+    const sunriseConfig = {
         type: 'line',
         borderColor: 'black',
         borderWidth: 0,
@@ -392,7 +392,7 @@ const chartConfigs = () => {
 	    xMin:  20,
       };
 
-    const annotation4 = {
+    const sunsetConfig = {
         type: 'line',
         borderColor: 'black',
         borderWidth: 0,
@@ -553,9 +553,9 @@ const chartConfigs = () => {
                 annotation: {
                     annotations: {
                         annotation1,
-                        annotation2,
+                        sunriseConfig,
                         annotation3,
-                        annotation4,
+                        sunsetConfig,
                         annotation5,
                     }
                 }
@@ -568,7 +568,9 @@ const chartConfigs = () => {
         moiChartConfig,
         windChartConfig,
         pressureChartConfig,
-        sunChartConfig
+        sunChartConfig,
+        sunriseConfig,
+        sunsetConfig
     }
 }
 
@@ -616,7 +618,7 @@ const myChart = document.getElementById('myChart'),
       nav = document.querySelector('.nav');
 
 const {getWeather} = (0,_services__WEBPACK_IMPORTED_MODULE_0__["default"])();
-const {tempChartConfig, moiChartConfig, windChartConfig, pressureChartConfig, sunChartConfig} = (0,_chartConfigs__WEBPACK_IMPORTED_MODULE_1__["default"])();
+const {tempChartConfig, moiChartConfig, windChartConfig, pressureChartConfig, sunChartConfig, sunriseConfig, sunsetConfig} = (0,_chartConfigs__WEBPACK_IMPORTED_MODULE_1__["default"])();
 
 burger.addEventListener('click', () => {
     if (nav.style.display === 'none') {
@@ -814,6 +816,8 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
           return [labels, sin];
         }
 
+        const [labels, sin] = sunCalk(res.sunrise, res.sunset)
+
         const date = new Date();
         const time = date.getHours() + (date.getMinutes() * (10/6)/100);
 
@@ -821,10 +825,12 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
         sun.src = '../src/images/sun.png';
 
         if (!sunChart) {
-          sunChartConfig.data.labels = sunCalk(res.sunrise, res.sunset)[0];
-          sunChartConfig.data.datasets[0].data = sunCalk(res.sunrise, res.sunset)[1];
-          sunChartConfig.data.datasets[1].data = sunCalk(res.sunrise, res.sunset)[1].slice(0, Math.floor(time * 4));
-          sunChartConfig.data.datasets[3].data = sunCalk(res.sunrise, res.sunset)[1].map(el => +el + 0.20 + '').slice(0, Math.floor((time * 4) - 2));
+          sunriseConfig.label.content = res.sunrise;
+          sunsetConfig.label.content = res.sunset;
+          sunChartConfig.data.labels = labels;
+          sunChartConfig.data.datasets[0].data = sin;
+          sunChartConfig.data.datasets[1].data = sin.slice(0, Math.floor(time * 4));
+          sunChartConfig.data.datasets[3].data = sin.map(el => +el + 0.20 + '').slice(0, Math.floor((time * 4) - 2));
           sunChartConfig.data.datasets[3].pointStyle[sunChartConfig.data.datasets[3].data.length - 1] = sun;
           sunChartConfig.options.plugins.subtitle.text = `${day}\n` + 'Sunrise / Sunset';
           sunChart = new chart_js_auto__WEBPACK_IMPORTED_MODULE_3__["default"](myChartSun, sunChartConfig);
@@ -1018,4 +1024,4 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=daily.19d4893872f5d3044a72.js.map
+//# sourceMappingURL=daily.ef684c03c6cb51f47009.js.map

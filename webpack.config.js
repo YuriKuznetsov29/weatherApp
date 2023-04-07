@@ -1,6 +1,8 @@
-'use strict';
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-let path = require('path');
+
+const isProd = process.env.NODE_ENV === 'production' // создали переменные дял определения режима сборки dev/prod, для них доустановили пакет cross-env
+const isDev = !isProd
 
 module.exports = {
   mode: 'development',
@@ -22,12 +24,18 @@ module.exports = {
     new HtmlWebpackPlugin({
     template: './src/index.html',
     chunks: ['main'],
-    }),
+    minify: { // минифицируем сборку html
+      removeComments: isProd,
+      collapseWhitespace: isProd
+  }}),
     new HtmlWebpackPlugin({
     template: './src/daily.html',
     filename: 'daily.html',
     chunks: ['daily'],
-    }),
+    minify: { // минифицируем сборку html
+      removeComments: isProd,
+      collapseWhitespace: isProd
+  }}),
 ],
   watch: true,
 
