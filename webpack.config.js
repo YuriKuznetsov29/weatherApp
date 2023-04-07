@@ -6,8 +6,25 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const isProd = process.env.NODE_ENV === 'production' // создали переменные дял определения режима сборки dev/prod, для них доустановили пакет cross-env
 const isDev = !isProd
 
-// const filename = ext => isDev ? `bundle.${ext}` : `bundle.[hash].${ext}`
-console.log(isDev)
+const filename = ext => isProd ? `[name].bundle.${ext}` : `[name].bundle.[hash].${ext}`
+
+const jsLoaders = () => {
+  const loaders = [
+      {
+          loader: "babel-loader",
+          options: {
+            presets: ['@babel/preset-env']
+          }
+      }
+  ]
+
+  // if (isDev) {
+  //     loaders.push('eslint-loader')
+  // }
+
+  return loaders
+}
+
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   mode: 'development',
@@ -16,7 +33,7 @@ module.exports = {
     daily: './js/daily.js'
   },
   output: {
-    filename: '[name].bundle.[hash].js', // автоматически подставляется имя и хеш при создании нового бандла
+    filename: filename('js'), // автоматически подставляется имя и хеш при создании нового бандла
     path: path.resolve(__dirname, 'dist'),
     clean: true // очищает от старых бандлов
   },
@@ -54,7 +71,7 @@ module.exports = {
     ],
   }),
   new MiniCssExtractPlugin({
-    filename: `bundle.[hash].css`
+    filename: filename('css')
   })
 ],
   // watch: true,
@@ -66,13 +83,18 @@ module.exports = {
         use: [
           // Creates `style` nodes from JS strings
           // MiniCssExtractPlugin.loader,
-          "style-loader",
+          MiniCssExtractPlugin.loader,
           // Translates CSS into CommonJS
           "css-loader",
           // Compiles Sass to CSS
           // "sass-loader",
         ],
       },
+      {
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: jsLoaders()
+      }
     ],
   },
 };

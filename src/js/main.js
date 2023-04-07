@@ -3,6 +3,7 @@ import { weatherDescription } from "./constants";
 import changeLocation from "./changeLocation";
 
 import '../styles/main.css';
+import '../styles/daily.css';
 
 const {getWeather} = getData();
 const city = document.querySelector('.city'),
