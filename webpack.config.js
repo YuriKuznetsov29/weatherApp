@@ -50,7 +50,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
     template: './index.html',
-    chunks: ['main'],
+    chunks: ['main', 'daily'],
     minify: { // минифицируем сборку html
       removeComments: isProd,
       collapseWhitespace: isProd
@@ -78,16 +78,16 @@ module.exports = {
   module: {
     rules: [
       {
-        // test: /\.s[ac]ss$/i,
-        test: /\.css$/i,
+        test: /\.s[ac]ss$/i,
+        // test: /\.css$/i,
         use: [
           // Creates `style` nodes from JS strings
-          // MiniCssExtractPlugin.loader,
           MiniCssExtractPlugin.loader,
+          // MiniCssExtractPlugin.loader,
           // Translates CSS into CommonJS
           "css-loader",
           // Compiles Sass to CSS
-          // "sass-loader",
+          "sass-loader",
         ],
       },
       {

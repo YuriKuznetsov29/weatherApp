@@ -4,9 +4,9 @@ import {
 } from './constants'
 
 let arrow = document.createElement('img');
-arrow.src = '../src/images/arrow.png';
-let sun = document.createElement('img');
-sun.src = '../src/images/sun.png';
+arrow.src = 'arrow.png';
+// let sun = document.createElement('img');
+// sun.src = 'sun.png';
 
 
 const chartConfigs = () => {
@@ -258,8 +258,8 @@ const chartConfigs = () => {
 	    yMin:  0.1,
 
         xScaleID: 'x',
-        xMax: 88,
-	    xMin:  88,
+        xMax: 110,
+	    xMin:  110,
       };
 
     const sunriseConfig = {
@@ -313,8 +313,8 @@ const chartConfigs = () => {
 	    yMin:  0.1,
 
         xScaleID: 'x',
-        xMax: 73,
-	    xMin:  73,
+        xMax: 92,
+	    xMin:  92,
       };
 
     const annotation5 = {
@@ -332,8 +332,8 @@ const chartConfigs = () => {
 	    yMin:  0.2,
 
         xScaleID: 'x',
-        xMax: 73,
-	    xMin:  73,
+        xMax: 92,
+	    xMin:  92,
       };
 
     const sunChartConfig = {
