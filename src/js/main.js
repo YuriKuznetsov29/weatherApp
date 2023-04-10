@@ -2,8 +2,8 @@ import getData from "./services";
 import { weatherDescription } from "./constants";
 import changeLocation from "./changeLocation";
 
-import '../styles/main.css';
-import '../styles/daily.css';
+import '../styles/index.scss';
+// import '../styles/daily.css';
 
 const {getWeather} = getData();
 const city = document.querySelector('.city'),
@@ -26,7 +26,7 @@ const getWeatherOnCity = (lat, lon) => {
         
         const temp = document.querySelector('.temp');
         temp.textContent = res.currentTemp + ' C';
-        document.querySelector('.ph-thermometer').after(temp);
+        // document.querySelector('.ph-thermometer').after(temp);
 
         const moi = document.querySelector('.moi');
         moi.textContent = res.currentMoi + ' %';

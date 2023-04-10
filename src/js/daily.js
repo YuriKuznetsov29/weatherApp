@@ -6,8 +6,8 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import annotationPlugin from 'chartjs-plugin-annotation';
 
 
-import '../styles/main.css';
-import '../styles/daily.css';
+import '../styles/index.scss';
+// import '../styles/daily.css';
 
 const myChart = document.getElementById('myChart'),
       myChartMoi = document.getElementById('myChartMoi'),
@@ -43,59 +43,59 @@ const getCurrentDate = () => {
   return currentDate;
 }
 
-inputDateBtn.addEventListener('click', () => {
-  if (inputDay.value) {
-    const regexp = new RegExp(/\d{4}[.-]\d{2}[.-]\d{2}/);
+// inputDateBtn.addEventListener('click', () => {
+//   if (inputDay.value) {
+//     const regexp = new RegExp(/\d{4}[.-]\d{2}[.-]\d{2}/);
 
-    console.log(regexp.test(inputDay.value))
-    if (regexp.test(inputDay.value)) {
-      const day = inputDay.value.replace(/\./ig, '-');
-      getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'), day);
-      dayErrorMessage.textContent = '';
-    } else {
-      dayErrorMessage.textContent = `Invalid date format yyyy-mm-dd`;
-    }
+//     console.log(regexp.test(inputDay.value))
+//     if (regexp.test(inputDay.value)) {
+//       const day = inputDay.value.replace(/\./ig, '-');
+//       getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'), day);
+//       dayErrorMessage.textContent = '';
+//     } else {
+//       dayErrorMessage.textContent = `Invalid date format yyyy-mm-dd`;
+//     }
     
-  }
-})
+//   }
+// })
 
-inputDay.addEventListener('keydown', (e) => {
-  if (e.keyCode == 13) {
-    const regexp = new RegExp(/\d{4}[.-]\d{2}[.-]\d{2}/);
-    console.log(regexp.test(inputDay.value))
-    if (regexp.test(inputDay.value)) {
-      const day = inputDay.value.replace(/\./ig, '-');
-      getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'), day);
-      dayErrorMessage.textContent = '';
-    } else {
-      dayErrorMessage.textContent = `Invalid date format yyyy-mm-dd`;
-    }
-  }
-})
+// inputDay.addEventListener('keydown', (e) => {
+//   if (e.keyCode == 13) {
+//     const regexp = new RegExp(/\d{4}[.-]\d{2}[.-]\d{2}/);
+//     console.log(regexp.test(inputDay.value))
+//     if (regexp.test(inputDay.value)) {
+//       const day = inputDay.value.replace(/\./ig, '-');
+//       getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'), day);
+//       dayErrorMessage.textContent = '';
+//     } else {
+//       dayErrorMessage.textContent = `Invalid date format yyyy-mm-dd`;
+//     }
+//   }
+// })
 
-nextDayBtn.addEventListener('click', () => {
-  let day = tempChart.options.plugins.subtitle.text
+// nextDayBtn.addEventListener('click', () => {
+//   let day = tempChart.options.plugins.subtitle.text
 
-  console.log(Number(day.slice(0, 4)), (Number(day.slice(5, 7))) - 1, (Number(day.slice(8))) + 1)
-  const lastDate = new Date(Number(day.slice(0, 4)), (Number(day.slice(5, 7))) - 1, (Number(day.slice(8))) + 1);
-  const lastYear = lastDate.getFullYear();
-  const lastmonth = lastDate.getMonth();
-  const lastDay = lastDate.getDate();
-  const transformLastDate = `${lastYear}-${(lastmonth + 1) < 10 ? `0${(lastmonth + 1)}` : (lastmonth + 1)}-${lastDay < 10 ? `0${lastDay}` : lastDay}`;
-  getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'), transformLastDate);
-})
+//   console.log(Number(day.slice(0, 4)), (Number(day.slice(5, 7))) - 1, (Number(day.slice(8))) + 1)
+//   const lastDate = new Date(Number(day.slice(0, 4)), (Number(day.slice(5, 7))) - 1, (Number(day.slice(8))) + 1);
+//   const lastYear = lastDate.getFullYear();
+//   const lastmonth = lastDate.getMonth();
+//   const lastDay = lastDate.getDate();
+//   const transformLastDate = `${lastYear}-${(lastmonth + 1) < 10 ? `0${(lastmonth + 1)}` : (lastmonth + 1)}-${lastDay < 10 ? `0${lastDay}` : lastDay}`;
+//   getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'), transformLastDate);
+// })
 
-previousDayBtn.addEventListener('click', () => {
-  let day = tempChart.options.plugins.subtitle.text
+// previousDayBtn.addEventListener('click', () => {
+//   let day = tempChart.options.plugins.subtitle.text
 
-  console.log(Number(day.slice(0, 4)), (Number(day.slice(5, 7))) - 1, (Number(day.slice(8))) - 1)
-  const lastDate = new Date(Number(day.slice(0, 4)), (Number(day.slice(5, 7))) - 1, (Number(day.slice(8))) - 1);
-  const lastYear = lastDate.getFullYear();
-  const lastmonth = lastDate.getMonth();
-  const lastDay = lastDate.getDate();
-  const transformLastDate = `${lastYear}-${(lastmonth + 1) < 10 ? `0${(lastmonth + 1)}` : (lastmonth + 1)}-${lastDay < 10 ? `0${lastDay}` : lastDay}`;
-  getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'), transformLastDate);
-})
+//   console.log(Number(day.slice(0, 4)), (Number(day.slice(5, 7))) - 1, (Number(day.slice(8))) - 1)
+//   const lastDate = new Date(Number(day.slice(0, 4)), (Number(day.slice(5, 7))) - 1, (Number(day.slice(8))) - 1);
+//   const lastYear = lastDate.getFullYear();
+//   const lastmonth = lastDate.getMonth();
+//   const lastDay = lastDate.getDate();
+//   const transformLastDate = `${lastYear}-${(lastmonth + 1) < 10 ? `0${(lastmonth + 1)}` : (lastmonth + 1)}-${lastDay < 10 ? `0${lastDay}` : lastDay}`;
+//   getWeatherOnCity(localStorage.getItem('lat'), localStorage.getItem('lon'), transformLastDate);
+// })
 
 Chart.register(annotationPlugin);
 Chart.register(ChartDataLabels);
@@ -227,7 +227,7 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
         const time = date.getHours() + (date.getMinutes() * (10/6)/100);
 
         let sun = document.createElement('img');
-        sun.src = '../src/images/sun.png';
+        sun.src = 'sun.png';
 
         if (!sunChart) {
           sunriseConfig.label.content = res.sunrise;
@@ -235,6 +235,7 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
           sunChartConfig.data.labels = labels;
           sunChartConfig.data.datasets[0].data = sin;
           sunChartConfig.data.datasets[1].data = sin.slice(0, Math.floor(time * 4));
+          sunChartConfig.data.datasets[2].data = new Array(114).fill(0)
           sunChartConfig.data.datasets[3].data = sin.map(el => +el + 0.20 + '').slice(0, Math.floor((time * 4) - 2));
           sunChartConfig.data.datasets[3].pointStyle[sunChartConfig.data.datasets[3].data.length - 1] = sun;
           sunChartConfig.options.plugins.subtitle.text = `${day}\n` + 'Sunrise / Sunset';
