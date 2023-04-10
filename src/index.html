@@ -36,6 +36,15 @@
         </div>
     </header>
 
+    <!-- Background -->
+    <!-- <video autoplay muted loop class="video-bg">
+        <source src="/src/images/winter.mp4" type="video/mp4">
+    </video> -->
+    <div class="background-image-wrapper">
+        <div class="background-image"></div>
+    </div>
+    <div class="background"></div>
+
     <!-- Search -->
     <div class="search">
         <div class="container">
@@ -49,6 +58,11 @@
     <!-- Recent locations -->
     <div class="recent-locations">
         <div class="container">
+            <div class="recent-locations__inner">
+                <div class="recent-locations__wrapper">
+                    <div class="recent-location__title">НЕДАВНИЕ МЕСТОПОЛОЖЕНИЯ</div>
+                </div>
+            </div>
             <div class="recent-locations__inner">
                 <div class="recent-locations__wrapper">
                     <div class="recent-locations__item">
@@ -65,8 +79,6 @@
                             <i class="ph-thin ph-thermometer"></i>
                         </div>
                     </div>
-                </div>
-                <div class="recent-locations__wrapper">
                     <div class="recent-locations__item">
                         <div class="recent-locations__item-city">Архангельск</div>
                         <div class="recent-locations__item-country">Россия</div>
@@ -81,8 +93,6 @@
                             <i class="ph-thin ph-thermometer"></i>
                         </div>
                     </div>
-                </div>
-                <div class="recent-locations__wrapper">
                     <div class="recent-locations__item">
                         <div class="recent-locations__item-city">Архангельск</div>
                         <div class="recent-locations__item-country">Россия</div>
@@ -100,6 +110,43 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Weather description -->
+    <div class="container">
+        <div class="description">
+            <div class="city"></div>
+            <div class="weatherDescription"></div>
+        </div>
+    </div>
+
+    <!-- Weather data -->
+    <div class="weather">    
+        <div class="container">
+            <div class="weather__inner">
+                <span class="weather__dataWrapper">
+                    <i class="ph-thermometer values"></i>
+                    <div class="temp values"></div>
+                </span>
+                <span class="weather__dataWrapper">
+                    <i class="ph-drop values"></i>
+                    <div class="moi values"></div>
+                </span>
+                <!-- <span>
+                    <i class="ph-cloud-snow values"></i>
+                    <div class="precip values"></div>
+                </span> -->
+                <span class="weather__dataWrapper">
+                    <i class="ph-wind values"></i>
+                    <div class="wind values"></div>
+                </span>
+                <span class="weather__dataWrapper">
+                    <i class="ph-sun-horizon values"></i>
+                    <div class="sunrise values"></div>
+                    <div class="sunset values"></div>
+                </span>
+            </div>
+        </div>  
     </div>
 
     <!-- Charts -->
@@ -153,47 +200,8 @@
         </div>
     </div>
 
-    <!-- Background -->
-    <!-- <video autoplay muted loop class="video-bg">
-        <source src="/src/images/winter.mp4" type="video/mp4">
-    </video> -->
-    <div class="background"></div>
     
-    <!-- Weather description -->
-    <div class="container">
-        <div class="description">
-            <div class="city"></div>
-            <div class="weatherDescription"></div>
-        </div>
-    </div>
     
-    <!-- Weather data -->
-    <div class="weather">    
-        <div class="container">
-            <div class="weather__inner">
-                <span class="weather__dataWrapper">
-                    <i class="ph-thermometer values"></i>
-                    <div class="temp values"></div>
-                </span>
-                <span class="weather__dataWrapper">
-                    <i class="ph-drop values"></i>
-                    <div class="moi values"></div>
-                </span>
-                <!-- <span>
-                    <i class="ph-cloud-snow values"></i>
-                    <div class="precip values"></div>
-                </span> -->
-                <span class="weather__dataWrapper">
-                    <i class="ph-wind values"></i>
-                    <div class="wind values"></div>
-                </span>
-                <span class="weather__dataWrapper">
-                    <i class="ph-sun-horizon values"></i>
-                    <div class="sunrise values"></div>
-                    <div class="sunset values"></div>
-                </span>
-            </div>
-        </div>  
-    </div>
+    
 </body>
 </html>
