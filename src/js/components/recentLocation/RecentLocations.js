@@ -11,9 +11,11 @@ export class RecentLocations {
 
     async init() {
         this.root = document.querySelector('#recent')
-        this.currentLocation = await getData.getWeatherForRecentLocation(storage('lat'), storage('lon'))
+        const { getWeatherForRecentLocation } = getData()
+        this.currentLocation = await getWeatherForRecentLocation(storage('lat'), storage('lon'))
+        console.log(this.currentLocation)
         this.addLocation()
-        console.log(this.locations, this.currentLocation)
+        console.log(storage('lat'), storage('lon'))
         storage('recentLocationt', this.locations)
         this.root.insertAdjacentHTML('afterbegin', getRecentTemplate())
     }
