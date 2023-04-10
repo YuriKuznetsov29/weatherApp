@@ -85,7 +85,27 @@ function getData() {
         })
     }
 
-    return {getLocation, getCityLocation, getWeather};
+    const getWeatherForRecentLocation = (lat, lon, day = getCurrentDate()) => {
+        const data = request(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,precipitation,weathercode,pressure_msl,surface_pressure,windspeed_10m,winddirection_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,precipitation_sum,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&timezone=Europe%2FMoscow&start_date=${day}&end_date=${getLastDate()}`);
+        data.then(console.log)
+        console.log(day);
+        return transformWeatherDataRecent(data);
+    }
+
+    const transformWeatherDataRecent = (data) => {
+        const hour = new Date().getHours()
+        return data.then((res) => {
+            let result = {
+                currentTemp: res.hourly.temperature_2m[hour],
+                currentPrecipitation: res.hourly.precipitation[hour],
+                weathercode: res.hourly.weathercode[hour],
+                realFeel: null
+            }
+            return result;
+        })
+    }
+
+    return {getLocation, getCityLocation, getWeather, getWeatherForRecentLocation};
 }
 
 export default getData;

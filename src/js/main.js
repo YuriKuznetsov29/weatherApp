@@ -1,9 +1,14 @@
 import getData from "./services";
 import { weatherDescription } from "./constants";
 import changeLocation from "./changeLocation";
+import { BaseComponent } from "./components/BaseComponent/BaseComponent";
+import { RecentLocations } from "./components/recentLocation/RecentLocations";
 
 import '../styles/index.scss';
 // import '../styles/daily.css';
+
+const app = new BaseComponent([RecentLocations])
+app.init()
 
 const {getWeather} = getData();
 const city = document.querySelector('.city'),
