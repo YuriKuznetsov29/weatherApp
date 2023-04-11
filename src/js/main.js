@@ -3,11 +3,21 @@ import { weatherDescription } from "./constants";
 import changeLocation from "./changeLocation";
 import { BaseComponent } from "./components/BaseComponent/BaseComponent";
 import { RecentLocations } from "./components/recentLocation/RecentLocations";
+import { CreateStore } from "./redux/CreateStore";
+import { reducer } from "./redux/reducer";
+import { CURRENT__LOCATION } from "./redux/actions";
 
 import '../styles/index.scss';
 // import '../styles/daily.css';
 
-const app = new BaseComponent([RecentLocations])
+const initialState = {
+  recentLocation: null,
+  currentLocation: null
+}
+
+const store = new CreateStore(reducer, initialState)
+
+const app = new BaseComponent([RecentLocations], store)
 app.init()
 
 const {getWeather} = getData();
@@ -24,6 +34,9 @@ burger.addEventListener('click', () => {
 })
 
 const getWeatherOnCity = (lat, lon) => {
+    store.dispatch({type: CURRENT__LOCATION, payload: {lat, lon}})
+    console.log('STORE', store.getState())
+
     city.textContent = localStorage.getItem('city');
 
     getWeather(lat, lon).then((res) => {

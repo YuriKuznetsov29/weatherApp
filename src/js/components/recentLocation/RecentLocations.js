@@ -3,30 +3,41 @@ import getData from "../../services"
 import { getRecentTemplate } from "./recent-template"
 
 export class RecentLocations {
-    constructor() {
+    constructor(store) {
         this.locations = []
-        this.currentLocation
+        this.currentLocation = store.currentLocation
         this.root
+        this.store = store
+        this.subscribe = ['currentLocation']
     }
 
-    async init() {
+    init() {
         this.root = document.querySelector('#recent')
-        const { getWeatherForRecentLocation } = getData()
-        this.currentLocation = await getWeatherForRecentLocation(storage('lat'), storage('lon'))
-        console.log(this.currentLocation)
-        this.addLocation()
-        console.log(storage('lat'), storage('lon'))
-        storage('recentLocationt', this.locations)
-        this.root.insertAdjacentHTML('afterbegin', getRecentTemplate())
+        
+        this.locations = storage('recentLocationt') || []
+        this.root.insertAdjacentHTML('afterbegin', getRecentTemplate(this.locations))
     }
 
     addLocation() {
-        if (this.locations.length < 3) {
+        let check = true
+        this.locations.forEach(location => {
+            if (JSON.stringify(location) === JSON.stringify(this.currentLocation)) {
+                check = false
+            }
+        })
+        if (this.locations.length < 3 && check) {
+            console.log('add')
             this.locations.push(this.currentLocation)
-        } else {
+        } else if (check) {
             this.locations.shift()
             this.locations.push(this.currentLocation)
         }
+    }
+
+    storeChanged({currentLocation}) {
+        this.currentLocation = currentLocation
+        this.addLocation()
+        storage('recentLocationt', this.locations)
     }
     
 }
