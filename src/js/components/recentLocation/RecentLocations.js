@@ -1,6 +1,6 @@
 import { storage } from "../../utils"
 import getData from "../../services"
-import { getRecentTemplate } from "./recent-template"
+import { getRecentTemplate, addRecentItems } from "./recent-template"
 
 export class RecentLocations {
     constructor(store) {
@@ -15,7 +15,8 @@ export class RecentLocations {
         this.root = document.querySelector('#recent')
         
         this.locations = storage('recentLocationt') || []
-        this.root.insertAdjacentHTML('afterbegin', getRecentTemplate(this.locations))
+        this.root.insertAdjacentHTML('afterbegin', getRecentTemplate())
+        addRecentItems(this.locations)
     }
 
     addLocation() {
@@ -27,6 +28,7 @@ export class RecentLocations {
         })
         if (this.locations.length < 3 && check) {
             console.log('add')
+            // debugger
             this.locations.push(this.currentLocation)
         } else if (check) {
             this.locations.shift()

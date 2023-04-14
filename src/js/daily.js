@@ -39,7 +39,6 @@ const getCurrentDate = () => {
   const month = date.getMonth();
   const day = date.getDate();
   const currentDate = `${year}-${(month + 1) < 10 ? `0${(month + 1)}` : (month + 1)}-${day < 10 ? `0${day}` : day}`;
-  console.log(currentDate);
   return currentDate;
 }
 
@@ -105,15 +104,12 @@ Chart.register(ChartDataLabels);
 Chart.defaults.color = '#fff';
 Chart.defaults.font.size = 16;
 Chart.defaults.plugins.datalabels.align = 'end';
-console.log(Chart.defaults)
 
 let tempChart;
 let moiChart;
 let windChart;
 let pressureChart;
 let sunChart;
-
-
 
 const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
     getWeather(lat, lon, day).then((res) => {
@@ -178,7 +174,6 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
           windChart = new Chart(myChartWind, windChartConfig);
           // windChart.legend.legendItems.shift()
           // windChart.legend.legendHitBoxes.shift()
-          console.log(windChart)
 
         } else {
             function addData(chart, label, data, rotation, day) {
@@ -252,7 +247,7 @@ const getWeatherOnCity = (lat, lon, day = getCurrentDate()) => {
     })
 }
 
-changeLocation(getWeatherOnCity);
+// changeLocation(getWeatherOnCity);
 
 
 

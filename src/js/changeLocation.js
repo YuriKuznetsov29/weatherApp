@@ -15,17 +15,14 @@ const changeLocation = (weatherFunc) => {
             link.classList.add('active');
         })
     })
-
  
     getLocation().then((res) => {
-        console.log(res)
         if (!localStorage.getItem('city')) {
             setLocationToLocalStorage(res.city, res.lat, res.lon);
-            yourLocation.textContent = `Current location: ${res.city}`;
+            // yourLocation.textContent = `Current location: ${res.city}`;
             weatherFunc(res.lat, res.lon);
         } else {
-            console.log(localStorage.getItem('city'))
-            yourLocation.textContent = `Current location: ${localStorage.getItem('city')}`;
+            // yourLocation.textContent = `Current location: ${localStorage.getItem('city')}`;
             weatherFunc(localStorage.getItem('lat'), localStorage.getItem('lon'));
         }
     })

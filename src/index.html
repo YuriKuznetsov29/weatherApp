@@ -4,36 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <script src="https://unpkg.com/phosphor-icons"></script>
     <title>Weather App</title>
 </head>
 <body>
 
     <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header__inner">
-                <div class="location">
-                    <div class="location__city"></div>
-                    <div class="location__get__btn">Get your location</div>
-                    <!-- <div class="location__change__btn">Change location</div> -->
-                    <div class="location__change__wrapper">
-                        <input class="input-city" type="text" placeholder="Input your city"/>
-                        <div class="location__change__find">
-                        </div>
-                    </div>
-                </div>
-                <nav class="nav">
-                    <a class="nav__link" href="./index.html">Main</a>
-                    <a class="nav__link" href="./daily.html">Daily</a>
-                    <!-- <a class="nav__link" href="#">Several days</a>
-                    <a class="nav__link" href="#">Marine Weather</a>
-                    <a class="nav__link" href="#">Historical Weather</a>
-                    <a class="nav__link" href="#">Air Quality</a> -->
-                </nav>
-                <i class="ph-list burger"></i>
-            </div>
-        </div>
+    <header class="header" id="header">
+        
     </header>
 
     <!-- Background -->
@@ -45,29 +24,22 @@
     </div>
     <div class="background"></div>
 
-    <!-- Search -->
-    <div class="search">
-        <div class="container">
-            <div class="search__wrapper">
-                <i class="ph-thin ph-magnifying-glass search__icon"></i>
-                <input class="search__input" placeholder="Поиск"></div>
-            </div>
-        </div>
-    </div>
+    <!-- Select Location -->
+    <div class="search" id="select"></div>
 
     <!-- Recent locations -->
     <div class="recent-locations" id="recent"> </div>
 
     <!-- Weather description -->
-    <div class="container">
+    <!-- <div class="container">
         <div class="description">
             <div class="city"></div>
             <div class="weatherDescription"></div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Weather data -->
-    <div class="weather">    
+    <!-- <div class="weather">    
         <div class="container">
             <div class="weather__inner">
                 <span class="weather__dataWrapper">
@@ -78,11 +50,11 @@
                     <i class="ph-drop values"></i>
                     <div class="moi values"></div>
                 </span>
-                <!-- <span>
+                 <span>
                     <i class="ph-cloud-snow values"></i>
                     <div class="precip values"></div>
                 </span> -->
-                <span class="weather__dataWrapper">
+                <!-- <span class="weather__dataWrapper">
                     <i class="ph-wind values"></i>
                     <div class="wind values"></div>
                 </span>
@@ -93,61 +65,14 @@
                 </span>
             </div>
         </div>  
-    </div>
+    </div> -->
+
+    <!-- Current Weather -->
+    <div class="currentWeather" id="currentWeather"></div>
 
     <!-- Charts -->
-    <div class="chart__innner">
-        <div class="container">
-            <div class="chartWrapper">
-                <div class="chart-container">
-                    <canvas class="chart" id="myChart" ></canvas>
-                </div>
-            </div>
-        </div>
+    <div class="charts" id="charts">
+        
     </div>
-
-    <div class="chart__innner">
-        <div class="container">
-            <div class="chartWrapper">
-                <div class="chart-container">
-                    <canvas class="chart" id="myChartMoi" ></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="chart__innner">
-        <div class="container">
-            <div class="chartWrapper">
-                <div class="chart-container">
-                    <canvas class="chart" id="myChartWind" ></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="chart__innner">
-        <div class="container">
-            <div class="chartWrapper">
-                <div class="chart-container">
-                    <canvas class="chart" id="myChartPressure" ></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="chart__innner">
-        <div class="container">
-            <div class="chartWrapper">
-                <div class="chart-container">
-                    <canvas class="chart" id="myChartSun" >
-                    </canvas>
-                    <div class="text">Horizon</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    
-    
-    
 </body>
 </html>
