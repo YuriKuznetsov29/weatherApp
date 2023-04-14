@@ -1,5 +1,5 @@
 export function getHeaderTemplate(currentLocation) {
-    console.log( 'CURRENT', currentLocation)
+
     return `
     <div class="container">
         <div class="header__inner">

@@ -12,7 +12,10 @@ export class Charts {
     init() {
         this.root = document.querySelector('#charts')
         this.root.insertAdjacentHTML('afterbegin', getChartsTemplate())
-        createCharts(this.store.getState().currentLocation)
+        const currentLocation = this.store.getState().currentLocation
+        if (currentLocation) {
+            createCharts(currentLocation)
+        }
     }
 
     storeChanged({currentLocation}) {

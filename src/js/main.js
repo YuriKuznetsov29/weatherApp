@@ -17,7 +17,7 @@ import '../styles/index.scss';
 
 const initialState = {
   recentLocation: null,
-  currentLocation: storage('currentLocation') || {lat: '', lon: '', city: ''}
+  currentLocation: storage('currentLocation') || null//{lat: '', lon: '', city: ''}
 }
 
 const store = new CreateStore(reducer, initialState)
@@ -37,6 +37,8 @@ burger.addEventListener('click', () => {
         nav.style.display = 'none';
       }
 })
+
+
 
 const getWeatherOnCity = (lat, lon) => {
     store.dispatch({type: CURRENT__LOCATION, payload: {lat: +lat, lon: +lon, city: localStorage.getItem('city')}})

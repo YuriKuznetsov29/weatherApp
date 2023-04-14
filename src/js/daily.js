@@ -25,13 +25,13 @@ const myChart = document.getElementById('myChart'),
 const {getWeather} = getData();
 const {tempChartConfig, moiChartConfig, windChartConfig, pressureChartConfig, sunChartConfig, sunriseConfig, sunsetConfig} = chartConfigs();
 
-burger.addEventListener('click', () => {
-    if (nav.style.display === 'none') {
-      nav.style.display = 'block';
-    } else {
-      nav.style.display = 'none';
-    }
-})
+// burger.addEventListener('click', () => {
+//     if (nav.style.display === 'none') {
+//       nav.style.display = 'block';
+//     } else {
+//       nav.style.display = 'none';
+//     }
+// })
 
 const getCurrentDate = () => {
   const date = new Date();

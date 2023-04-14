@@ -5,7 +5,6 @@ import { getRecentTemplate, addRecentItems } from "./recent-template"
 export class RecentLocations {
     constructor(store) {
         this.locations = []
-        this.currentLocation = store.currentLocation
         this.root
         this.store = store
         this.subscribe = ['currentLocation']
@@ -13,7 +12,7 @@ export class RecentLocations {
 
     init() {
         this.root = document.querySelector('#recent')
-        
+        this.currentLocation = this.store.getState().currentLocation
         this.locations = storage('recentLocationt') || []
         this.root.insertAdjacentHTML('afterbegin', getRecentTemplate())
         addRecentItems(this.locations)
@@ -40,6 +39,7 @@ export class RecentLocations {
         this.currentLocation = currentLocation
         this.addLocation()
         storage('recentLocationt', this.locations)
+        addRecentItems(this.locations)
     }
     
 }

@@ -1,4 +1,7 @@
 import { StoreSubscriber } from "../../StoreSubscriber"
+import { storage } from "../../utils"
+import getData from "../../services"
+import { CURRENT__LOCATION } from "../../redux/actions"
 
 export class BaseComponent {
     constructor(components, store) {
@@ -8,6 +11,13 @@ export class BaseComponent {
     }
 
     init() {
+        if (!storage('currentLocation')) {
+            const {getLocation} = getData()
+            getLocation().then((res) => {
+                storage('currentLocation', {lat: res.lat, lon: res.lon, city: res.city})
+                this.store.dispatch({type: CURRENT__LOCATION, payload: {lat: +res.lat, lon: +res.lon, city: res.city}})
+            })
+        }
         this.components = this.components.map(Component => {
             const component = new Component(this.store)
             component.init()
