@@ -16,8 +16,15 @@ export class BaseComponent {
             getLocation().then((res) => {
                 storage('currentLocation', {lat: res.lat, lon: res.lon, city: res.city})
                 this.store.dispatch({type: CURRENT__LOCATION, payload: {lat: +res.lat, lon: +res.lon, city: res.city}})
+                this.runComponent()
             })
+            return
         }
+
+        this.runComponent()
+    }
+
+    runComponent() {
         this.components = this.components.map(Component => {
             const component = new Component(this.store)
             component.init()

@@ -116,13 +116,16 @@
     margin-bottom: 200px;
 
     .recent-locations__inner {
+        margin: 0 auto;
+        width: 540px;
         display: flex;
+        flex-direction: column;
         justify-content: center;
-        // align-items: center;
+        align-items: center;
         font-size: 16px;
 
         .recent-locations__wrapper {
-            width: 550px;
+            width: 100%;
             display: flex;
             justify-content: left;
             align-items: center;
@@ -140,6 +143,9 @@
                 border-radius: 8px;
                 color: #fff;
                 background-color: rgba(0, 0, 0, .4);
+                &:hover {
+                    cursor: pointer;
+                }
         
                 .recent-locations__item-city {
                     font-size: 16px;

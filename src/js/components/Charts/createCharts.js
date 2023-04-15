@@ -1,5 +1,5 @@
 import chartConfigs from "../../chartConfigs";
-import { Chart, LineController, LineElement, PointElement, CategoryScale, LinearScale, Filler, Legend} from "chart.js";
+import { Chart, LineController, LineElement, PointElement, CategoryScale, LinearScale, Filler, Legend, BarController, BarElement} from "chart.js";
 // import Chart from 'chart.js/auto';
 // import { Chart, BarElement, BarController, CategoryScale, Decimation, Filler, Legend, Title, Tooltip} from 'chart.js';
 // import { Chart, registerables} from 'chart.js';
@@ -26,7 +26,7 @@ const getCurrentDate = () => {
 const {tempChartConfig, moiChartConfig, windChartConfig, pressureChartConfig, sunChartConfig, sunriseConfig, sunsetConfig} = chartConfigs();
 const {getWeather} = getData();
 
-Chart.register(annotationPlugin, ChartDataLabels, LineController, LineElement, PointElement, CategoryScale, LinearScale, Filler, Legend);
+Chart.register(annotationPlugin, ChartDataLabels, LineController, LineElement, PointElement, CategoryScale, LinearScale, Filler, Legend, BarController, BarElement);
 // Chart.register(annotationPlugin);
 // Chart.register(ChartDataLabels);
 
@@ -88,55 +88,55 @@ export function createCharts(location, day = getCurrentDate()) {
             addData(tempChart, res.dailyTime, res.dailyTemp, day);
         }
         
-        // if (!moiChart) {
-        //   moiChartConfig.data.labels = res.dailyTime;
-        //   moiChartConfig.data.datasets[0].data = res.dailyMoi;
-        //   moiChartConfig.options.plugins.subtitle.text = day;
-        //   moiChart = new Chart(myChartMoi, moiChartConfig);
-        // } else {
-        //     function addData(chart, label, data, day) {
-        //       chart.data.labels = label;
-        //       chart.data.datasets[0].data = data;
-        //       chart.options.plugins.subtitle.text = day;
-        //       chart.update('active');
-        //     }
-        //     addData(moiChart, res.dailyTime, res.dailyMoi, day);
-        // }
+        if (!moiChart) {
+          moiChartConfig.data.labels = res.dailyTime;
+          moiChartConfig.data.datasets[0].data = res.dailyMoi;
+          moiChartConfig.options.plugins.subtitle.text = day;
+          moiChart = new Chart(myChartMoi, moiChartConfig);
+        } else {
+            function addData(chart, label, data, day) {
+              chart.data.labels = label;
+              chart.data.datasets[0].data = data;
+              chart.options.plugins.subtitle.text = day;
+              chart.update('active');
+            }
+            addData(moiChart, res.dailyTime, res.dailyMoi, day);
+        }
 
-        // if (!windChart) {
-        //   windChartConfig.data.labels = res.dailyTime;
-        //   windChartConfig.data.datasets[0].data = res.dailyWind.map(el => el + 2.5);
-        //   windChartConfig.data.datasets[1].data = res.dailyWind;
-        //   windChartConfig.data.datasets[0].rotation = res.dailyWindDir
-        //   windChartConfig.options.plugins.subtitle.text = day + ' Wind';
-        //   windChart = new Chart(myChartWind, windChartConfig);
+        if (!windChart) {
+          windChartConfig.data.labels = res.dailyTime;
+          windChartConfig.data.datasets[0].data = res.dailyWind.map(el => el + 2.5);
+          windChartConfig.data.datasets[1].data = res.dailyWind;
+          windChartConfig.data.datasets[0].rotation = res.dailyWindDir
+          windChartConfig.options.plugins.subtitle.text = day + ' Wind';
+          windChart = new Chart(myChartWind, windChartConfig);
 
-        // } else {
-        //     function addData(chart, label, data, rotation, day) {
-        //       chart.data.labels = label;
-        //       chart.data.datasets[0].data = data.map(el => el + 2.5);
-        //       chart.data.datasets[0].rotation = rotation;
-        //       windChartConfig.data.datasets[1].data = data;
-        //       chart.options.plugins.subtitle.text = day + ' Wind';
-        //       chart.update('active');
-        //     }
-        //     addData(windChart, res.dailyTime, res.dailyWind, res.dailyWindDir, day);
-        // }
+        } else {
+            function addData(chart, label, data, rotation, day) {
+              chart.data.labels = label;
+              chart.data.datasets[0].data = data.map(el => el + 2.5);
+              chart.data.datasets[0].rotation = rotation;
+              windChartConfig.data.datasets[1].data = data;
+              chart.options.plugins.subtitle.text = day + ' Wind';
+              chart.update('active');
+            }
+            addData(windChart, res.dailyTime, res.dailyWind, res.dailyWindDir, day);
+        }
 
-        // if (!pressureChart) {
-        //   pressureChartConfig.data.labels = res.dailyTime;
-        //   pressureChartConfig.data.datasets[0].data =  res.dailyPressure;
-        //   pressureChartConfig.options.plugins.subtitle.text = day;
-        //   pressureChart = new Chart(myChartPressure, pressureChartConfig);
-        // } else {
-        //     function addData(chart, label, data, day) {
-        //       chart.data.labels = label;
-        //       chart.data.datasets[0].data = data;
-        //       chart.options.plugins.subtitle.text = day;
-        //       chart.update('active');
-        //     }
-        //     addData(pressureChart, res.dailyTime, res.dailyPressure, day);
-        // }
+        if (!pressureChart) {
+          pressureChartConfig.data.labels = res.dailyTime;
+          pressureChartConfig.data.datasets[0].data =  res.dailyPressure;
+          pressureChartConfig.options.plugins.subtitle.text = day;
+          pressureChart = new Chart(myChartPressure, pressureChartConfig);
+        } else {
+            function addData(chart, label, data, day) {
+              chart.data.labels = label;
+              chart.data.datasets[0].data = data;
+              chart.options.plugins.subtitle.text = day;
+              chart.update('active');
+            }
+            addData(pressureChart, res.dailyTime, res.dailyPressure, day);
+        }
 
         const sunCalk = (sunrise, sunset) => {
           let labels = [];
@@ -160,26 +160,26 @@ export function createCharts(location, day = getCurrentDate()) {
         let sun = document.createElement('img');
         sun.src = 'sun.png';
 
-        // if (!sunChart) {
-        //   sunriseConfig.label.content = res.sunrise;
-        //   sunsetConfig.label.content = res.sunset;
-        //   sunChartConfig.data.labels = labels;
-        //   sunChartConfig.data.datasets[0].data = sin;
-        //   sunChartConfig.data.datasets[1].data = sin.slice(0, Math.floor(time * 4));
-        //   sunChartConfig.data.datasets[2].data = new Array(114).fill(0)
-        //   sunChartConfig.data.datasets[3].data = sin.map(el => +el + 0.20 + '').slice(0, Math.floor((time * 4) - 2));
-        //   sunChartConfig.data.datasets[3].pointStyle[sunChartConfig.data.datasets[3].data.length - 1] = sun;
-        //   sunChartConfig.options.plugins.subtitle.text = `${day}\n` + 'Sunrise / Sunset';
-        //   sunChart = new Chart(myChartSun, sunChartConfig);
-        // } else {
-        //     function addData(chart, label, data, day) {
-        //       chart.data.labels = label;
-        //       chart.data.datasets[0].data = data;
-        //       chart.options.plugins.subtitle.text = day;
-        //       chart.update('active');
-        //     }
-        //     addData(pressureChart, res.dailyTime, res.dailyPressure, day);
-        // }
+        if (!sunChart) {
+          sunriseConfig.label.content = res.sunrise;
+          sunsetConfig.label.content = res.sunset;
+          sunChartConfig.data.labels = labels;
+          sunChartConfig.data.datasets[0].data = sin;
+          sunChartConfig.data.datasets[1].data = sin.slice(0, Math.floor(time * 4));
+          sunChartConfig.data.datasets[2].data = new Array(114).fill(0)
+          sunChartConfig.data.datasets[3].data = sin.map(el => +el + 0.20 + '').slice(0, Math.floor((time * 4) - 2));
+          sunChartConfig.data.datasets[3].pointStyle[sunChartConfig.data.datasets[3].data.length - 1] = sun;
+          sunChartConfig.options.plugins.subtitle.text = `${day}\n` + 'Sunrise / Sunset';
+          sunChart = new Chart(myChartSun, sunChartConfig);
+        } else {
+            function addData(chart, label, data, day) {
+              chart.data.labels = label;
+              chart.data.datasets[0].data = data;
+              chart.options.plugins.subtitle.text = day;
+              chart.update('active');
+            }
+            addData(pressureChart, res.dailyTime, res.dailyPressure, day);
+        }
     })
 }
 

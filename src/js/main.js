@@ -30,13 +30,13 @@ const city = document.querySelector('.city'),
       burger = document.querySelector('.burger'),
       nav = document.querySelector('.nav');
 
-burger.addEventListener('click', () => {
-    if (nav.style.display === 'none') {
-        nav.style.display = 'block';
-      } else {
-        nav.style.display = 'none';
-      }
-})
+// burger.addEventListener('click', () => {
+//     if (nav.style.display === 'none') {
+//         nav.style.display = 'block';
+//       } else {
+//         nav.style.display = 'none';
+//       }
+// })
 
 
 

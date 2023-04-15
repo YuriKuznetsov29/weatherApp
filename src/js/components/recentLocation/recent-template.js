@@ -8,7 +8,8 @@ export function addRecentItems(locations) {
     locations.forEach(async (location) => {
         const {lat, lon, city} = location
         const data = await getWeatherForRecentLocation(lat, lon)
-        recentWrapper.insertAdjacentHTML('afterbegin', `<div class="recent-locations__item">
+        recentWrapper.insertAdjacentHTML('afterbegin', `
+            <div class="recent-locations__item" data-type="recentItem" data-recentLocation="${lat},${lon},${city}">
                 <div class="recent-locations__item-city">${city}</div>
                 <div class="recent-locations__item-country">Россия</div>
                 <div class="recent-locations__item-data">
@@ -28,15 +29,13 @@ export function addRecentItems(locations) {
 
 export function getRecentTemplate() {
     return `<div class="container">
-            <div class="recent-locations__inner">
-                <div class="recent-locations__wrapper">
-                    <div class="recent-location__title">НЕДАВНИЕ МЕСТОПОЛОЖЕНИЯ</div>
-                </div>
-            </div>
-            <div class="recent-locations__inner">
-                <div class="recent-locations__wrapper" id="recentWrapper">
-                </div>
-                </div>
-            </div>
+                    <div class="recent-locations__inner">
+                        <div class="recent-locations__wrapper">
+                            <div class="recent-location__title">НЕДАВНИЕ МЕСТОПОЛОЖЕНИЯ</div>
+                        </div>
+                        <div class="recent-locations__inner">
+                            <div class="recent-locations__wrapper" id="recentWrapper"></div>
+                        </div>
+                    </div>
             </div>`
 }

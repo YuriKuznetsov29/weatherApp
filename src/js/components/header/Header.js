@@ -13,10 +13,8 @@ export class Header {
 
     init() {
         this.currentLocation = this.store.getState().currentLocation
-        if (this.currentLocation) {
             this.root.insertAdjacentHTML('afterbegin', getHeaderTemplate(this.currentLocation))
             this.city = this.root.querySelector('[data-type="city"]')
-        }
     }
 
     addListeners() {
