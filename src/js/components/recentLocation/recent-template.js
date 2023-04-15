@@ -3,6 +3,7 @@ import getData from "../../services"
 export function addRecentItems(locations) {
     const {getWeatherForRecentLocation} = getData()
     const recentWrapper = document.querySelector('#recentWrapper')
+    recentWrapper.innerHTML = ''
 
     locations.forEach(async (location) => {
         const {lat, lon, city} = location

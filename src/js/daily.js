@@ -33,14 +33,14 @@ const {tempChartConfig, moiChartConfig, windChartConfig, pressureChartConfig, su
 //     }
 // })
 
-const getCurrentDate = () => {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const day = date.getDate();
-  const currentDate = `${year}-${(month + 1) < 10 ? `0${(month + 1)}` : (month + 1)}-${day < 10 ? `0${day}` : day}`;
-  return currentDate;
-}
+// const getCurrentDate = () => {
+//   const date = new Date();
+//   const year = date.getFullYear();
+//   const month = date.getMonth();
+//   const day = date.getDate();
+//   const currentDate = `${year}-${(month + 1) < 10 ? `0${(month + 1)}` : (month + 1)}-${day < 10 ? `0${day}` : day}`;
+//   return currentDate;
+// }
 
 // inputDateBtn.addEventListener('click', () => {
 //   if (inputDay.value) {

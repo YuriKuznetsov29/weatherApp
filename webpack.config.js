@@ -30,7 +30,7 @@ module.exports = {
   mode: 'development',
   entry: {
     main: './js/main.js',
-    daily: './js/daily.js'
+    // daily: './js/daily.js'
   },
   output: {
     filename: filename('js'), // автоматически подставляется имя и хеш при создании нового бандла
@@ -50,7 +50,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
     template: './index.html',
-    chunks: ['main', 'daily'],
+    chunks: ['main'],
     minify: { // минифицируем сборку html
       removeComments: isProd,
       collapseWhitespace: isProd
@@ -58,7 +58,7 @@ module.exports = {
     new HtmlWebpackPlugin({
     template: './daily.html',
     filename: 'daily.html',
-    chunks: ['daily'],
+    chunks: ['main'],
     minify: { // минифицируем сборку html
       removeComments: isProd,
       collapseWhitespace: isProd

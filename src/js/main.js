@@ -22,7 +22,7 @@ const initialState = {
 
 const store = new CreateStore(reducer, initialState)
 
-const app = new BaseComponent([Charts, Header, SelectLocation, RecentLocations, CurrentWeather], store)
+const app = new BaseComponent([Header, SelectLocation, RecentLocations, CurrentWeather, Charts], store)
 app.init()
 
 const {getWeather} = getData();
