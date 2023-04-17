@@ -14,11 +14,11 @@ export class Charts {
         this.root.insertAdjacentHTML('afterbegin', getChartsTemplate())
         const currentLocation = this.store.getState().currentLocation
         if (currentLocation) {
-            createCharts(currentLocation)
+            createCharts(currentLocation, this.root)
         }
     }
 
     storeChanged({currentLocation}) {
-        createCharts(currentLocation)
+        createCharts(currentLocation, this.root)
     }
 }

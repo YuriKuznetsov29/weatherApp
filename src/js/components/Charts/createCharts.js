@@ -1,34 +1,23 @@
 import chartConfigs from "../../chartConfigs";
 import { Chart, LineController, LineElement, PointElement, CategoryScale, LinearScale, Filler, Legend, BarController, BarElement} from "chart.js";
 // import Chart from 'chart.js/auto';
-// import { Chart, BarElement, BarController, CategoryScale, Decimation, Filler, Legend, Title, Tooltip} from 'chart.js';
-// import { Chart, registerables} from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import getData from "../../services";
 
-
-const myChart = document.getElementById('myChart'),
-      myChartMoi = document.getElementById('myChartMoi'),
-      myChartWind = document.getElementById('myChartWind'),
-      myChartPressure = document.getElementById('myChartPressure'),
-      myChartSun = document.getElementById('myChartSun');
-
-const getCurrentDate = () => {
+const getCurrentDate = () => { // переписать
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth();
     const day = date.getDate();
     const currentDate = `${year}-${(month + 1) < 10 ? `0${(month + 1)}` : (month + 1)}-${day < 10 ? `0${day}` : day}`;
     return currentDate;
-  }
+}
 
 const {tempChartConfig, moiChartConfig, windChartConfig, pressureChartConfig, sunChartConfig, sunriseConfig, sunsetConfig} = chartConfigs();
 const {getWeather} = getData();
 
 Chart.register(annotationPlugin, ChartDataLabels, LineController, LineElement, PointElement, CategoryScale, LinearScale, Filler, Legend, BarController, BarElement);
-// Chart.register(annotationPlugin);
-// Chart.register(ChartDataLabels);
 
 Chart.defaults.color = '#fff';
 Chart.defaults.font.size = 16;
@@ -40,30 +29,28 @@ Chart.defaults.plugins.datalabels.align = 'end';
 // Chart.defaults.plugins.legend.color = '#fff';
 // Chart.defaults.backgroundColor = '#fff';
 
-
 let tempChart;
 let moiChart;
 let windChart;
 let pressureChart;
 let sunChart;
 
-export function createCharts(location, day = getCurrentDate()) {
+export function createCharts(location, root, day = getCurrentDate()) {
 
-    const {lat, lon} = location
-    // debugger
-    console.log('DEBUGGGGGGG')
+  const {lat, lon} = location
 
-// Chart.register(Chart, BarElement, BarController, CategoryScale, Decimation, Filler, Legend, Title, Tooltip, annotationPlugin, ChartDataLabels);
+  const myChart = root.querySelector('#myChart'),
+        myChartMoi = root.querySelector('#myChartMoi'),
+        myChartWind = root.querySelector('#myChartWind'),
+        myChartPressure = root.querySelector('#myChartPressure'),
+        myChartSun = root.querySelector('#myChartSun'),
+        loading = root.querySelectorAll('.loadingChart');
 
-
-
-    const myChart = document.getElementById('myChart'),
-          myChartMoi = document.getElementById('myChartMoi'),
-          myChartWind = document.getElementById('myChartWind'),
-          myChartPressure = document.getElementById('myChartPressure'),
-          myChartSun = document.getElementById('myChartSun');
+        loading.forEach(el => el.style.display = 'block')
 
     getWeather(lat, lon, day).then((res) => {
+
+        loading.forEach(el => el.style.display = 'none')
 
         if (document.documentElement.clientWidth <= 600) {
           Chart.defaults.font.size = 10;
@@ -181,5 +168,6 @@ export function createCharts(location, day = getCurrentDate()) {
             addData(pressureChart, res.dailyTime, res.dailyPressure, day);
         }
     })
+    .catch(console.error)
 }
 

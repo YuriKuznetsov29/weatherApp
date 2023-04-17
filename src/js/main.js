@@ -15,6 +15,10 @@ import { storage } from "./utils";
 import '../styles/index.scss';
 // import '../styles/daily.css';
 
+const background = document.querySelector('.background-image')
+background.style.background = `url("/background${Math.floor(Math.random() * 5)}.jpg") 50% no-repeat`
+background.style.backgroundSize = `cover`
+
 const initialState = {
   recentLocation: null,
   currentLocation: storage('currentLocation') || null//{lat: '', lon: '', city: ''}
@@ -25,10 +29,12 @@ const store = new CreateStore(reducer, initialState)
 const app = new BaseComponent([Header, SelectLocation, RecentLocations, CurrentWeather, Charts], store)
 app.init()
 
-const {getWeather} = getData();
-const city = document.querySelector('.city'),
-      burger = document.querySelector('.burger'),
-      nav = document.querySelector('.nav');
+const {getWeather, getWeatherForRecentLocation} = getData();
+
+getWeatherForRecentLocation('40.71', '-74.01').then(console.log)
+// const city = document.querySelector('.city'),
+//       burger = document.querySelector('.burger'),
+//       nav = document.querySelector('.nav');
 
 // burger.addEventListener('click', () => {
 //     if (nav.style.display === 'none') {

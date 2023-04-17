@@ -20,6 +20,7 @@ export class BaseComponent {
             })
             return
         }
+        // this.store.dispatch({type: CURRENT__LOCATION, payload: {lat: '', lon: '', city: ''}})
 
         this.runComponent()
     }

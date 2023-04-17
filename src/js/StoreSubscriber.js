@@ -7,6 +7,7 @@ export class StoreSubscriber {
 
     subscribeComponents(components) {
         this.prevState = this.store.getState()
+        debugger
 
         this.sub = this.store.subscribe((state) => {
             Object.keys(state).forEach(key => {

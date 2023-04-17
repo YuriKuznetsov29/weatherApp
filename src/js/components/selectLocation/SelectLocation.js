@@ -36,6 +36,7 @@ export class SelectLocation {
                     storage('currentLocation', this.store.getState().currentLocation)
                     this.clearFind()
                 })
+                .catch(console.error)
             }
 
             if (event.target.dataset.type === 'setLocation') {
@@ -59,6 +60,7 @@ export class SelectLocation {
                     })
                 }
             })
+            .catch(console.error)
         }
 
         document.body.onclick = (event) => {

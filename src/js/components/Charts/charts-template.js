@@ -1,7 +1,11 @@
 export function getChartsTemplate() {
     return `<div class="chart__inner">
-    <div class="container">
+    <div class="container" id="chartContainer">
+        
         <div class="chartWrapper">
+            <div class="loadingChart">
+                <div class="gradient"></div>
+            </div>
             <div class="chart-container">
                 <canvas class="chart" id="myChart" ></canvas>
             </div>
@@ -10,7 +14,10 @@ export function getChartsTemplate() {
 </div>
 
 <div class="chart__inner">
-    <div class="container">
+    <div class="container" id="chartContainer">
+        <div class="loadingChart">
+            <div class="gradient"></div>
+        </div>
         <div class="chartWrapper">
             <div class="chart-container">
                 <canvas class="chart" id="myChartMoi" ></canvas>
@@ -20,7 +27,10 @@ export function getChartsTemplate() {
 </div>
 
 <div class="chart__inner">
-    <div class="container">
+    <div class="container" id="chartContainer">
+        <div class="loadingChart">
+            <div class="gradient"></div>
+        </div>
         <div class="chartWrapper">
             <div class="chart-container">
                 <canvas class="chart" id="myChartWind" ></canvas>
@@ -29,7 +39,10 @@ export function getChartsTemplate() {
     </div>
 </div>
 <div class="chart__inner">
-    <div class="container">
+    <div class="container" id="chartContainer">
+        <div class="loadingChart">
+            <div class="gradient"></div>
+        </div>
         <div class="chartWrapper">
             <div class="chart-container">
                 <canvas class="chart" id="myChartPressure" ></canvas>
@@ -38,7 +51,10 @@ export function getChartsTemplate() {
     </div>
 </div>
 <div class="chart__inner">
-    <div class="container">
+    <div class="container" id="chartContainer">
+        <div class="loadingChart">
+            <div class="gradient"></div>
+        </div>
         <div class="chartWrapper">
             <div class="chart-container">
                 <canvas class="chart" id="myChartSun" >
