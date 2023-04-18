@@ -258,8 +258,8 @@ const chartConfigs = () => {
 	    yMin:  0.1,
 
         xScaleID: 'x',
-        xMax: 110,
-	    xMin:  110,
+        xMax: 90,
+	    xMin:  90,
       };
 
     const sunriseConfig = {
@@ -313,8 +313,8 @@ const chartConfigs = () => {
 	    yMin:  0.1,
 
         xScaleID: 'x',
-        xMax: 92,
-	    xMin:  92,
+        xMax: 75,
+	    xMin:  75,
       };
 
     const annotation5 = {
@@ -332,8 +332,8 @@ const chartConfigs = () => {
 	    yMin:  0.2,
 
         xScaleID: 'x',
-        xMax: 92,
-	    xMin:  92,
+        xMax: 75,
+	    xMin:  75,
       };
 
     const sunChartConfig = {
@@ -371,7 +371,7 @@ const chartConfigs = () => {
                 },
                 {
                     label: 'Sunrise / Sunset',
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+                    data: [],
                     fill: false,
                     backgroundColor: CHART_COLORS.yellow,
                     borderColor: CHART_COLORS.grey,

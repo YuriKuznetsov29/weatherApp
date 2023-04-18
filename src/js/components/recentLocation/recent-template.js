@@ -31,13 +31,13 @@ export function addRecentItems(locations) {
                         <div class="recent-locations__item-realFeel-temp">${data.realFeel}°C</div>
                     </div>
                 </div>`)
-                console.log(i)
+                // console.log(i)
 
         if (arr.length === itemArr.length) {
             recentWrapper.innerHTML = ''
-            console.log(locations)
-            console.log(itemArr)
-            console.log(arr.length)
+            // console.log(locations)
+            // console.log(itemArr)
+            // console.log(arr.length)
             recentWrapper.insertAdjacentHTML('afterbegin', itemArr.join(''))
         }
     })

@@ -7,11 +7,12 @@ export class StoreSubscriber {
 
     subscribeComponents(components) {
         this.prevState = this.store.getState()
-        debugger
+        // debugger
 
         this.sub = this.store.subscribe((state) => {
             Object.keys(state).forEach(key => {
                 if (JSON.stringify(state[key]) !== JSON.stringify(this.prevState[key])) {
+                    console.log("CHANGE CURRENT")
                     components.forEach(component => {
                         if (component.subscribe.includes(key)) {
                             const changes = {[key]: state[key]}

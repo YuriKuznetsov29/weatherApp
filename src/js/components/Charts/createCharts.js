@@ -124,23 +124,29 @@ export function createCharts(location, root, day = getCurrentDate()) {
             }
             addData(pressureChart, res.dailyTime, res.dailyPressure, day);
         }
-
+// debugger
         const sunCalk = (sunrise, sunset) => {
-          let labels = [];
-          let sin = [];
-          // let coefficient = (6.5 - (+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100)) * 0.25;
+          let labels = []
+          let sin = []
+          let sunArr = []
+
           const step = Math.PI / ((+sunset.slice(0, 2) + (+sunset.slice(3, 5) * (10/6))/100) - (+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100))
           
-          for (let i = -Math.PI / 2; i <= 1.5*Math.PI; i+= (step / 4)) {
+          for (let i = -Math.PI / 2; i <= 1.5*Math.PI; i+= Math.abs(step / 4)) {
               labels.push(''+i.toFixed(10));
               sin.push(Math.sin(i).toFixed(10));
              }
+
+          const stepSun = Math.PI / ((+sunset.slice(0, 2) + (+sunset.slice(3, 5) * (10/6))/100) - (+sunrise.slice(0, 2) + (+sunrise.slice(3, 5) * (10/6))/100))
+          for (let i = -Math.PI / 2; i <= 1.5*Math.PI; i+= Math.abs(stepSun / 4)) {
+              sunArr.push(Math.sin(i).toFixed(10));
+             }
   
-          return [labels, sin];
+          return [labels, sin, sunArr];
         }
 
-        const [labels, sin] = sunCalk(res.sunrise, res.sunset)
-
+        const [labels, sin, sunArr] = sunCalk(res.sunrise, res.sunset)
+        // console.log(labels, sin)
         const date = new Date();
         const time = date.getHours() + (date.getMinutes() * (10/6)/100);
 
@@ -153,9 +159,12 @@ export function createCharts(location, root, day = getCurrentDate()) {
           sunChartConfig.data.labels = labels;
           sunChartConfig.data.datasets[0].data = sin;
           sunChartConfig.data.datasets[1].data = sin.slice(0, Math.floor(time * 4));
-          sunChartConfig.data.datasets[2].data = new Array(114).fill(0)
+
+          sunChartConfig.data.datasets[2].data = new Array(labels.length).fill(0)
+
           sunChartConfig.data.datasets[3].data = sin.map(el => +el + 0.20 + '').slice(0, Math.floor((time * 4) - 2));
           sunChartConfig.data.datasets[3].pointStyle[sunChartConfig.data.datasets[3].data.length - 1] = sun;
+
           sunChartConfig.options.plugins.subtitle.text = `${day}\n` + 'Sunrise / Sunset';
           sunChart = new Chart(myChartSun, sunChartConfig);
         } else {

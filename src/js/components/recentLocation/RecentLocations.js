@@ -1,5 +1,4 @@
 import { storage } from "../../utils"
-import getData from "../../services"
 import { getRecentTemplate, addRecentItems } from "./recent-template"
 import { CURRENT__LOCATION } from "../../redux/actions"
 
@@ -45,6 +44,7 @@ export class RecentLocations {
                 check = false
             }
         })
+        console.log("TRUE")
         if (this.locations.length < 3 && check) {
             console.log('add')
             // debugger

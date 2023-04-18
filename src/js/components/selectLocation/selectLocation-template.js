@@ -23,6 +23,6 @@ export function getSelectLocationTemplate() {
 }
 
 export function insertSearchResults(location) {
-    const {country, country_code, name, latitude, longitude} = location
-    return `<div class="search__result" data-type="setLocation" data-location="${latitude},${longitude},${name}">${country}, ${name}, ${country_code}</div>`
+    const {country, country_code, name, latitude, longitude, timezone} = location
+    return `<div class="search__result" data-type="setLocation" data-location="${latitude},${longitude},${name},${timezone}">${country}, ${name}, ${country_code}</div>`
 }

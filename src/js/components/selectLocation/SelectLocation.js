@@ -42,7 +42,7 @@ export class SelectLocation {
             if (event.target.dataset.type === 'setLocation') {
                 console.log(event.target.dataset.location)
                 const location = event.target.dataset.location.split(',')
-                this.store.dispatch({type: CURRENT__LOCATION, payload: {lat: +location[0], lon: +location[1], city: location[2]}})
+                this.store.dispatch({type: CURRENT__LOCATION, payload: {lat: +location[0], lon: +location[1], city: location[2], timezone: location[3]}})
                 storage('currentLocation', this.store.getState().currentLocation)
                 this.clearFind()
             }

@@ -21,16 +21,29 @@ function getData() {
                 lon: res.longitude,
             }
           })
-        // return data;
+          .catch(console.error)
     }
 
     // 
     // http://ip-api.com/json/
 
-    const getCityLocation = (city) => {
-        const data = request(`https://geocoding-api.open-meteo.com/v1/search?name=${city}`);
-        return data;
+    const getCityLocation = async (city) => {
+        const data = await request(`https://geocoding-api.open-meteo.com/v1/search?name=${city}`);
+        console.log(data.timezone)
+        // if (data.results) {
+        //     for (let i = 0; i < data.results.length; i++) {
+        //         data.results[i].timezone = data.results[i].timezone.replace(/\//, '%2F')
+        //     }
+        // }
+        if (data.results) {
+            for (let key of data.results) {
+                key.timezone = key.timezone.replace(/\//, '%2F')
+            }
+        }
+        return data
     }
+
+    
 
     const getLastDate = () => {
         const date = new Date();
@@ -43,7 +56,7 @@ function getData() {
         const lastDay = lastDate.getDate();
         const transformLastDate = `${lastYear}-${(lastmonth + 1) < 10 ? `0${(lastmonth + 1)}` : (lastmonth + 1)}-${lastDay < 10 ? `0${lastDay}` : lastDay}`;
         // console.log(transformLastDate);
-        return transformLastDate;
+        return transformLastDate; // переписать
     }
 
     const getCurrentDate = () => {
@@ -56,8 +69,8 @@ function getData() {
         return currentDate;
     }
 
-    const getWeather = (lat, lon, day = getCurrentDate()) => {
-        const data = request(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,precipitation,weathercode,pressure_msl,surface_pressure,windspeed_10m,winddirection_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,precipitation_sum,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&timezone=Europe%2FMoscow&start_date=${day}&end_date=${getLastDate()}`);
+    const getWeather = (lat, lon, day = getCurrentDate(), timezone = 'Europe%2FMoscow') => {
+        const data = request(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,precipitation,weathercode,pressure_msl,surface_pressure,windspeed_10m,winddirection_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,precipitation_sum,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&timezone=${timezone}&start_date=${day}&end_date=${getLastDate()}`);
         // data.then(console.log)
         // console.log(day);
         return transformWeatherData(data);
@@ -86,8 +99,8 @@ function getData() {
     }
 
     const getWeatherForRecentLocation = (lat, lon, day = getCurrentDate()) => {
-        const data = request(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,pressure_msl,surface_pressure,windspeed_10m,winddirection_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,precipitation_sum,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&timezone=Europe%2FMoscow&start_date=${day}&end_date=${getLastDate()}`);
-        return transformWeatherDataRecent(data);
+            const data = request(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,pressure_msl,surface_pressure,windspeed_10m,winddirection_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,precipitation_sum,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&timezone=Europe%2FMoscow&start_date=${day}&end_date=${getLastDate()}`);
+            return transformWeatherDataRecent(data);
     }
 
     const transformWeatherDataRecent = (data) => {
