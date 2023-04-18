@@ -13,12 +13,14 @@ function getData() {
         //   };
 
         //   navigator.geolocation.getCurrentPosition(success)
-          
           return data.then(res => {
+          console.log(res)
+
             return {
                 city: res.city,
                 lat: res.latitude,
                 lon: res.longitude,
+                timezone: res.time_zone.name.replace(/\//, '%2F')
             }
           })
           .catch(console.error)
@@ -69,7 +71,7 @@ function getData() {
         return currentDate;
     }
 
-    const getWeather = (lat, lon, day = getCurrentDate(), timezone = 'Europe%2FMoscow') => {
+    const getWeather = (lat, lon, timezone, day = getCurrentDate()) => {
         const data = request(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,precipitation,weathercode,pressure_msl,surface_pressure,windspeed_10m,winddirection_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,precipitation_sum,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&timezone=${timezone}&start_date=${day}&end_date=${getLastDate()}`);
         // data.then(console.log)
         // console.log(day);
@@ -98,8 +100,8 @@ function getData() {
         })
     }
 
-    const getWeatherForRecentLocation = (lat, lon, day = getCurrentDate()) => {
-            const data = request(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,pressure_msl,surface_pressure,windspeed_10m,winddirection_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,precipitation_sum,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&timezone=Europe%2FMoscow&start_date=${day}&end_date=${getLastDate()}`);
+    const getWeatherForRecentLocation = (lat, lon, timezone, day = getCurrentDate()) => {
+            const data = request(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,pressure_msl,surface_pressure,windspeed_10m,winddirection_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,precipitation_sum,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&timezone=${timezone}&start_date=${day}&end_date=${getLastDate()}`);
             return transformWeatherDataRecent(data);
     }
 

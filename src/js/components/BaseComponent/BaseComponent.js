@@ -14,13 +14,12 @@ export class BaseComponent {
         if (!storage('currentLocation')) {
             const {getLocation} = getData()
             getLocation().then((res) => {
-                storage('currentLocation', {lat: res.lat, lon: res.lon, city: res.city})
-                this.store.dispatch({type: CURRENT__LOCATION, payload: {lat: +res.lat, lon: +res.lon, city: res.city}})
+                storage('currentLocation', {lat: res.lat, lon: res.lon, city: res.city, timezone: res.timezone})
+                this.store.dispatch({type: CURRENT__LOCATION, payload: {lat: +res.lat, lon: +res.lon, city: res.city, timezone: res.timezone}})
                 this.runComponent()
             })
             return
         }
-        // this.store.dispatch({type: CURRENT__LOCATION, payload: {lat: '', lon: '', city: ''}})
 
         this.runComponent()
     }

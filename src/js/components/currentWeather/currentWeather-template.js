@@ -6,7 +6,7 @@ export async function getCurrentWeatherTemplate(root, location) {
 
     loading(root)
 
-    const {lat, lon} = location
+    const {lat, lon, timezone} = location
     const date = new Date()
     const time = date.toLocaleTimeString().slice(0,-3)
     const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
@@ -15,13 +15,7 @@ export async function getCurrentWeatherTemplate(root, location) {
 
     const {getWeatherForRecentLocation} = getData()
 
-    let data
-    try {
-        data = await getWeatherForRecentLocation(lat, lon)
-    } catch (error) {
-        throw error
-    }
-    
+        const data = await getWeatherForRecentLocation(lat, lon, timezone)
     
     root.innerHTML = ''
     root.insertAdjacentHTML('afterbegin', `

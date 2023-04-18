@@ -1,4 +1,3 @@
-import { storage } from "../../utils"
 import { getHeaderTemplate } from "./header-template"
 
 export class Header {

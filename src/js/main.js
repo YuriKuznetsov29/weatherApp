@@ -31,7 +31,7 @@ app.init()
 
 const {getWeather, getWeatherForRecentLocation} = getData();
 
-getWeatherForRecentLocation('40.71', '-74.01').then(console.log)
+// getWeatherForRecentLocation('40.71', '-74.01').then(console.log)
 // const city = document.querySelector('.city'),
 //       burger = document.querySelector('.burger'),
 //       nav = document.querySelector('.nav');

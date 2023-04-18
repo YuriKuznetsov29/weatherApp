@@ -32,7 +32,7 @@ export class SelectLocation {
 
             if (event.target.dataset.type === 'getLocation') {
                 getLocation().then((res) => {
-                    this.store.dispatch({type: CURRENT__LOCATION, payload: {lat: +res.lat, lon: +res.lon, city: res.city}})
+                    this.store.dispatch({type: CURRENT__LOCATION, payload: {lat: +res.lat, lon: +res.lon, city: res.city, timezone: res.timezone}})
                     storage('currentLocation', this.store.getState().currentLocation)
                     this.clearFind()
                 })

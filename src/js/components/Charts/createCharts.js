@@ -37,7 +37,7 @@ let sunChart;
 
 export function createCharts(location, root, day = getCurrentDate()) {
 
-  const {lat, lon} = location
+  const {lat, lon, timezone} = location
 
   const myChart = root.querySelector('#myChart'),
         myChartMoi = root.querySelector('#myChartMoi'),
@@ -48,7 +48,7 @@ export function createCharts(location, root, day = getCurrentDate()) {
 
         loading.forEach(el => el.style.display = 'block')
 
-    getWeather(lat, lon, day).then((res) => {
+    getWeather(lat, lon, timezone, day).then((res) => {
 
         loading.forEach(el => el.style.display = 'none')
 

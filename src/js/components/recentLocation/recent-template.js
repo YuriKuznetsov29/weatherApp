@@ -8,17 +8,17 @@ export function addRecentItems(locations) {
 
     const itemArr = []
     locations.forEach(async (location, i, arr) => {
-        const {lat, lon, city} = location
+        const {lat, lon, city, timezone} = location
 
         let data
         try {
-            data = await getWeatherForRecentLocation(lat, lon)
+            data = await getWeatherForRecentLocation(lat, lon, timezone)
         } catch (error) {
             throw error
         }
 
         itemArr.push(`
-                <div class="recent-locations__item" data-type="recentItem" data-recentLocation="${lat},${lon},${city}">
+                <div class="recent-locations__item" data-type="recentItem" data-recentLocation="${lat},${lon},${city},${timezone}">
                     <div class="recent-locations__item-city">${city}</div>
                     <div class="recent-locations__item-country">Россия</div>
                     <div class="recent-locations__item-data">
@@ -35,9 +35,6 @@ export function addRecentItems(locations) {
 
         if (arr.length === itemArr.length) {
             recentWrapper.innerHTML = ''
-            // console.log(locations)
-            // console.log(itemArr)
-            // console.log(arr.length)
             recentWrapper.insertAdjacentHTML('afterbegin', itemArr.join(''))
         }
     })
