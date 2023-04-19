@@ -5,25 +5,21 @@ export async function getCurrentWeatherTemplate(root, location) {
     if (!location) return ''
 
     loading(root)
-
     const {lat, lon, timezone} = location
-    const date = new Date()
-    const time = date.toLocaleTimeString().slice(0,-3)
-    const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
-    const month = date.getMonth()
-    const day = date.getDate()
-
     const {getWeatherForRecentLocation} = getData()
-
-        const data = await getWeatherForRecentLocation(lat, lon, timezone)
+    const data = await getWeatherForRecentLocation(lat, lon, timezone)
+    console.log(data.utcOffset)
     
+    const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+    const {time, month, day} = getTimeWithUtcOffset(data.utcOffset)
+
     root.innerHTML = ''
     root.insertAdjacentHTML('afterbegin', `
         <div class="container">
             <div class="currentWeather__wrapper">
                 <div class="currentWeather__data">
                     <div class="currentWeather__data-time">${day} ${months[month]}, ${time}</div>
-                    <div class="currentWeather__data-temp">${data.currentTemp}C</div>
+                    <div class="currentWeather__data-temp">${data.currentTemp}°C</div>
                     <div class="currentWeather__data-Feeltemp">Ощущается как ${data.realFeel}°C</div>
                 </div>
                 <div class="currentWeather__code">
@@ -33,6 +29,17 @@ export async function getCurrentWeatherTemplate(root, location) {
             </div>
         </div>`
     )
+}
+
+function getTimeWithUtcOffset(offset) {
+    const date = new Date()
+    const utcDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds())
+    utcDate.setSeconds(offset)
+    const time = utcDate.toLocaleTimeString().slice(0,-3)
+    const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+    const month = utcDate.getMonth()
+    const day = utcDate.getDate()
+    return {time, month, day}
 }
 
 function loading(root) {

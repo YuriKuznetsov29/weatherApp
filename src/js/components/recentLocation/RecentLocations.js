@@ -1,6 +1,7 @@
 import { storage } from "../../utils"
 import { getRecentTemplate, addRecentItems } from "./recent-template"
-import { CURRENT__LOCATION } from "../../redux/actions"
+import { changeCurrentLocation } from "../../redux/actions"
+import { CURRENT__LOCATION } from "../../redux/types"
 
 export class RecentLocations {
     constructor(store) {
@@ -14,7 +15,7 @@ export class RecentLocations {
     init() {
         this.root = document.querySelector('#recent')
         this.currentLocation = this.store.getState().currentLocation
-        this.locations = storage('recentLocationt') || []
+        this.locations = storage('recentLocations') || []
         this.root.insertAdjacentHTML('afterbegin', getRecentTemplate())
         if (!this.locations[0]) {
             this.addLocation()
@@ -30,8 +31,8 @@ export class RecentLocations {
             if (recentLocation) {
                 console.log(recentLocation.dataset.recentlocation)
                 const [lat, lon, city, timezone] = recentLocation.dataset.recentlocation.split(',')
-                this.store.dispatch({type: CURRENT__LOCATION, payload: {lat: +lat, lon: +lon, city: city, timezone: timezone}})
-                storage('currentLocation', this.store.getState().currentLocation) // реальзовать функцию для автоматического обновления LacalStorage из стора
+                this.store.dispatch(changeCurrentLocation({lat: +lat, lon: +lon, city: city, timezone: timezone}))
+                // storage('currentLocation', this.store.getState().currentLocation) // реальзовать функцию для автоматического обновления LacalStorage из стора
             }
         }
     }
@@ -57,7 +58,8 @@ export class RecentLocations {
     storeChanged({currentLocation}) {
         this.currentLocation = currentLocation
         this.addLocation()
-        storage('recentLocationt', this.locations)
+        storage('recentLocations', this.locations)
+        console.log('CHANGE', this.locations)
         addRecentItems(this.locations)
     }
     

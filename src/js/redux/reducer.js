@@ -1,12 +1,12 @@
-import { RECENT__LOCATION } from "./actions";
-import { CURRENT__LOCATION } from "./actions";
+import { RECENT__LOCATION } from "./types";
+import { CURRENT__LOCATION } from "./types";
 
 export function reducer(state, action) {
     switch (action.type) {
         case RECENT__LOCATION:
             return {
                 ...state,
-                recentLocation: action.payload
+                recentLocations: action.payload
             }
         case CURRENT__LOCATION:
             return {

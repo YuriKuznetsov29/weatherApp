@@ -1,7 +1,8 @@
 import { getSelectLocationTemplate, insertSearchResults } from "./selectLocation-template"
 import getData from "../../services"
 import { storage } from "../../utils"
-import { CURRENT__LOCATION } from "../../redux/actions"
+import { changeCurrentLocation } from "../../redux/actions"
+import { CURRENT__LOCATION } from "../../redux/types"
 
 export class SelectLocation {
     constructor(store) {
@@ -32,7 +33,7 @@ export class SelectLocation {
 
             if (event.target.dataset.type === 'getLocation') {
                 getLocation().then((res) => {
-                    this.store.dispatch({type: CURRENT__LOCATION, payload: {lat: +res.lat, lon: +res.lon, city: res.city, timezone: res.timezone}})
+                    this.store.dispatch(changeCurrentLocation({lat: +res.lat, lon: +res.lon, city: res.city, timezone: res.timezone, country: res.country}))
                     storage('currentLocation', this.store.getState().currentLocation)
                     this.clearFind()
                 })
@@ -42,7 +43,7 @@ export class SelectLocation {
             if (event.target.dataset.type === 'setLocation') {
                 console.log(event.target.dataset.location)
                 const location = event.target.dataset.location.split(',')
-                this.store.dispatch({type: CURRENT__LOCATION, payload: {lat: +location[0], lon: +location[1], city: location[2], timezone: location[3]}})
+                this.store.dispatch(changeCurrentLocation({lat: +location[0], lon: +location[1], city: location[2], timezone: location[3], country: location[4]}))
                 storage('currentLocation', this.store.getState().currentLocation)
                 this.clearFind()
             }

@@ -158,6 +158,8 @@
                 }
             
                 .recent-locations__item-country {
+                    padding: 2px 0;
+                    margin: 3px 0;
                     font-size: 12px;
                 }
             
@@ -196,6 +198,7 @@
 }
 
 .currentWeather__wrapper {
+    
     display: flex;
     justify-content: space-between;
     color: #fff;
@@ -210,6 +213,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.currentWeather__codeValue {
+    margin: 10px 0;
 }
 
 .code-icon {

@@ -8,19 +8,14 @@ export function addRecentItems(locations) {
 
     const itemArr = []
     locations.forEach(async (location, i, arr) => {
-        const {lat, lon, city, timezone} = location
-
-        let data
-        try {
-            data = await getWeatherForRecentLocation(lat, lon, timezone)
-        } catch (error) {
-            throw error
-        }
+        const {lat, lon, city, timezone, country} = location
+        
+        const data = await getWeatherForRecentLocation(lat, lon, timezone)
 
         itemArr.push(`
                 <div class="recent-locations__item" data-type="recentItem" data-recentLocation="${lat},${lon},${city},${timezone}">
                     <div class="recent-locations__item-city">${city}</div>
-                    <div class="recent-locations__item-country">Россия</div>
+                    <div class="recent-locations__item-country">${country}</div>
                     <div class="recent-locations__item-data">
                         <i class="wi ${weatherDayClasses[data.weathercode]} recent-icon"></i>
                         <div class="recent-locations__item-data-temp">${data.currentTemp}</div>

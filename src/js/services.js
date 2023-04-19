@@ -20,7 +20,8 @@ function getData() {
                 city: res.city,
                 lat: res.latitude,
                 lon: res.longitude,
-                timezone: res.time_zone.name.replace(/\//, '%2F')
+                timezone: res.time_zone.name.replace(/\//, '%2F'),
+                country: res.country_name
             }
           })
           .catch(console.error)
@@ -49,26 +50,32 @@ function getData() {
 
     const getLastDate = () => {
         const date = new Date();
-        const year = date.getFullYear();
-        const month = date.getMonth();
-        const day = date.getDate();
-        const lastDate = new Date(year, month, day + 15);
-        const lastYear = lastDate.getFullYear();
-        const lastmonth = lastDate.getMonth();
-        const lastDay = lastDate.getDate();
-        const transformLastDate = `${lastYear}-${(lastmonth + 1) < 10 ? `0${(lastmonth + 1)}` : (lastmonth + 1)}-${lastDay < 10 ? `0${lastDay}` : lastDay}`;
+        date.setDate(date.getDate() + 15)
+        // const year = date.getFullYear();
+        // const month = date.getMonth();
+        // const day = date.getDate();
+        // const lastDate = new Date(year, month, day + 15);
+
+        // const lastYear = lastDate.getFullYear();
+        // const lastmonth = lastDate.getMonth();
+        // const lastDay = lastDate.getDate();
+        // const transformLastDate = `${lastYear}-${(lastmonth + 1) < 10 ? `0${(lastmonth + 1)}` : (lastmonth + 1)}-${lastDay < 10 ? `0${lastDay}` : lastDay}`;
         // console.log(transformLastDate);
-        return transformLastDate; // переписать
+        // return transformLastDate; // переписать
+
+        return date.toLocaleDateString().replace(/(\d{2})\.(\d{2})\.(\d{4})/g, '$3-$2-$1')
     }
 
     const getCurrentDate = () => {
-        const date = new Date();
-        const year = date.getFullYear();
-        const month = date.getMonth();
-        const day = date.getDate();
-        const currentDate = `${year}-${(month + 1) < 10 ? `0${(month + 1)}` : (month + 1)}-${day < 10 ? `0${day}` : day}`;
+        // const date = new Date();
+        // const year = date.getFullYear();
+        // const month = date.getMonth();
+        // const day = date.getDate();
+        // const currentDate = `${year}-${(month + 1) < 10 ? `0${(month + 1)}` : (month + 1)}-${day < 10 ? `0${day}` : day}`;
         // console.log(currentDate);
-        return currentDate;
+        // return currentDate;
+
+        return new Date().toLocaleDateString().replace(/(\d{2})\.(\d{2})\.(\d{4})/g, '$3-$2-$1')
     }
 
     const getWeather = (lat, lon, timezone, day = getCurrentDate()) => {
@@ -106,13 +113,16 @@ function getData() {
     }
 
     const transformWeatherDataRecent = (data) => {
-        const hour = new Date().getHours()
+        const hour = new Date().getHours() //ddddddddd
         return data.then((res) => {
+            console.log(res)
             let result = {
-                currentTemp: res.hourly.temperature_2m[hour],
-                realFeel: res.hourly.apparent_temperature[hour],
+                currentTemp: Math.round(res.hourly.temperature_2m[hour]),
+                realFeel: Math.round(res.hourly.apparent_temperature[hour]),
                 currentPrecipitation: res.hourly.precipitation[hour],
                 weathercode: res.hourly.weathercode[hour],
+                utcOffset: res.utc_offset_seconds
+
             }
             return result;
         })

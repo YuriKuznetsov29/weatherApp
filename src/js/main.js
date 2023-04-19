@@ -9,7 +9,7 @@ import { Header } from "./components/header/Header";
 import { Charts } from "./components/Charts/Charts";
 import { CreateStore } from "./redux/CreateStore";
 import { reducer } from "./redux/reducer";
-import { CURRENT__LOCATION } from "./redux/actions";
+import { CURRENT__LOCATION } from "./redux/types";
 import { storage } from "./utils";
 
 import '../styles/index.scss';
@@ -20,7 +20,7 @@ background.style.background = `url("/background${Math.floor(Math.random() * 5)}.
 background.style.backgroundSize = `cover`
 
 const initialState = {
-  recentLocation: null,
+  recentLocations: null,
   currentLocation: storage('currentLocation') || null//{lat: '', lon: '', city: ''}
 }
 
@@ -29,7 +29,7 @@ const store = new CreateStore(reducer, initialState)
 const app = new BaseComponent([Header, SelectLocation, RecentLocations, CurrentWeather, Charts], store)
 app.init()
 
-const {getWeather, getWeatherForRecentLocation} = getData();
+// const {getWeather, getWeatherForRecentLocation} = getData();
 
 // getWeatherForRecentLocation('40.71', '-74.01').then(console.log)
 // const city = document.querySelector('.city'),
@@ -46,34 +46,34 @@ const {getWeather, getWeatherForRecentLocation} = getData();
 
 
 
-const getWeatherOnCity = (lat, lon) => {
-    store.dispatch({type: CURRENT__LOCATION, payload: {lat: +lat, lon: +lon, city: localStorage.getItem('city')}})
+// const getWeatherOnCity = (lat, lon) => {
+//     store.dispatch({type: CURRENT__LOCATION, payload: {lat: +lat, lon: +lon, city: localStorage.getItem('city')}})
 
-    city.textContent = localStorage.getItem('city');
+//     city.textContent = localStorage.getItem('city');
 
-    getWeather(lat, lon).then((res) => {
-        document.querySelector('.weatherDescription').innerHTML = weatherDescription[res.weathercode]
+//     getWeather(lat, lon).then((res) => {
+//         document.querySelector('.weatherDescription').innerHTML = weatherDescription[res.weathercode]
         
-        const temp = document.querySelector('.temp');
-        temp.textContent = res.currentTemp + ' C';
-        // document.querySelector('.ph-thermometer').after(temp);
+//         const temp = document.querySelector('.temp');
+//         temp.textContent = res.currentTemp + ' C';
+//         // document.querySelector('.ph-thermometer').after(temp);
 
-        const moi = document.querySelector('.moi');
-        moi.textContent = res.currentMoi + ' %';
-        document.querySelector('.ph-drop').after(moi);
+//         const moi = document.querySelector('.moi');
+//         moi.textContent = res.currentMoi + ' %';
+//         document.querySelector('.ph-drop').after(moi);
 
-        const wind = document.querySelector('.wind');
-        wind.textContent = res.wind + ' km/h'; // + Math.floor(res.wind*1000/3600) + 'm/s';
-        document.querySelector('.ph-wind').after(wind);
+//         const wind = document.querySelector('.wind');
+//         wind.textContent = res.wind + ' km/h'; // + Math.floor(res.wind*1000/3600) + 'm/s';
+//         document.querySelector('.ph-wind').after(wind);
 
-        const sunrise = document.querySelector('.sunrise');
-        sunrise.textContent = res.sunrise;
-        document.querySelector('.ph-sun-horizon').after(sunrise);
+//         const sunrise = document.querySelector('.sunrise');
+//         sunrise.textContent = res.sunrise;
+//         document.querySelector('.ph-sun-horizon').after(sunrise);
 
-        const sunset = document.querySelector('.sunset');
-        sunset.textContent = res.sunset;
-        sunrise.after(sunset);
-    })
-}
+//         const sunset = document.querySelector('.sunset');
+//         sunset.textContent = res.sunset;
+//         sunrise.after(sunset);
+//     })
+// }
 
 // changeLocation(getWeatherOnCity);
