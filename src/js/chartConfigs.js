@@ -57,6 +57,7 @@ const chartConfigs = () => {
                     },
                 },
                 legend: {
+                    display: false,
                     labels: {
                         font: {
                             size: 24
@@ -107,6 +108,7 @@ const chartConfigs = () => {
                     },
                 },
                 legend: {
+                    display: false,
                     labels: {
                         font: {
                             size: 24
@@ -250,7 +252,7 @@ const chartConfigs = () => {
         borderWidth: 0,
         label: {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
-          content: 'Horizon',
+          content: 'Горизонт',
           display: true
         },
         yScaleID: 'y',
@@ -260,7 +262,7 @@ const chartConfigs = () => {
         xScaleID: 'x',
         xMax: 90,
 	    xMin:  90,
-      };
+    };
 
     const sunriseConfig = {
         type: 'line',
@@ -268,17 +270,17 @@ const chartConfigs = () => {
         borderWidth: 0,
         label: {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
-          content: '6:38',
+          content: '6:00',
           display: true
         },
         yScaleID: 'y',
-        yMax: 0.1,
-	    yMin:  0.1,
+        yMax: -0.9,
+	    yMin: -0.9,
 
         xScaleID: 'x',
         xMax: 20,
 	    xMin:  20,
-      };
+    };
 
     const annotation3 = {
         type: 'line',
@@ -286,17 +288,52 @@ const chartConfigs = () => {
         borderWidth: 0,
         label: {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
-          content: 'Sunrise',
+          content: 'Рассвет',
           display: true
         },
         yScaleID: 'y',
-        yMax: 0.2,
-	    yMin:  0.2,
+        yMax: -0.8,
+	    yMin: -0.8,
 
         xScaleID: 'x',
         xMax: 20,
 	    xMin:  20,
-      };
+    };
+
+    const annotation4 = {
+        type: 'line',
+        borderColor: 'black',
+        borderWidth: 0,
+        label: {
+          backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          content: 'Истинный полдень',
+          display: true
+        },
+        yScaleID: 'y',
+        yMax: -0.8,
+	    yMin: -0.8,
+
+        xScaleID: 'x',
+        xMax: 48,
+	    xMin: 48,
+    };
+    const trueNoonConfig = {
+        type: 'line',
+        borderColor: 'black',
+        borderWidth: 0,
+        label: {
+          backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          content: '12:00',
+          display: true
+        },
+        yScaleID: 'y',
+        yMax: -0.9,
+	    yMin: -0.9,
+
+        xScaleID: 'x',
+        xMax: 48,
+	    xMin: 48,
+    };
 
     const sunsetConfig = {
         type: 'line',
@@ -304,18 +341,18 @@ const chartConfigs = () => {
         borderWidth: 0,
         label: {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
-          content: '18:15',
+          content: '18:00',
           display: true
         },
 
         yScaleID: 'y',
-        yMax: 0.1,
-	    yMin:  0.1,
+        yMax: -0.9,
+	    yMin: -0.9,
 
         xScaleID: 'x',
         xMax: 75,
 	    xMin:  75,
-      };
+    };
 
     const annotation5 = {
         type: 'line',
@@ -323,18 +360,18 @@ const chartConfigs = () => {
         borderWidth: 0,
         label: {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
-          content: 'Sunset',
+          content: 'Закат',
           display: true
         },
 
         yScaleID: 'y',
-        yMax: 0.2,
-	    yMin:  0.2,
+        yMax: -0.8,
+	    yMin: -0.8,
 
         xScaleID: 'x',
         xMax: 75,
 	    xMin:  75,
-      };
+    };
 
     const sunChartConfig = {
         type: 'line',
@@ -463,6 +500,8 @@ const chartConfigs = () => {
                         annotation3,
                         sunsetConfig,
                         annotation5,
+                        annotation4,
+                        trueNoonConfig
                     }
                 }
             },
@@ -476,7 +515,8 @@ const chartConfigs = () => {
         pressureChartConfig,
         sunChartConfig,
         sunriseConfig,
-        sunsetConfig
+        sunsetConfig,
+        trueNoonConfig
     }
 }
 

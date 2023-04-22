@@ -13,7 +13,7 @@ export function addRecentItems(locations) {
         const data = await getWeatherForRecentLocation(lat, lon, timezone)
 
         itemArr.push(`
-                <div class="recent-locations__item" data-type="recentItem" data-recentLocation="${lat},${lon},${city},${timezone}">
+                <div class="recent-locations__item" data-type="recentItem" data-recentLocation="${lat},${lon},${city},${timezone},${country}">
                     <div class="recent-locations__item-city">${city}</div>
                     <div class="recent-locations__item-country">${country}</div>
                     <div class="recent-locations__item-data">

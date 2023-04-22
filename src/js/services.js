@@ -1,4 +1,5 @@
 import { request } from "./http";
+import { getTimeWithUtcOffset } from "./utils";
 
 function getData() {
     const getLocation = () => {
@@ -31,7 +32,7 @@ function getData() {
     // http://ip-api.com/json/
 
     const getCityLocation = async (city) => {
-        const data = await request(`https://geocoding-api.open-meteo.com/v1/search?name=${city}`);
+        const data = await request(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=5&language=ru`);
         console.log(data.timezone)
         // if (data.results) {
         //     for (let i = 0; i < data.results.length; i++) {
@@ -40,7 +41,7 @@ function getData() {
         // }
         if (data.results) {
             for (let key of data.results) {
-                key.timezone = key.timezone.replace(/\//, '%2F')
+                key.timezone = key.timezone ? key.timezone.replace(/\//, '%2F') : ''
             }
         }
         return data
@@ -86,8 +87,10 @@ function getData() {
     } 
 
     const transformWeatherData = (data) => {
-        const hour = new Date().getHours()
+        // const hour = new Date().getHours()
         return data.then((res) => {
+            const {hour} = getTimeWithUtcOffset(res.utc_offset_seconds)
+
             let result = {
                 currentTemp: res.hourly.temperature_2m[hour],
                 currentMoi: res.hourly.relativehumidity_2m[hour],
@@ -102,26 +105,34 @@ function getData() {
                 dailyWindDir: res.hourly.winddirection_10m.slice(0, 24),
                 dailyPressure: res.hourly.pressure_msl.slice(0, 24).map(el => Math.round(el)),
                 dailyTime: res.hourly.time.slice(0, 24).map(item => item.slice(-5)),
+                utcOffset: res.utc_offset_seconds
             }
             return result;
         })
     }
 
     const getWeatherForRecentLocation = (lat, lon, timezone, day = getCurrentDate()) => {
-            const data = request(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation,weathercode,pressure_msl,surface_pressure,windspeed_10m,winddirection_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,precipitation_sum,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&timezone=${timezone}&start_date=${day}&end_date=${getLastDate()}`);
+            const data = request(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,dewpoint_2m,precipitation_probability,apparent_temperature,precipitation,visibility,weathercode,pressure_msl,surface_pressure,windspeed_10m,winddirection_10m,uv_index&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,precipitation_probability_max,precipitation_sum,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&timezone=${timezone}&start_date=${day}&end_date=${getLastDate()}`);
             return transformWeatherDataRecent(data);
     }
 
     const transformWeatherDataRecent = (data) => {
-        const hour = new Date().getHours() //ddddddddd
+        // const hour = new Date().getHours() 
         return data.then((res) => {
             console.log(res)
+            const {hour} = getTimeWithUtcOffset(res.utc_offset_seconds)
             let result = {
                 currentTemp: Math.round(res.hourly.temperature_2m[hour]),
                 realFeel: Math.round(res.hourly.apparent_temperature[hour]),
                 currentPrecipitation: res.hourly.precipitation[hour],
                 weathercode: res.hourly.weathercode[hour],
-                utcOffset: res.utc_offset_seconds
+                utcOffset: res.utc_offset_seconds,
+                moi: res.hourly.relativehumidity_2m[hour],
+                dewpoint: res.hourly.dewpoint_2m[hour],
+                pressure: res.hourly.pressure_msl[hour],
+                uvIndex: res.hourly.uv_index[hour],
+                precipProb: res.hourly.precipitation_probability[hour],
+                visibility: res.hourly.visibility[hour],
 
             }
             return result;

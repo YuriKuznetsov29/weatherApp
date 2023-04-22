@@ -1,7 +1,7 @@
 export function getChartsTemplate() {
     return `<div class="chart__inner">
-    <div class="container" id="chartContainer">
-        
+<div class="container" id="chartContainer">
+        <div class="chartTitle">Температура</div>
         <div class="chartWrapper">
             <div class="loadingChart">
                 <div class="gradient"></div>
@@ -15,19 +15,7 @@ export function getChartsTemplate() {
 
 <div class="chart__inner">
     <div class="container" id="chartContainer">
-        <div class="loadingChart">
-            <div class="gradient"></div>
-        </div>
-        <div class="chartWrapper">
-            <div class="chart-container">
-                <canvas class="chart" id="myChartMoi" ></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="chart__inner">
-    <div class="container" id="chartContainer">
+        <div class="chartTitle">Ветер</div>
         <div class="loadingChart">
             <div class="gradient"></div>
         </div>
@@ -38,20 +26,10 @@ export function getChartsTemplate() {
         </div>
     </div>
 </div>
+
 <div class="chart__inner">
     <div class="container" id="chartContainer">
-        <div class="loadingChart">
-            <div class="gradient"></div>
-        </div>
-        <div class="chartWrapper">
-            <div class="chart-container">
-                <canvas class="chart" id="myChartPressure" ></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="chart__inner">
-    <div class="container" id="chartContainer">
+        <div class="chartTitle">Восход и закат солнца</div>
         <div class="loadingChart">
             <div class="gradient"></div>
         </div>
@@ -65,3 +43,29 @@ export function getChartsTemplate() {
     </div>
 </div>`
 }
+
+{/* <div class="chart__inner">
+    <div class="container" id="chartContainer">
+        <div class="loadingChart">
+            <div class="gradient"></div>
+        </div>
+        <div class="chartWrapper">
+            <div class="chart-container">
+                <canvas class="chart" id="myChartMoi" ></canvas>
+            </div>
+        </div>
+    </div>
+</div> */}
+
+{/* <div class="chart__inner">
+    <div class="container" id="chartContainer">
+        <div class="loadingChart">
+            <div class="gradient"></div>
+        </div>
+        <div class="chartWrapper">
+            <div class="chart-container">
+                <canvas class="chart" id="myChartPressure" ></canvas>
+            </div>
+        </div>
+    </div>
+</div> */}

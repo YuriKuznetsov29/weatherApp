@@ -144,7 +144,7 @@
                 margin: 5px;
                 padding: 10px;
                 width: 170px;
-                height: 130px;
+                min-height: 130px;
                 border-radius: 8px;
                 color: #fff;
                 background-color: rgba(0, 0, 0, .4);
@@ -222,6 +222,28 @@
 .code-icon {
     margin: 20px;
     font-size: 150px;
+}
+
+.currentWeather__nowTitle {
+    margin-top: 30px;
+    font-size: 30px;
+    color: #fff;
+}
+
+.currentWeather__values {
+    text-align: left;
+}
+
+
+.currentWeather__data-name, .currentWeather__data-value  {
+    margin: 10px 0;
+}
+
+// Charts
+
+.chartTitle {
+    color: #fff;
+    font-size: 30px;
 }
 
 /* Background */

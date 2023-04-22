@@ -30,8 +30,8 @@ export class RecentLocations {
             const recentLocation = event.target.closest('[data-type="recentItem"]')
             if (recentLocation) {
                 console.log(recentLocation.dataset.recentlocation)
-                const [lat, lon, city, timezone] = recentLocation.dataset.recentlocation.split(',')
-                this.store.dispatch(changeCurrentLocation({lat: +lat, lon: +lon, city: city, timezone: timezone}))
+                const [lat, lon, city, timezone, country] = recentLocation.dataset.recentlocation.split(',')
+                this.store.dispatch(changeCurrentLocation({lat: +lat, lon: +lon, city: city, timezone: timezone, country: country}))
                 // storage('currentLocation', this.store.getState().currentLocation) // реальзовать функцию для автоматического обновления LacalStorage из стора
             }
         }
@@ -59,6 +59,7 @@ export class RecentLocations {
         this.currentLocation = currentLocation
         this.addLocation()
         storage('recentLocations', this.locations)
+        storage('currentLocation', currentLocation)
         console.log('CHANGE', this.locations)
         addRecentItems(this.locations)
     }
