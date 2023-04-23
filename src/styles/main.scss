@@ -248,6 +248,10 @@
 
 // Precipitation
 
+.precipitation {
+    font-size: 14px;
+}
+
 .precipitation__wrapper {
     display: flex;
     justify-content: space-between;
@@ -275,6 +279,7 @@
     flex-direction: column;
     align-items: center;
     color: #fff;
+    // color: rgba(8, 0, 255, 1);
 }
 
 .precipitation__probability {
