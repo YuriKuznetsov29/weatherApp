@@ -80,7 +80,7 @@ function getData() {
     }
 
     const getWeather = (lat, lon, timezone, day = getCurrentDate()) => {
-        const data = request(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,precipitation,weathercode,pressure_msl,surface_pressure,windspeed_10m,winddirection_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,precipitation_sum,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&timezone=${timezone}&start_date=${day}&end_date=${getLastDate()}`);
+        const data = request(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relativehumidity_2m,precipitation,precipitation_probability,weathercode,pressure_msl,surface_pressure,windspeed_10m,winddirection_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,precipitation_sum,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&timezone=${timezone}&start_date=${day}&end_date=${getLastDate()}`);
         // data.then(console.log)
         // console.log(day);
         return transformWeatherData(data);
@@ -101,6 +101,8 @@ function getData() {
                 weathercode: res.hourly.weathercode[hour],
                 dailyTemp: res.hourly.temperature_2m.slice(0, 24),
                 dailyMoi: res.hourly.relativehumidity_2m.slice(0, 24),
+                dailyPrecipitation: res.hourly.precipitation.slice(0, 24),
+                dailyPrecipitationProb: res.hourly.precipitation_probability.slice(0, 24),
                 dailyWind: res.hourly.windspeed_10m.slice(0, 24).map(el => Math.round(el)),
                 dailyWindDir: res.hourly.winddirection_10m.slice(0, 24),
                 dailyPressure: res.hourly.pressure_msl.slice(0, 24).map(el => Math.round(el)),

@@ -4,6 +4,7 @@ import changeLocation from "./changeLocation";
 import { BaseComponent } from "./components/BaseComponent/BaseComponent";
 import { RecentLocations } from "./components/recentLocation/RecentLocations";
 import { CurrentWeather } from "./components/currentWeather/CurrentWeather";
+import { Precipitation } from "./components/precipitation/precipitation";
 import { SelectLocation } from "./components/selectLocation/SelectLocation";
 import { Header } from "./components/header/Header";
 import { Charts } from "./components/Charts/Charts";
@@ -26,7 +27,7 @@ const initialState = {
 
 const store = new CreateStore(reducer, initialState)
 
-const app = new BaseComponent([Header, SelectLocation, RecentLocations, CurrentWeather, Charts], store)
+const app = new BaseComponent([Header, SelectLocation, RecentLocations, CurrentWeather, Precipitation, Charts], store)
 app.init()
 
 // const {getWeather, getWeatherForRecentLocation} = getData();

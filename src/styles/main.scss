@@ -260,6 +260,16 @@
     color: #ccc;
 }
 
+.precipitationTitle {
+    margin-bottom: 20px;
+    font-size: 30px;
+    color: #fff;
+}
+
+.precipitation__quantity-title {
+    margin-bottom: 12px;
+}
+
 .precipitation__item {
     display: flex;
     flex-direction: column;
@@ -271,14 +281,19 @@
     display: flex;
 }
 
-.precipitation__drop {
-    color: #fff;
+.precipitation__quantity-drop {
+    margin: 15px 0;
+    // color: #fff;
     // background-color: #fff;
 }
 
 .precipitation__probability-value {
     color: #fff;
     font-size: 20px;
+}
+
+.precipitation__time {
+    margin-top: 10px;
 }
 
 /* Background */
