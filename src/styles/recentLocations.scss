@@ -1,0 +1,132 @@
+.recent-locations {
+    margin-top: 50px;
+    margin-bottom: 200px;
+}
+
+.recent-locations__inner {
+    margin: 0 auto;
+    width: 540px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+}
+
+.recent-locations__wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.recent-location__title {
+    margin-left: 5px;
+    color: #fff;
+}
+
+.recent-locations__item {
+    margin: 5px;
+    padding: 10px;
+    width: 170px;
+    min-height: 130px;
+    border-radius: 8px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, .4);
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.recent-locations__item-city {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.recent-locations__item-country {
+    padding: 2px 0;
+    margin: 3px 0;
+    font-size: 12px;
+}
+
+.recent-locations__item-data {
+    margin-top: 5px;
+    display: flex;
+    align-self: start;
+    font-size: 35px;
+}
+
+.recent-icon {
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.recent-locations__item-realFeel {
+    padding-top: 5px;
+    display: flex;
+    justify-content: left;
+    font-size: 12px;
+    font-weight: 100;
+}
+
+.recent-locations__item-realFeel-note {
+    margin-right: 5px;
+    font-family: sans-serif;
+}
+
+
+@media(max-width: 650px) {
+
+    .recent-locations__inner {
+        width: 400px;
+    }
+
+    .recent-locations {
+        margin-bottom: 100px;
+    }
+
+    .recent-locations__wrapper {
+        flex-direction: column;
+    }
+
+    .recent-locations__item {
+        width: 400px;
+        min-height: 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .recent-locations__item-realFeel {
+        display: none;
+    }
+
+    .recent-locations__item-country {
+        display: inline;
+    }
+}
+
+@media(max-width: 450px) {
+    .recent-locations__inner, .recent-locations__item {
+        width: 100%;
+    }
+
+    .recent-locations__item {
+        // height: 45px;
+        border-radius: 6px;
+    }
+
+    .recent-locations__item-city {
+        font-size: 14px;
+    }
+
+    .recent-locations__item-country {
+        font-size: 10px;
+    }
+
+    .recent-icon, .recent-locations__item-data { 
+        font-size: 30px;
+    }
+
+}

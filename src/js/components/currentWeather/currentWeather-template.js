@@ -1,6 +1,6 @@
 import getData from "../../services"
-import { weatherDescription, weatherDayClasses, weatherNigthClasses } from "../../constants"
-import { getTimeWithUtcOffset } from "../../utils"
+import { weatherDescription} from "../../constants"
+import { getTimeWithUtcOffset, getWetherImage } from "../../utils"
 
 export async function getCurrentWeatherTemplate(root, location) {
     if (!location) return ''
@@ -9,7 +9,8 @@ export async function getCurrentWeatherTemplate(root, location) {
     const {lat, lon, timezone} = location
     const {getWeatherForRecentLocation} = getData()
     const data = await getWeatherForRecentLocation(lat, lon, timezone)
-    console.log(data.utcOffset)
+    const {currentTemp, weathercode, realFeel, sunrise, sunset, utcOffset, moi, dewpoint, pressure, uvIndex, precipProb, visibility} = data
+    const image = getWetherImage(sunrise, sunset, weathercode, utcOffset)
     
     const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
     const {time, month, day} = getTimeWithUtcOffset(data.utcOffset)
@@ -20,12 +21,12 @@ export async function getCurrentWeatherTemplate(root, location) {
             <div class="currentWeather__wrapper">
                 <div class="currentWeather__data">
                     <div class="currentWeather__data-time">${day} ${months[month]}, ${time}</div>
-                    <div class="currentWeather__data-temp">${data.currentTemp}°C</div>
-                    <div class="currentWeather__data-Feeltemp">Ощущается как ${data.realFeel}°C</div>
+                    <div class="currentWeather__data-temp">${currentTemp}°C</div>
+                    <div class="currentWeather__data-Feeltemp">Ощущается как ${realFeel}°C</div>
                 </div>
                 <div class="currentWeather__code">
-                    <i class="wi ${weatherDayClasses[data.weathercode]} code-icon"></i>
-                    <div class="currentWeather__codeValue">${weatherDescription[data.weathercode]}</div>
+                    <i class="wi ${image} code-icon"></i>
+                    <div class="currentWeather__codeValue">${weatherDescription[weathercode]}</div>
                 </div>
             </div>
         </div>
@@ -42,29 +43,18 @@ export async function getCurrentWeatherTemplate(root, location) {
                     
                 </div>
                 <div class="currentWeather__values">
-                    <div class="currentWeather__data-value">${data.moi} %</div>
-                    <div class="currentWeather__data-value">${data.dewpoint} °C</div>
-                    <div class="currentWeather__data-value">${data.pressure} мбар</div>
-                    <div class="currentWeather__data-value">${data.uvIndex}</div>
-                    <div class="currentWeather__data-value">${data.precipProb} %</div>
-                    <div class="currentWeather__data-value">${data.visibility} М</div>
+                    <div class="currentWeather__data-value">${moi} %</div>
+                    <div class="currentWeather__data-value">${dewpoint} °C</div>
+                    <div class="currentWeather__data-value">${pressure} мбар</div>
+                    <div class="currentWeather__data-value">${uvIndex}</div>
+                    <div class="currentWeather__data-value">${precipProb} %</div>
+                    <div class="currentWeather__data-value">${visibility} M</div>
                 </div>
             </div>
         </div>
         `
     )
 }
-
-// function getTimeWithUtcOffset(offset) {
-//     const date = new Date()
-//     const utcDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds())
-//     utcDate.setSeconds(offset)
-//     const time = utcDate.toLocaleTimeString().slice(0,-3)
-//     const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
-//     const month = utcDate.getMonth()
-//     const day = utcDate.getDate()
-//     return {time, month, day}
-// }
 
 function loading(root) {
     root.innerHTML = ''

@@ -2,7 +2,6 @@ import { getSelectLocationTemplate, insertSearchResults } from "./selectLocation
 import getData from "../../services"
 import { storage } from "../../utils"
 import { changeCurrentLocation } from "../../redux/actions"
-import { CURRENT__LOCATION } from "../../redux/types"
 
 export class SelectLocation {
     constructor(store) {
@@ -37,7 +36,6 @@ export class SelectLocation {
                     storage('currentLocation', this.store.getState().currentLocation)
                     this.clearFind()
                 })
-                .catch(console.error)
             }
 
             if (event.target.dataset.type === 'setLocation') {
@@ -52,7 +50,6 @@ export class SelectLocation {
         this.root.oninput = () => {
             getCityLocation(this.inputSearch.value).then((res) =>{
                 const {results} = res
-                console.log(res)
                 if (results) {
                     this.searchRes.innerHTML = ''
                     this.btnCurrentLocation.classList.add('search__active')
@@ -61,7 +58,6 @@ export class SelectLocation {
                     })
                 }
             })
-            .catch(console.error)
         }
 
         document.body.onclick = (event) => {

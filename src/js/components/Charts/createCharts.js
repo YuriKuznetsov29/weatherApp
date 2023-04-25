@@ -20,15 +20,9 @@ const {getWeather} = getData();
 
 Chart.register(annotationPlugin, ChartDataLabels, LineController, LineElement, PointElement, CategoryScale, LinearScale, Filler, Legend, BarController, BarElement);
 
-Chart.defaults.color = '#fff';
+Chart.defaults.color = '#000';
 Chart.defaults.font.size = 16;
 Chart.defaults.plugins.datalabels.align = 'end';
-
-
-// Chart.register(ChartDataLabels);
-// Chart.defaults.plugins.title.color = '#fff';
-// Chart.defaults.plugins.legend.color = '#fff';
-// Chart.defaults.backgroundColor = '#fff';
 
 let tempChart;
 let moiChart;
@@ -56,6 +50,9 @@ export function createCharts(location, root, day = getCurrentDate()) {
         if (document.documentElement.clientWidth <= 600) {
           Chart.defaults.font.size = 10;
           const chartContainer = document.querySelectorAll('.chart-container');
+          const sunChartContainer = document.querySelector('.sunChart-container');
+          console.log(sunChartContainer)
+          sunChartContainer.style.cssText = `height:${document.documentElement.clientWidth * 0.7}px; width: ${document.documentElement.clientWidth - 30}px;`
           chartContainer.forEach(el => {
             el.style.cssText = 'height:300px; width: 800px;'
           })

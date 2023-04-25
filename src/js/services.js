@@ -135,6 +135,8 @@ function getData() {
                 uvIndex: res.hourly.uv_index[hour],
                 precipProb: res.hourly.precipitation_probability[hour],
                 visibility: res.hourly.visibility[hour],
+                sunrise: res.daily.sunrise[0].slice(-5),
+                sunset: res.daily.sunset[0].slice(-5)
 
             }
             return result;

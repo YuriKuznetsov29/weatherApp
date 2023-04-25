@@ -1,5 +1,17 @@
-@import "daily";
-@import "main";
+// @import "main";
+// @import "daily";
+
+@import "loading";
+@import "recentLocations";
+@import "header";
+@import "selectLocation";
+@import "currentWeather";
+@import "charts";
+@import "precipitation";
+@import "variables";
+
+@import "weather-icons";
+
 
 *,
 *:before,
@@ -12,4 +24,62 @@
 body {
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: 1230px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Background */
+
+.background-image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    // width: 100vw;
+    height: 500px;
+    // max-width: 100%;
+    // min-height: 100%;
+    z-index: -500;
+    &:before {
+        background: linear-gradient(0deg,hsla(0,0%,6%,0),#111);
+        content: "";
+        height: 120px;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 500px;
+    // min-width: 100%;
+    // min-height: 100%;
+    z-index: -500;
+    // background: url("../images/background1.jpg") 50% no-repeat;
+    background-size: cover;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1000;
+    background-color: #ebebeb;
+    // background-color: rgba(83, 83, 83);
+}
+
+.headerWrapper {
+    height: 400px;
 }

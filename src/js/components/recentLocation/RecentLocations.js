@@ -32,7 +32,6 @@ export class RecentLocations {
                 console.log(recentLocation.dataset.recentlocation)
                 const [lat, lon, city, timezone, country] = recentLocation.dataset.recentlocation.split(',')
                 this.store.dispatch(changeCurrentLocation({lat: +lat, lon: +lon, city: city, timezone: timezone, country: country}))
-                // storage('currentLocation', this.store.getState().currentLocation) // реальзовать функцию для автоматического обновления LacalStorage из стора
             }
         }
     }

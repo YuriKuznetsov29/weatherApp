@@ -1,8 +1,5 @@
 /* Chart */
-.chart__inner {
-    margin-top: 50px;
-    display: flex;
-}
+
 
 /* .chart {
     height: 500px;
@@ -77,44 +74,7 @@
 
 /* Charts */
 
-.chartWrapper {
-    max-width: 100%;
-}
 
-.chart-container {
-    height:600px; 
-    width: 1200px;
-}
-
-.text {
-    position: fixed;
-    top: 100;
-    right: -1000;
-    z-index: 10000;
-    color: #fff;
-    font-size: 40px;
-}
 
 /* Media */
 
-@media (max-width: 1200px) {
-    .chartWrapper {
-        overflow-x: scroll;
-    }
-}
-/* @media(max-width: 900px) {
-    .day {
-        margin-top: 100px;
-    }
-} */
-
-@media(max-width: 450px) {
-    .chart__innner {
-        margin-top: 20px;
-    }
-
-    .day__input {
-        width: 200px;
-        font-size: 20px;
-    }
-}

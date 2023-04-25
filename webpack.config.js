@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const isProd = process.env.NODE_ENV === 'production' // создали переменные дял определения режима сборки dev/prod, для них доустановили пакет cross-env
 const isDev = !isProd
 
-const filename = ext => isProd ? `[name].bundle.${ext}` : `[name].bundle.[hash].${ext}`
+const filename = ext => isDev ? `[name].bundle.${ext}` : `[name].bundle.[fullhash].${ext}`
 
 const jsLoaders = () => {
   const loaders = [
@@ -29,7 +29,7 @@ module.exports = {
   context: path.resolve(__dirname, 'src'),
   mode: 'development',
   entry: {
-    main: './js/main.js',
+    index: './js/index.js',
     // daily: './js/daily.js'
   },
   output: {
@@ -50,19 +50,11 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
     template: './index.html',
-    chunks: ['main'],
+    chunks: ['index'],
     minify: { // минифицируем сборку html
       removeComments: isProd,
       collapseWhitespace: isProd
-  }}),
-    new HtmlWebpackPlugin({
-    template: './daily.html',
-    filename: 'daily.html',
-    chunks: ['main'],
-    minify: { // минифицируем сборку html
-      removeComments: isProd,
-      collapseWhitespace: isProd
-  }}),
+  }}), 
   new CopyPlugin({ // плагин позволяющий копировать определенные файлы или папки в папку со сброкой
     patterns: [
       { from: path.resolve(__dirname, 'src/images'), // в нашем случае копируем favicon

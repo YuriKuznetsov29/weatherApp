@@ -1,5 +1,5 @@
 import getData from "../../services"
-import { weatherDayClasses } from "../../constants"
+import { getWetherImage } from "../../utils"
 
 export function addRecentItems(locations) {
     const {getWeatherForRecentLocation} = getData()
@@ -11,19 +11,22 @@ export function addRecentItems(locations) {
         const {lat, lon, city, timezone, country} = location
         
         const data = await getWeatherForRecentLocation(lat, lon, timezone)
+        const {weathercode, realFeel, currentTemp, sunrise, sunset, utcOffset} = data
+        const image = getWetherImage(sunrise, sunset, weathercode, utcOffset)
+
+        
 
         itemArr.push(`
                 <div class="recent-locations__item" data-type="recentItem" data-recentLocation="${lat},${lon},${city},${timezone},${country}">
-                    <div class="recent-locations__item-city">${city}</div>
-                    <div class="recent-locations__item-country">${country}</div>
+                    ${adaptiveContent(city, country)}
                     <div class="recent-locations__item-data">
-                        <i class="wi ${weatherDayClasses[data.weathercode]} recent-icon"></i>
-                        <div class="recent-locations__item-data-temp">${data.currentTemp}</div>
+                        <i class="wi ${image} recent-icon"></i>
+                        <div class="recent-locations__item-data-temp">${currentTemp}</div>
                         <i class="ph-thin ph-thermometer"></i>
                     </div>
                     <div class="recent-locations__item-realFeel">
                         <div class="recent-locations__item-realFeel-note">RealFeel</div>
-                        <div class="recent-locations__item-realFeel-temp">${data.realFeel}°C</div>
+                        <div class="recent-locations__item-realFeel-temp">${realFeel}°C</div>
                     </div>
                 </div>`)
                 // console.log(i)
@@ -35,13 +38,23 @@ export function addRecentItems(locations) {
     })
 }
 
+function adaptiveContent(city, country) {
+    if (document.documentElement.clientWidth > 650) {
+        return`<div class="recent-locations__item-city">${city}</div>
+        <div class="recent-locations__item-country">${country}</div>`
+    } else {
+        return `
+        <div class="recent-locations__item-city">
+            ${city}, <div class="recent-locations__item-country">${country}</div>
+        </div>`
+    }
+}
+
 function loading(locations, root) {
     const loadArr = new Array(locations.length)
         .fill(`<div class="smallLoading">
             <div class="smallGradient"></div>
         </div>`)
-    
-
     root.innerHTML = ''
     root.insertAdjacentHTML('afterbegin', loadArr.join(''))
 }

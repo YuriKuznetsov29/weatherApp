@@ -4,7 +4,7 @@ import {
 } from './constants'
 
 let arrow = document.createElement('img');
-arrow.src = 'arrow.png';
+arrow.src = 'arrow-up-bold.svg';
 // let sun = document.createElement('img');
 // sun.src = 'sun.png';
 
@@ -252,6 +252,7 @@ const chartConfigs = () => {
         borderWidth: 0,
         label: {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          color: '#000',
           content: 'Горизонт',
           display: true
         },
@@ -270,6 +271,7 @@ const chartConfigs = () => {
         borderWidth: 0,
         label: {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          color: '#000',
           content: '6:00',
           display: true
         },
@@ -288,6 +290,7 @@ const chartConfigs = () => {
         borderWidth: 0,
         label: {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          color: '#000',
           content: 'Рассвет',
           display: true
         },
@@ -306,6 +309,7 @@ const chartConfigs = () => {
         borderWidth: 0,
         label: {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          color: '#000',
           content: 'Истинный полдень',
           display: true
         },
@@ -323,6 +327,7 @@ const chartConfigs = () => {
         borderWidth: 0,
         label: {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          color: '#000',
           content: '12:00',
           display: true
         },
@@ -341,6 +346,7 @@ const chartConfigs = () => {
         borderWidth: 0,
         label: {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          color: '#000',
           content: '18:00',
           display: true
         },
@@ -360,6 +366,7 @@ const chartConfigs = () => {
         borderWidth: 0,
         label: {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
+          color: '#000',
           content: 'Закат',
           display: true
         },
@@ -375,7 +382,7 @@ const chartConfigs = () => {
 
     const sunChartConfig = {
         type: 'line',
-        color: '#fff',
+        // color: '#fff',
         data: {
             // labels: sunCalk()[0],
             datasets: [

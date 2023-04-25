@@ -34,7 +34,7 @@ export function getChartsTemplate() {
             <div class="gradient"></div>
         </div>
         <div class="chartWrapper">
-            <div class="chart-container">
+            <div class="sunChart-container">
                 <canvas class="chart" id="myChartSun" >
                 </canvas>
                 <div class="text">Horizon</div>
@@ -63,7 +63,7 @@ export function getChartsTemplate() {
             <div class="gradient"></div>
         </div>
         <div class="chartWrapper">
-            <div class="chart-container">
+            <div class="sunChart-container">
                 <canvas class="chart" id="myChartPressure" ></canvas>
             </div>
         </div>
