@@ -4,19 +4,7 @@ import { getTimeWithUtcOffset } from "./utils";
 function getData() {
     const getLocation = () => {
         const data = request('https://api.ipgeolocation.io/ipgeo?apiKey=17a8d753063e4a20a9531fe3638de576');
-        // function success(pos) {
-        //     var crd = pos.coords;
-        //     console.log('Ваше текущее местоположение:');
-        //     console.log(`Широта: ${crd.latitude}`);
-        //     console.log(`Долгота: ${crd.longitude}`);
-        //     console.log(`Плюс-минус ${crd.accuracy} метров.`);
-        //     console.log(crd);
-        //   };
-
-        //   navigator.geolocation.getCurrentPosition(success)
           return data.then(res => {
-          console.log(res)
-
             return {
                 city: res.city,
                 lat: res.latitude,
@@ -34,11 +22,6 @@ function getData() {
     const getCityLocation = async (city) => {
         const data = await request(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=5&language=ru`);
         console.log(data.timezone)
-        // if (data.results) {
-        //     for (let i = 0; i < data.results.length; i++) {
-        //         data.results[i].timezone = data.results[i].timezone.replace(/\//, '%2F')
-        //     }
-        // }
         if (data.results) {
             for (let key of data.results) {
                 key.timezone = key.timezone ? key.timezone.replace(/\//, '%2F') : ''
@@ -47,35 +30,13 @@ function getData() {
         return data
     }
 
-    
-
     const getLastDate = () => {
         const date = new Date();
         date.setDate(date.getDate() + 15)
-        // const year = date.getFullYear();
-        // const month = date.getMonth();
-        // const day = date.getDate();
-        // const lastDate = new Date(year, month, day + 15);
-
-        // const lastYear = lastDate.getFullYear();
-        // const lastmonth = lastDate.getMonth();
-        // const lastDay = lastDate.getDate();
-        // const transformLastDate = `${lastYear}-${(lastmonth + 1) < 10 ? `0${(lastmonth + 1)}` : (lastmonth + 1)}-${lastDay < 10 ? `0${lastDay}` : lastDay}`;
-        // console.log(transformLastDate);
-        // return transformLastDate; // переписать
-
         return date.toLocaleDateString().replace(/(\d{2})\.(\d{2})\.(\d{4})/g, '$3-$2-$1')
     }
 
     const getCurrentDate = () => {
-        // const date = new Date();
-        // const year = date.getFullYear();
-        // const month = date.getMonth();
-        // const day = date.getDate();
-        // const currentDate = `${year}-${(month + 1) < 10 ? `0${(month + 1)}` : (month + 1)}-${day < 10 ? `0${day}` : day}`;
-        // console.log(currentDate);
-        // return currentDate;
-
         return new Date().toLocaleDateString().replace(/(\d{2})\.(\d{2})\.(\d{4})/g, '$3-$2-$1')
     }
 

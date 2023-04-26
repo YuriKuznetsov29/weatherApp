@@ -9,13 +9,6 @@ export function getPrecipitationTemplate(root, location) {
         const itemsArr = res.dailyPrecipitation.map((pecipitation, i) => {
             const percent = calckPrecipitationInHour(pecipitation)
 
-            let adaptiveSize
-            if (document.documentElement.clientWidth < 1200) {
-                adaptiveSize = 50
-            } else {
-                adaptiveSize = 40
-            }
-
             return `
                 <div class="precipitation__item">
                     <div class="precipitation__probability">${res.dailyPrecipitationProb[i]}%</div>
