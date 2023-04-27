@@ -5,11 +5,7 @@ import annotationPlugin from 'chartjs-plugin-annotation';
 import getData from "../../services";
 import { getTimeWithUtcOffset } from "../../utils";
 
-const getCurrentDate = () => {
-  return new Date().toLocaleDateString().replace(/(\d{2})\.(\d{2})\.(\d{4})/g, '$3-$2-$1')
-}
-
-const {tempChartConfig, windChartConfig, sunChartConfig, sunriseConfig, sunsetConfig, trueNoonConfig} = chartConfigs();
+const {tempChartConfig, windChartConfig, sunChartConfig, sunriseConfig, sunsetConfig, trueNoonConfig, horizontConfig} = chartConfigs();
 const {getWeather} = getData();
 
 Chart.register(annotationPlugin, ChartDataLabels, LineController, LineElement, PointElement, CategoryScale, LinearScale, Filler, BarController, BarElement);
@@ -22,105 +18,146 @@ let tempChart;
 let windChart;
 let sunChart;
 
-export function createCharts(location, root, day = getCurrentDate()) {
+const getCurrentDate = () => {
+  return new Date().toLocaleDateString().replace(/(\d{2})\.(\d{2})\.(\d{4})/g, '$3-$2-$1')
+}
 
-  const {lat, lon, timezone} = location
+export function createCharts(location, root, day = getCurrentDate()) {
 
   const myChart = root.querySelector('#myChart'),
         myChartWind = root.querySelector('#myChartWind'),
         myChartSun = root.querySelector('#myChartSun'),
         loading = root.querySelectorAll('.loadingChart');
 
-        loading.forEach(el => el.style.display = 'block')
+  
+  adaptiveCharts(root)
+  loading.forEach(el => el.style.display = 'block')
+  
+  const {lat, lon, timezone} = location
 
-    getWeather(lat, lon, timezone, day).then((res) => {
-        const {dailyTime, dailyTemp, dailyWind, dailyWindDir, sunrise, sunset, utcOffset} = res      
+  getWeather(lat, lon, timezone, day).then((res) => {
+    loading.forEach(el => el.style.display = 'none')
+    createTempChart(myChart, res)
+    createWindChart(myChartWind, res)
+    createSunChart(myChartSun, lon, res)
+  })
+}
 
-        loading.forEach(el => el.style.display = 'none')
+function adaptiveCharts(root) {
+  if (document.documentElement.clientWidth <= 650) {
+    const chartContainer = root.querySelectorAll('.chart-container'),
+          sunChartContainer = document.querySelector('.sunChart-container');
 
-        if (document.documentElement.clientWidth <= 650) {
-          Chart.defaults.font.size = 10;
-          const chartContainer = document.querySelectorAll('.chart-container');
-          const sunChartContainer = document.querySelector('.sunChart-container');
-          sunChartContainer.style.cssText = `height:${document.documentElement.clientWidth * 0.4}px; width: ${document.documentElement.clientWidth - 30}px;`
-          sunsetConfig.yMax = -1.2
-          sunriseConfig.yMax = -1.2
-          trueNoonConfig.yMax = -1.2
-          chartContainer.forEach(el => {
-            el.style.cssText = 'height:300px; width: 800px;'
-          })
-        }
-
-        if (!tempChart) {
-          tempChartConfig.data.labels = dailyTime;
-          tempChartConfig.data.datasets[0].data = dailyTemp,
-          tempChartConfig.options.plugins.subtitle.text = day;
-          tempChart = new Chart(myChart, tempChartConfig);
-        } else {
-            function addData(chart, data) {
-              chart.data.datasets[0].data = data;
-              chart.update('active');
-            }
-            addData(tempChart, dailyTemp);
-        }
-
-        if (!windChart) {
-          windChartConfig.data.labels = dailyTime;
-          windChartConfig.data.datasets[0].data = dailyWind.map(el => el + 2.5);
-          windChartConfig.data.datasets[1].data = dailyWind;
-          windChartConfig.data.datasets[0].rotation = dailyWindDir
-          windChart = new Chart(myChartWind, windChartConfig);
-        } else {
-            function addData(chart, data, rotation) {
-              chart.data.datasets[0].data = data.map(el => el + 2.5);
-              chart.data.datasets[0].rotation = rotation;
-              chart.data.datasets[1].data = data;
-              chart.update('active');
-            }
-            addData(windChart, dailyWind, dailyWindDir);
-        }
-
-        const {time} = getTimeWithUtcOffset(utcOffset)
-        const [labels, sin] = sinusCalk()
-        const sunPosition = culkSunPosition(sunrise, sunset, time)
-        let sun = document.createElement('img');
-        sun.style.cssText = 'width: 10px; height: 10px;'
-        sun.src = 'sun.svg';
-        const trueNoon = culkTrueNoon(utcOffset, lon)
-        const shift = sunPosition < 24 || sunPosition > 72 ? 2 : 0
-
-        if (!sunChart) {
-          sunriseConfig.label.content = sunrise;
-          sunsetConfig.label.content = sunset;
-          trueNoonConfig.label.content = trueNoon;
-          sunChartConfig.data.labels = labels;
-          sunChartConfig.data.datasets[0].data = sin; // sinus
-          sunChartConfig.data.datasets[1].data = sin.slice(0, sunPosition + 1);
-          sunChartConfig.data.datasets[2].data = new Array(labels.length).fill(0) // горизонт
-          sunChartConfig.data.datasets[3].data = sin.map(el => +el + 0.20 + '').slice(0, sunPosition + 1)
-          
-          if (sunPosition > 1) {
-            sunChartConfig.data.datasets[3].pointStyle[sunPosition - shift] = sun
-          }
-
-          sunChart = new Chart(myChartSun, sunChartConfig);
-        } else {
-            function addData(chart) {
-              sunriseConfig.label.content = res.sunrise;
-              sunsetConfig.label.content = res.sunset;
-              trueNoonConfig.label.content = trueNoon;
-              chart.data.datasets[1].data = sin.slice(0, sunPosition + 1)
-              sunChartConfig.data.datasets[3].data = sin.map(el => +el + 0.20 + '').slice(0, Math.floor(sunPosition + 1));
-              chart.data.datasets[3].data = sin.map(el => +el + 0.20 + '').slice(0, Math.floor(sunPosition + 1))
-              chart.data.datasets[3].pointStyle = []
-              if (sunPosition > 1) {
-                sunChartConfig.data.datasets[3].pointStyle[sunPosition - shift] = sun
-              }
-              chart.update()
-            }
-            addData(sunChart);
-        }
+    Chart.defaults.font.size = 10;
+    tempChartConfig.data.datasets[0].borderWidth = 1
+    tempChartConfig.data.datasets[0].pointRadius = 2
+    sunChartConfig.data.datasets[0].borderWidth = 1
+    sunChartConfig.data.datasets[1].borderWidth = 1
+    sunChartConfig.data.datasets[2].borderWidth = 1
+    const windowWidth = document.documentElement.clientWidth
+    sunChartContainer.style.cssText = `height:${windowWidth * 0.5}px; width: ${windowWidth - 30}px;`
+    sunsetConfig.yMax = -1.2
+    sunriseConfig.yMax = -1.2
+    trueNoonConfig.yMax = -1.2
+    horizontConfig.yMax = 0.3
+    chartContainer.forEach(el => {
+      el.style.cssText = 'height:300px; width: 800px;'
     })
+  }
+}
+
+function createTempChart(element, res) {
+  const {dailyTime, dailyTemp} = res    
+
+  if (!tempChart) {
+    tempChartConfig.data.labels = dailyTime;
+    tempChartConfig.data.datasets[0].data = dailyTemp,
+    tempChart = new Chart(element, tempChartConfig);
+  } else {
+      function addData(chart, data) {
+        chart.data.datasets[0].data = data;
+        chart.update('active');
+      }
+      addData(tempChart, dailyTemp);
+  }
+}
+
+function createWindChart(element, res) {
+  const {dailyTime, dailyWind, dailyWindDir} = res
+  
+  const datasets = windChartConfig.data.datasets
+
+  if (!windChart) {
+    windChartConfig.data.labels = dailyTime;
+    datasets[0].data = dailyWind.map(el => el + 2.5);
+    datasets[1].data = dailyWind;
+    datasets[0].rotation = dailyWindDir
+    windChart = new Chart(element, windChartConfig);
+  } else {
+      function addData(chart, data, rotation) {
+        const chartDatasets = chart.data.datasets
+        chartDatasets[0].data = data.map(el => el + 2.5);
+        chartDatasets[0].rotation = rotation;
+        chartDatasets[1].data = data;
+        chart.update('active');
+      }
+      addData(windChart, dailyWind, dailyWindDir);
+  }
+}
+
+function createSunChart(myChartSun, lon, res) {
+  const {sunrise, sunset, utcOffset} = res
+
+  const {time} = getTimeWithUtcOffset(utcOffset)
+  const [labels, sin] = sinusCalk()
+  const sunPosition = culkSunPosition(sunrise, sunset, time)
+  const sun = createSunImg()
+  const trueNoon = culkTrueNoon(utcOffset, lon)
+  const shift = sunPosition < 24  || sunPosition > 72 ? 2 : 0
+
+  const datasets = sunChartConfig.data.datasets
+
+  if (!sunChart) {
+    sunriseConfig.label.content = sunrise
+    sunsetConfig.label.content = sunset
+    trueNoonConfig.label.content = trueNoon;
+    sunChartConfig.data.labels = labels;
+    datasets[0].data = sin; // sinus
+    datasets[1].data = sin.slice(0, sunPosition + 1);
+    datasets[2].data = new Array(labels.length).fill(0) // горизонт
+    datasets[3].data = sin.map(el => +el + 0.20 + '').slice(0, sunPosition + 1)
+    // debugger
+    if (sunPosition > 1) {
+      datasets[3].pointStyle[sunPosition - shift] = sun
+    }
+    sunChart = new Chart(myChartSun, sunChartConfig);
+  } else {
+      function addData(chart) {
+        sunriseConfig.label.content = sunrise
+        sunsetConfig.label.content = sunset
+        trueNoonConfig.label.content = trueNoon
+
+        const chartDatasets = chart.data.datasets
+        chartDatasets[1].data = sin.slice(0, sunPosition + 1)
+        chartDatasets[3].data = sin.map(el => +el + 0.20 + '').slice(0, Math.floor(sunPosition + 1))
+        chartDatasets[3].pointStyle = []
+        if (sunPosition > 1) {
+          datasets[3].pointStyle[sunPosition - shift] = sun
+        }
+        chart.update()
+      }
+      addData(sunChart);
+  }
+}
+
+function createSunImg() {
+  let sun = document.createElement('img');
+  if (document.documentElement.clientWidth <= 650) {
+    sun.src = 'smallSun.svg';
+  } else {
+    sun.src = 'sun.svg';
+  }
+  return sun
 }
 
 function sinusCalk() {
@@ -160,6 +197,9 @@ function sinusCalk() {
 }
 
 function culkSunPosition(sunrise, sunset, curtime) {
+
+  // curtime = '03:50'
+
   const sOnDay = 24 * 60 * 60;
   const allSteps = 96;
   
@@ -179,7 +219,7 @@ function culkSunPosition(sunrise, sunset, curtime) {
   if (curtimeS >= sunriseS) {
       return Math.floor(allSteps / 4 + (curtimeS - sunriseS) / dayStep);
   }
-  return curtimeS / morningStep;
+  return Math.round(curtimeS / morningStep);
 }
 
 function culkTrueNoon(offset, lon) {

@@ -13,6 +13,7 @@ const chartConfigs = () => {
                 fill: 'start',
                 backgroundColor: CHART_COLORS.blue,
                 borderColor: CHART_COLORS.red,
+                borderWidth: 2,
                 color: '#fff',
                 tension: 0.1,
                 datalabels: {
@@ -23,7 +24,9 @@ const chartConfigs = () => {
         options: {
             maintainAspectRatio: false,
             layout: {
-                padding: 15
+                padding: {
+                    top: 35
+                }
             },
             scales: {
                 y: {
@@ -93,6 +96,11 @@ const chartConfigs = () => {
         options: {
             maintainAspectRatio: false,
             showAllTooltips: true,
+            layout: {
+                padding: {
+                    top: 35
+                }
+            },
             scales: {
                 y: {
                     display: false,
@@ -130,7 +138,7 @@ const chartConfigs = () => {
         }
     }
 
-    const annotation1 = {
+    const horizontConfig = {
         type: 'line',
         borderColor: 'black',
         borderWidth: 0,
@@ -138,11 +146,14 @@ const chartConfigs = () => {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
           color: '#000',
           content: 'Горизонт',
-          display: true
+          display: true,
+          font: {
+            weight: 400
+          }
         },
         yScaleID: 'y',
-        yMax: 0.15,
-	    yMin:  0.15,
+        yMax: 0.07,
+	    yMin:  0.07,
 
         xScaleID: 'x',
         xMax: 95,
@@ -156,8 +167,11 @@ const chartConfigs = () => {
         label: {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
           color: '#000',
-          content: '6:00',
-          display: true
+        //   content: '6:00',
+          display: true,
+          font: {
+            weight: 400
+          }
         },
         yScaleID: 'y',
         yMax: -0.9,
@@ -176,7 +190,10 @@ const chartConfigs = () => {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
           color: '#000',
           content: 'Рассвет',
-          display: true
+          display: true,
+          font: {
+            weight: 400
+          }
         },
         yScaleID: 'y',
         yMax: -0.8,
@@ -195,7 +212,10 @@ const chartConfigs = () => {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
           color: '#000',
           content: 'Истинный полдень',
-          display: true
+          display: true,
+          font: {
+            weight: 400
+          }
         },
         yScaleID: 'y',
         yMax: -0.8,
@@ -214,7 +234,10 @@ const chartConfigs = () => {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
           color: '#000',
           content: '12:00',
-          display: true
+          display: true,
+          font: {
+            weight: 400
+          }
         },
         yScaleID: 'y',
         yMax: -0.9,
@@ -233,7 +256,10 @@ const chartConfigs = () => {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
           color: '#000',
           content: '18:00',
-          display: true
+          display: true,
+          font: {
+            weight: 400
+          }
         },
 
         yScaleID: 'y',
@@ -253,7 +279,10 @@ const chartConfigs = () => {
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
           color: '#000',
           content: 'Закат',
-          display: true
+          display: true,
+          font: {
+            weight: 400
+          }
         },
 
         yScaleID: 'y',
@@ -274,6 +303,7 @@ const chartConfigs = () => {
                     fill: false,
                     backgroundColor: CHART_COLORS.yellow,
                     borderColor: CHART_COLORS.orange,
+                    borderWidth: 2,
                     color: '#fff',
                     tension: 0.1,
                     pointStyle: false,
@@ -287,9 +317,11 @@ const chartConfigs = () => {
                       },
                     backgroundColor: CHART_COLORS.yellow,
                     borderColor: CHART_COLORS.orange,
+                    borderWidth: 2,
+                    pointHitRadius: 0,
                     color: '#fff',
                     tension: 0.1,
-                    
+                    pointRadius: 0
                 },
                 {
                     label: 'Sunrise / Sunset',
@@ -297,6 +329,7 @@ const chartConfigs = () => {
                     fill: false,
                     backgroundColor: CHART_COLORS.yellow,
                     borderColor: CHART_COLORS.grey,
+                    borderWidth: 2,
                     color: '#fff',
                     tension: 0.1,
                     pointStyle: false,
@@ -308,14 +341,19 @@ const chartConfigs = () => {
                     borderColor: 'rgba(0, 0, 0, 0.0)',
                     color: '#fff',
                     tension: 0.1,
-                    borderWidth: 3,
+                    borderWidth: 2,
                     pointStyle: [],
-                    pointHitRadius: 0
+                    pointHitRadius: 0,
                 }, 
         ]
         },
         options: {
             maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    top: 35
+                }
+            },
             interaction: {
                 mode: 'index',
                 intersect: false
@@ -374,7 +412,7 @@ const chartConfigs = () => {
                 },
                 annotation: {
                     annotations: {
-                        annotation1,
+                        horizontConfig,
                         sunriseConfig,
                         annotation3,
                         sunsetConfig,
@@ -393,7 +431,8 @@ const chartConfigs = () => {
         sunChartConfig,
         sunriseConfig,
         sunsetConfig,
-        trueNoonConfig
+        trueNoonConfig,
+        horizontConfig
     }
 }
 

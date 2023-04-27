@@ -18,15 +18,6 @@
     width: 1200px;
 }
 
-.text {
-    position: fixed;
-    top: 100;
-    right: -1000;
-    z-index: 10000;
-    color: #fff;
-    font-size: 40px;
-}
-
 @media (max-width: 1200px) {
     .chartWrapper {
         overflow-x: scroll;
